@@ -1,2 +1,2 @@
-# SCS-Project-Group-i
-SCS Project Group i
+# MMI-Project
+Nothing to see yet
