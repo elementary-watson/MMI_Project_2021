@@ -1,2 +1,2 @@
 # MMI-Project
-Nothing to see yet
+Kanban Board auf Microsoft Teams: "MMI Task Board"
