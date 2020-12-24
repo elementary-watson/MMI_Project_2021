@@ -9,9 +9,12 @@ using UnityEngine.UI;
 public class Network : MonoBehaviourPunCallbacks
 {
     public Text statusText;
-    public Text statusPlayerNumber;
     public CameraFollow playerCamera;
     public GameObject Lobby_Room_Name;
+
+    PhotonView photonView;
+    public Text statusPlayerNumber;
+
 
     List<int> PlayerColor = new List<int>();
 
@@ -26,18 +29,18 @@ public class Network : MonoBehaviourPunCallbacks
 
     private string RandomColor()
     {
-        List<string> PlayerColorName = new List<string>{"PlayerBlack", "PlayerBlue", "PlayerBrown", "PlayerCyan", "PlayerGreen", "PlayerOrange", "PlayerPurple", "PlayerRed", "PlayerWhite", "PlayerYellow"};
+        List<string> PlayerColorName = new List<string> { "PlayerBlack", "PlayerBlue", "PlayerBrown", "PlayerCyan", "PlayerGreen", "PlayerOrange", "PlayerPurple", "PlayerRed", "PlayerWhite", "PlayerYellow" };
         print(PlayerColorName);
-        
+
         bool B1 = true;
         bool B2 = false;
         int randomNumberforColor = 0;
-              
-        while(B1)
+
+        while (B1)
         {
             randomNumberforColor = Random.Range(1, 10);
 
-            for (int i = 0; i< PlayerColor.Count; i++)
+            for (int i = 0; i < PlayerColor.Count; i++)
             {
                 if (randomNumberforColor == PlayerColor[i])
                 {
@@ -59,10 +62,17 @@ public class Network : MonoBehaviourPunCallbacks
         return PlayerColorName[randomNumberforColor];
     }
 
+    [PunRPC]
+    public void RefreshPlayerNumberLogical()
+    {
+        statusPlayerNumber.text = "(" + PhotonNetwork.CurrentRoom.PlayerCount + "/10)";
+    }
+
     public void CreateLobby()
     {
         statusText.text = "Connecting";
         PhotonNetwork.NickName = "Player" + Random.Range(0, 100);
+
         PhotonNetwork.ConnectUsingSettings();
     }
 
@@ -75,6 +85,9 @@ public class Network : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         statusText.text = "Connected to Lobby: " + Lobby_Room_Name.GetComponent<Text>().text;
+
+        photonView = gameObject.GetComponent<PhotonView>();
+        photonView.RPC("RefreshPlayerNumberLogical", RpcTarget.All);
 
         switch (PhotonNetwork.CurrentRoom.PlayerCount)
         {
@@ -113,6 +126,6 @@ public class Network : MonoBehaviourPunCallbacks
                 break;
         }
        
-        statusPlayerNumber.text = "("+ PhotonNetwork.CurrentRoom.PlayerCount + "/10)";
+        //statusPlayerNumber.text = "("+ PhotonNetwork.CurrentRoom.PlayerCount + "/10)";
     }
 }
