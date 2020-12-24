@@ -13,7 +13,14 @@ public class Network : MonoBehaviourPunCallbacks
     public CameraFollow playerCamera;
     public GameObject Lobby_Room_Name;
 
-
+    private void SpawnPlayer(string PlayerColor)
+    {
+        playerCamera.target = PhotonNetwork.Instantiate(PlayerColor,
+                new Vector3(
+                    Random.Range(-4, 4),
+                    Random.Range(-4, 4),
+                    0), Quaternion.identity).transform;
+    }
 
     public void CreateLobby()
     {
@@ -26,102 +33,99 @@ public class Network : MonoBehaviourPunCallbacks
     {
         statusText.text = "Joining room";
         PhotonNetwork.JoinOrCreateRoom(Lobby_Room_Name.GetComponent<Text>().text, new RoomOptions() { MaxPlayers = 10 }, null);
-        //print("Current Player in the Lobby: " + PhotonNetwork.CountOfPlayersOnMaster);
     }
 
     public override void OnJoinedRoom()
     {
-        /*byte PlayerNumber = PhotonNetwork.CurrentRoom.PlayerCount;
-        int PlayerNumberInt = Convert.ToInt32(PlayerNumber);
-        
-
-        print(PlayerNumber);*/
-        //print("Current Player in the Room: " + PhotonNetwork.CurrentRoom.PlayerCount);
-
         statusText.text = "Connected to Lobby: " + Lobby_Room_Name.GetComponent<Text>().text;
 
-        if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
+        switch (PhotonNetwork.CurrentRoom.PlayerCount)
         {
-            playerCamera.target = PhotonNetwork.Instantiate("PlayerBlack",
-                new Vector3(
-                    Random.Range(-4, 4),
-                    Random.Range(-4, 4),
-                    0), Quaternion.identity).transform;
+            case 1:
+                SpawnPlayer("PlayerBlack");
+                break;
+            case 2:
+                SpawnPlayer("PlayerBlue");
+                break;
+            case 3:
+                SpawnPlayer("PlayerBrown");
+                break;
+            case 4:
+                SpawnPlayer("PlayerCyan");
+                break;
+            case 5:
+                SpawnPlayer("PlayerGreen");
+                break;
+            case 6:
+                SpawnPlayer("PlayerOrange");
+                break;
+            case 7:
+                SpawnPlayer("PlayerPurple");
+                break;
+            case 8:
+                SpawnPlayer("PlayerRed");
+                break;
+            case 9:
+                SpawnPlayer("PlayerWhite");
+                break;
+            case 10:
+                SpawnPlayer("PlayerYellow");
+                break;
+            default:
+                print("Das darf gar nicht passieren");
+                break;
+        }
+
+        /*if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
+        {
+            SpawnPlayer("PlayerBlack");
 
         }
         else if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
         {
-            playerCamera.target = PhotonNetwork.Instantiate("PlayerBlue",
-                new Vector3(
-                    Random.Range(-4, 4),
-                    Random.Range(-4, 4),
-                    0), Quaternion.identity).transform;
+            SpawnPlayer("PlayerBlue");
+
         }
         else if (PhotonNetwork.CurrentRoom.PlayerCount == 3)
         {
-            playerCamera.target = PhotonNetwork.Instantiate("PlayerBrown",
-                new Vector3(
-                    Random.Range(-4, 4),
-                    Random.Range(-4, 4),
-                    0), Quaternion.identity).transform;
+            SpawnPlayer("PlayerBrown");
+
         }
         else if (PhotonNetwork.CurrentRoom.PlayerCount == 4)
         {
-            playerCamera.target = PhotonNetwork.Instantiate("PlayerCyan",
-                new Vector3(
-                    Random.Range(-4, 4),
-                    Random.Range(-4, 4),
-                    0), Quaternion.identity).transform;
+            SpawnPlayer("PlayerCyan");
+
         }
         else if (PhotonNetwork.CurrentRoom.PlayerCount == 5)
         {
-            playerCamera.target = PhotonNetwork.Instantiate("PlayerGreen",
-                new Vector3(
-                    Random.Range(-4, 4),
-                    Random.Range(-4, 4),
-                    0), Quaternion.identity).transform;
+            SpawnPlayer("PlayerGreen");
+
         }
         else if (PhotonNetwork.CurrentRoom.PlayerCount == 6)
         {
-            playerCamera.target = PhotonNetwork.Instantiate("PlayerOrange",
-                new Vector3(
-                    Random.Range(-4, 4),
-                    Random.Range(-4, 4),
-                    0), Quaternion.identity).transform;
+            SpawnPlayer("PlayerOrange");
+
         }
         else if (PhotonNetwork.CurrentRoom.PlayerCount == 7)
         {
-            playerCamera.target = PhotonNetwork.Instantiate("PlayerPurple",
-                new Vector3(
-                    Random.Range(-4, 4),
-                    Random.Range(-4, 4),
-                    0), Quaternion.identity).transform;
+            SpawnPlayer("PlayerPurple");
+
         }
         else if (PhotonNetwork.CurrentRoom.PlayerCount == 8)
         {
-            playerCamera.target = PhotonNetwork.Instantiate("PlayerRed",
-                new Vector3(
-                    Random.Range(-4, 4),
-                    Random.Range(-4, 4),
-                    0), Quaternion.identity).transform;
+            SpawnPlayer("PlayerRed");
+
         }
         else if (PhotonNetwork.CurrentRoom.PlayerCount == 9)
         {
-            playerCamera.target = PhotonNetwork.Instantiate("PlayerWhite",
-                new Vector3(
-                    Random.Range(-4, 4),
-                    Random.Range(-4, 4),
-                    0), Quaternion.identity).transform;
+            SpawnPlayer("PlayerWhite");
+
         }
         else if (PhotonNetwork.CurrentRoom.PlayerCount == 10)
         {
-            playerCamera.target = PhotonNetwork.Instantiate("PlayerYellow",
-                new Vector3(
-                    Random.Range(-4, 4),
-                    Random.Range(-4, 4),
-                    0), Quaternion.identity).transform;
-        }
+            SpawnPlayer("PlayerYellow");
 
+        }*/
 
         //print("Current Player in the Room: " + PhotonNetwork.CurrentRoom.PlayerCount);
         statusPlayerNumber.text = "("+ PhotonNetwork.CurrentRoom.PlayerCount + "/10)";
