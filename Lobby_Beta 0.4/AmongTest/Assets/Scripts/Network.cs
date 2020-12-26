@@ -9,16 +9,15 @@ using UnityEngine.UI;
 
 public class Network : MonoBehaviourPunCallbacks
 {
-    [SerializeField] private TMP_Text[] playerNameTexts = new TMP_Text[4];
-    [SerializeField] private TMP_Text[] playerReadyTexts = new TMP_Text[4];
-    [SerializeField] private Image[] playerImageContainer = new Image[4];
-    [SerializeField] private Button readyButton;
+    [SerializeField] private TMP_Text[] playerNameTexts = new TMP_Text[10];
+    [SerializeField] private TMP_Text[] playerReadyTexts = new TMP_Text[10];
+    [SerializeField] private Image[] playerImageContainer = new Image[10];
     public Text statusText;
     public CameraFollow playerCamera;
     public string Lobby_Room_Name;
 
     PhotonView photonView;
-    public Text counterPlayerReady;
+    public Text statusPlayerNumber;
 
 
     List<int> PlayerColor = new List<int>();
@@ -70,23 +69,27 @@ public class Network : MonoBehaviourPunCallbacks
     public void Awake()
     {
         Lobby_Room_Name = "LobbyA";
-        playerImageContainer[0].enabled = false;
-        playerImageContainer[1].enabled = false;
-        playerImageContainer[2].enabled = false;
-        playerImageContainer[3].enabled = false;
+        for(int i = 0; i < 10; i++)
+        {
+            playerImageContainer[i].enabled = false;
+        }
     }
 
     [PunRPC]
-    public void RefreshPlayerNumberLogical()
+    public void RefreshPlayerNumberOnJoin()
     {
         statusPlayerNumber.text = "(" + PhotonNetwork.CurrentRoom.PlayerCount + "/10)";
     }
-
+    [PunRPC]
+    public void RefreshPlayerNumberOnLeave()
+    {
+        statusPlayerNumber.text = "(" + (PhotonNetwork.CurrentRoom.PlayerCount-1) + "/10)";
+    }
     [PunRPC]
     public void SyncPlayersTextfiles()
     {
         int i = 0;
-        for (int j = 0; j < 4; j++) 
+        for (int j = 0; j < 10; j++) 
         {
             playerImageContainer[j].enabled = false;
             playerNameTexts[j].SetText("");
@@ -102,10 +105,10 @@ public class Network : MonoBehaviourPunCallbacks
         }
     }
     [PunRPC]
-    public void SyncPlayersLeave()
+    public void SyncPlayersLeave(string playerNickname)
     {
         int i = 0;
-        for (int j = 0; j < 4; j++)
+        for (int j = 0; j < 10; j++)
         {
             playerImageContainer[j].enabled = false;
             playerNameTexts[j].SetText("");
@@ -113,7 +116,7 @@ public class Network : MonoBehaviourPunCallbacks
         }
         foreach (Player player in PhotonNetwork.PlayerList)
         {
-            if (PhotonNetwork.NickName != player.NickName) 
+            if (playerNickname != player.NickName) 
             {                
                 print("ID: " + player.ActorNumber + "\n" + "Nickname: " + player.NickName);
                 playerNameTexts[i].SetText(player.NickName);
@@ -125,14 +128,33 @@ public class Network : MonoBehaviourPunCallbacks
     }
     public void CreateLobby()
     {
+        print("");
+        print("Statistik: " + PhotonNetwork.CountOfPlayersInRooms);
         statusText.text = "Connecting";
         PhotonNetwork.NickName = "Player" + Random.Range(0, 1000);
         
         PhotonNetwork.ConnectUsingSettings();
     }
 
+    //
+    /*public void setPlayerReadyBtn()
+    {
+        if (readyState == false) readyState = true;
+        else if (readyState == true) readyState = false;
+        
+        photonView.RPC("setPlayerReady", RpcTarget.All);
+    }
+    [PunRPC]
+    private void setPlayerReady()
+    {
+        if (readyState == true) intPlayerReady++;
+        else if (readyState == false) intPlayerReady--;
+        //counterPlayerReady.text = "(" + intPlayerReady + "/10)";
+    }*/
+
     public override void OnConnectedToMaster()
     {
+
         // PhotonNetwork.PlayerList is never empty
 
         foreach (Player player in PhotonNetwork.PlayerList)
@@ -146,14 +168,15 @@ public class Network : MonoBehaviourPunCallbacks
     void OnApplicationQuit()
     {
         print("DEBUG: Player left Application");
-        photonView.RPC("SyncPlayersLeave", RpcTarget.All);
+        photonView.RPC("SyncPlayersLeave", RpcTarget.All, PhotonNetwork.NickName.ToString());
         this.SendQuitEvent();
     }
     void SendQuitEvent()
     {
+        photonView.RPC("RefreshPlayerNumberOnLeave", RpcTarget.All);
         // send event, add your code here
         print("DEBUG: 1. SendQuitEvent reinkommen");
-        photonView.RPC("SyncPlayersLeave", RpcTarget.All);
+        //photonView.RPC("SyncPlayersLeave", RpcTarget.All);
         print("DEBUG: 2. SendQuitEvent RPC");
         PhotonNetwork.SendAllOutgoingCommands(); // send it right now
         print("DEBUG: 3. SendQuitEvent SendAllOutgoing");
@@ -164,11 +187,10 @@ public class Network : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-
         Debug.Log("DEBUG: Name of Player: " + PhotonNetwork.NickName);
         statusText.text = "Connected to Lobby: " + Lobby_Room_Name;
         photonView = gameObject.GetComponent<PhotonView>();
-        photonView.RPC("RefreshPlayerNumberLogical", RpcTarget.All);
+        photonView.RPC("RefreshPlayerNumberOnJoin", RpcTarget.All);
         photonView.RPC("SyncPlayersTextfiles", RpcTarget.All);
         //statusPlayerNumber.text = "("+ PhotonNetwork.CurrentRoom.PlayerCount + "/10)";
     }
