@@ -26,9 +26,13 @@ public class Network : MonoBehaviourPunCallbacks
     public Text txtCounterPlayersInRoom;
     public Text txtCurrentRoomName;
     public Text lobbyOrRoom;
+
+    public Text countdown;
     [SerializeField] GameObject GameMapPanel;
     [SerializeField] GameObject LobbyRoomPanel;
     [SerializeField] GameObject StartPanel;
+    [SerializeField] GameObject FadeObject;
+    [SerializeField] GameObject CounterObject;
     //Photon
     [Header("Photon")]
     private TypedLobby customLobby = new TypedLobby("customLobby", LobbyType.Default);
@@ -40,7 +44,9 @@ public class Network : MonoBehaviourPunCallbacks
     List<string> randomColorList;
     private string myPlayerColor;
     int roomMaxPlayerRef;
-    bool canJoin;
+
+    //bool canJoin;
+
 
     private void SpawnPlayer()
     {
@@ -81,7 +87,9 @@ public class Network : MonoBehaviourPunCallbacks
         RandomColor();
         myRoomOptions = new RoomOptions() { MaxPlayers = 2, IsVisible = true, IsOpen = true };
         roomMaxPlayerRef = 2;
-        canJoin = true;
+
+        //canJoin = true;
+
     }
 
     [PunRPC]
@@ -153,6 +161,13 @@ public class Network : MonoBehaviourPunCallbacks
         LobbyRoomPanel.SetActive(false);
         SpawnPlayer();
     }
+
+    [PunRPC]
+    public void startFading()
+    {
+        FadeObject.SetActive(true);
+    }
+
     [PunRPC]
     public void closeRoom()
     {
@@ -248,30 +263,35 @@ public class Network : MonoBehaviourPunCallbacks
         }catch(Exception e) { print("ERROR: " + e); }
 
     }
+
+    void RPCStartgame()
+    {
+        photonView.RPC("startGame", RpcTarget.All);
+    }
+
+    void RPCStartFading()
+    {
+        photonView.RPC("startFading", RpcTarget.All);
+    }
+
+    [PunRPC]
+    public void RPCStartCounter()
+    {
+        CounterObject.SetActive(true);
+    }
+
     //XOF Funktion der Methode unbekannt. Steht in Relation mit Lobbyraum verlassen
     //public void OnPhotonPlayerDisconnected(){}
     public override void OnJoinedRoom()
     {
+
+        
         print("DEBUG: I joined room");
         try { 
-            if (PhotonNetwork.CurrentRoom.PlayerCount == roomMaxPlayerRef)
-            {
-                PhotonNetwork.CurrentRoom.IsOpen = false;
-                //Randomize colors
-                RandomColor();
-                photonView = gameObject.GetComponent<PhotonView>();
-                int i = 0;
-                //setColor over RPC
-                foreach (Player player in PhotonNetwork.PlayerList)
-                {
-                    photonView.RPC("setColor", RpcTarget.All, player.NickName + "-" + randomColorList[i] );
-                    photonView.RPC("setColor", RpcTarget.OthersBuffered, player.NickName + "-" + randomColorList[i] );
-                    i++;
-                }
-                photonView.RPC("startGame", RpcTarget.All);
-            }
+           
             //else if (PhotonNetwork.CurrentRoom.PlayerCount == roomMaxPlayerRef+1) PhotonNetwork.LeaveRoom();
-            else if(PhotonNetwork.CurrentRoom.IsOpen == true)
+            if(PhotonNetwork.CurrentRoom.IsOpen == true)
+
             {
                 txtCurrentRoomName.text = PhotonNetwork.CurrentRoom.Name;
                 print("Name of room: " + PhotonNetwork.CurrentRoom.Name);
@@ -283,6 +303,25 @@ public class Network : MonoBehaviourPunCallbacks
                 photonView.RPC("RefreshPlayerNumberOnJoin", RpcTarget.All);
                 photonView.RPC("RoomPlayerJoin", RpcTarget.All);
                 //txtCounterPlayersInRoom.text = "("+ PhotonNetwork.CurrentRoom.PlayerCount + "/10)";
+                if (PhotonNetwork.CurrentRoom.PlayerCount == roomMaxPlayerRef)
+                {
+                    PhotonNetwork.CurrentRoom.IsOpen = false;
+                    //Randomize colors
+                    RandomColor();
+                    photonView = gameObject.GetComponent<PhotonView>();
+                    int i = 0;
+                    //setColor over RPC
+                    foreach (Player player in PhotonNetwork.PlayerList)
+                    {
+                        photonView.RPC("setColor", RpcTarget.All, player.NickName + "-" + randomColorList[i]);
+                        photonView.RPC("setColor", RpcTarget.OthersBuffered, player.NickName + "-" + randomColorList[i]);
+                        i++;
+                    }
+                    photonView.RPC("RPCStartCounter", RpcTarget.All);
+                    Invoke("RPCStartFading", 8);
+                    Invoke("RPCStartgame", 10);
+                }
+
             }
             else { print("ERROR: Joining Room failed"); }
             
