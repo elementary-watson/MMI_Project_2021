@@ -26,14 +26,13 @@ public class Network : MonoBehaviourPunCallbacks
     public Text txtCounterPlayersInRoom;
     public Text txtCurrentRoomName;
     public Text lobbyOrRoom;
+
     public Text countdown;
     [SerializeField] GameObject GameMapPanel;
     [SerializeField] GameObject LobbyRoomPanel;
     [SerializeField] GameObject StartPanel;
     [SerializeField] GameObject FadeObject;
     [SerializeField] GameObject CounterObject;
-
-
     //Photon
     [Header("Photon")]
     private TypedLobby customLobby = new TypedLobby("customLobby", LobbyType.Default);
@@ -45,7 +44,9 @@ public class Network : MonoBehaviourPunCallbacks
     List<string> randomColorList;
     private string myPlayerColor;
     int roomMaxPlayerRef;
+
     //bool canJoin;
+
 
     private void SpawnPlayer()
     {
@@ -86,7 +87,9 @@ public class Network : MonoBehaviourPunCallbacks
         RandomColor();
         myRoomOptions = new RoomOptions() { MaxPlayers = 2, IsVisible = true, IsOpen = true };
         roomMaxPlayerRef = 2;
+
         //canJoin = true;
+
     }
 
     [PunRPC]
@@ -281,12 +284,14 @@ public class Network : MonoBehaviourPunCallbacks
     //public void OnPhotonPlayerDisconnected(){}
     public override void OnJoinedRoom()
     {
+
         
         print("DEBUG: I joined room");
         try { 
            
             //else if (PhotonNetwork.CurrentRoom.PlayerCount == roomMaxPlayerRef+1) PhotonNetwork.LeaveRoom();
             if(PhotonNetwork.CurrentRoom.IsOpen == true)
+
             {
                 txtCurrentRoomName.text = PhotonNetwork.CurrentRoom.Name;
                 print("Name of room: " + PhotonNetwork.CurrentRoom.Name);
@@ -294,12 +299,10 @@ public class Network : MonoBehaviourPunCallbacks
                 print("Alle RaumStatistiken PlayerInRooms: " + PhotonNetwork.CountOfPlayersInRooms);
                 Debug.Log("DEBUG: (InRoom) Name of Player: " + PhotonNetwork.NickName);
                 statusText.text = "Connected to Lobby: " + lobby_Room_Name;
-
                 photonView = gameObject.GetComponent<PhotonView>();
                 photonView.RPC("RefreshPlayerNumberOnJoin", RpcTarget.All);
                 photonView.RPC("RoomPlayerJoin", RpcTarget.All);
                 //txtCounterPlayersInRoom.text = "("+ PhotonNetwork.CurrentRoom.PlayerCount + "/10)";
-
                 if (PhotonNetwork.CurrentRoom.PlayerCount == roomMaxPlayerRef)
                 {
                     PhotonNetwork.CurrentRoom.IsOpen = false;
