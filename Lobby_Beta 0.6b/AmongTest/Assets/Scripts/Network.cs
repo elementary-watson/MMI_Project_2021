@@ -33,7 +33,6 @@ public class Network : MonoBehaviourPunCallbacks
     [SerializeField] GameObject FadeObject;
     [SerializeField] GameObject CounterObject;
 
-
     //Photon
     [Header("Photon")]
     private TypedLobby customLobby = new TypedLobby("customLobby", LobbyType.Default);
@@ -43,13 +42,14 @@ public class Network : MonoBehaviourPunCallbacks
     int lobbySwitch;
     //game logic
     List<string> randomColorList;
-    private string myPlayerColor;
+    private string myPlayerColorPrefab;
+    private string myPlayerColorFilename;
     int roomMaxPlayerRef;
     //bool canJoin;
 
     private void SpawnPlayer()
     {
-        playerCamera.target = PhotonNetwork.Instantiate(myPlayerColor,
+        playerCamera.target = PhotonNetwork.Instantiate(myPlayerColorPrefab,
                  new Vector3(
                      UnityEngine.Random.Range(-4, 4),
                      UnityEngine.Random.Range(-4, 4),
@@ -88,7 +88,19 @@ public class Network : MonoBehaviourPunCallbacks
         roomMaxPlayerRef = 2;
         //canJoin = true;
     }
-
+    
+    #region Chatfunctions
+    public int getActorId()
+    {
+        return PhotonNetwork.LocalPlayer.ActorNumber;
+    } 
+    public string getPlayerColor()
+    {
+        return myPlayerColorFilename;
+    }
+    #endregion
+    
+    #region RPC
     [PunRPC]
     public void RefreshPlayerNumberOnJoin()
     {
@@ -146,15 +158,27 @@ public class Network : MonoBehaviourPunCallbacks
         String[] parts = idAndColor.Split('-');
             if (idAndColor.Contains(PhotonNetwork.NickName))
             {
-                myPlayerColor = parts[1];
+                myPlayerColorPrefab = parts[1];
             }
-        
+        List<string> colorFileList = new List<string> { "Black_Char", "Blue_Char", "Brown_Char", "Cyan_Char", "Green_Char", "Orange_Char", "Purple_Char", "Red_Char", "White_Char", "Yellow_Char" };
+        string temp = "";
+        if (myPlayerColorPrefab != null)
+            temp = myPlayerColorPrefab.Remove(0, 6);
+        int i = 0;
+        foreach (string item in colorFileList)
+        {
+            if (item.Contains(temp))
+            {
+                myPlayerColorFilename = colorFileList[i];
+            }
+            i++;
+        }
         //PhotonNetwork.NickName;
     }
     [PunRPC]
     public void startGame()
     {
-        GameMapPanel.SetActive(true);
+        //GameMapPanel.SetActive(true);
         LobbyRoomPanel.SetActive(false);
         SpawnPlayer();
     }
@@ -170,6 +194,8 @@ public class Network : MonoBehaviourPunCallbacks
     {
 
     }
+
+    #endregion
     /*public void setPlayerReadyBtn()
     {
         if (readyState == false) readyState = true;

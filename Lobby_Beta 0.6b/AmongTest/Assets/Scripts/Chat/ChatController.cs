@@ -17,6 +17,7 @@ public class ChatController : MonoBehaviour, IChatClientListener
     [SerializeField] private Transform content;
     [SerializeField] private ScrollRect scrollRect;
     [SerializeField] private GameObject chatListing;
+    [SerializeField] private Network network;
 
     [Header("Photon Chat Logic")]
     private ChatClient chatClient;
@@ -26,15 +27,15 @@ public class ChatController : MonoBehaviour, IChatClientListener
         chatClient = new ChatClient(this);
         print("CHAT: chatClient created");
         ConnectToPhotonChat();
-        
     }
-
     // Update is called once per frame
     void Update()
     {
         chatClient.Service();
-        if (Input.GetKeyUp(KeyCode.Return)) { btnSendMessage(); }
+       
     }
+
+
     //Eigene Methoden 
     #region Eigene Methode
     private void ConnectToPhotonChat()
@@ -53,7 +54,7 @@ public class ChatController : MonoBehaviour, IChatClientListener
 
     public void btnSendMessage()
     {
-       // print("Current Actor id: " + Network.getActorId()); XOF
+        print("Current Actor id: " + network.getActorId());
         var tempUInput = tmp_userInput.GetComponent<TMP_InputField>();
         string userInputText = tempUInput.text;
         chatClient.PublishMessage("channelA", userInputText);
@@ -87,20 +88,16 @@ public class ChatController : MonoBehaviour, IChatClientListener
             }
             if (currentItem.name.Equals("r_img_player"))
             {
-                /* Network network = new Network(); XOF
                  string color = network.getPlayerColor();
                  if (color == null) color = "Red_Char";
-                 else 
-                 { 
-                     network.getPlayerColor();
-                 }
-                 print("Player-Color: " + color);
+
+                 print("CHAT Player-Color: " + color);
 
                  Texture2D texture2D = new Texture2D(92, 92);
                  string filename = "PlayerColor_PNG/" + color;
                  //byte[] bytes = File.ReadAllBytes(Path.Combine(Application.persistentDataPath, filename));
                  texture2D = Resources.Load<Texture2D>(filename);
-                 chatElement.transform.GetChild(i).GetComponent<RawImage>().texture = texture2D;//= msg;*/
+                 chatElement.transform.GetChild(i).GetComponent<RawImage>().texture = texture2D;//= msg;
             }
         }
     }
