@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ChatTrigger : MonoBehaviour
 {
-    [SerializeField] private GameObject startChatElement;
-    [SerializeField] private GameObject chatWindow;
+    [SerializeField] private GameObject circleTriggerElement;
+    [SerializeField] private Network networkReference;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,7 +14,7 @@ public class ChatTrigger : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log("Hello");
-        chatWindow.SetActive(true);
+        networkReference.callChatWindowRPC();
     }
     // Update is called once per frame
     void Update()
@@ -29,7 +29,7 @@ public class ChatTrigger : MonoBehaviour
                 chatWindow.SetActive(true);
             };
         }*/
-        if (Input.touchCount > 0)
+        /*if (Input.touchCount > 0)
         {
             Vector3 wp = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
             if (GetComponent<Collider2D>().OverlapPoint(wp))
@@ -37,6 +37,6 @@ public class ChatTrigger : MonoBehaviour
                 //your code
                 Debug.Log("Hello");
             }
-        }
+        }*/
     }
 }

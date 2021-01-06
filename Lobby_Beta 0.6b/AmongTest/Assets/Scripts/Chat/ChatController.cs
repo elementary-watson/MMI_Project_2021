@@ -12,7 +12,6 @@ using System.IO;
 public class ChatController : MonoBehaviour, IChatClientListener
 {
     [Header("Chat Interface")]
-    [SerializeField] private string nickName;
     [SerializeField] public TMP_InputField tmp_userInput;
     [SerializeField] private Transform content;
     [SerializeField] private ScrollRect scrollRect;
@@ -21,6 +20,10 @@ public class ChatController : MonoBehaviour, IChatClientListener
 
     [Header("Photon Chat Logic")]
     private ChatClient chatClient;
+
+    //ingame logic
+    private string nickName;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,21 +35,21 @@ public class ChatController : MonoBehaviour, IChatClientListener
     void Update()
     {
         chatClient.Service();
-       
+        if (Input.GetKeyUp(KeyCode.Return)) btnSendMessage();
     }
-
 
     //Eigene Methoden 
     #region Eigene Methode
     private void ConnectToPhotonChat()
     {
-        print("CHAT: Connect to Photonchat startet:");        
-        nickName = "TestName";
+        print("CHAT: Connect to Photonchat startet:");
+        nickName = network.getPlayerColor();
         chatClient.AuthValues = new Photon.Chat.AuthenticationValues(nickName);
         ChatAppSettings chatSettings = PhotonNetwork.PhotonServerSettings.AppSettings.GetChatSettings();
         chatClient.ConnectUsingSettings(chatSettings);
         print("CHAT: Connect Methode wurde ausgeführt");
     }
+
     public void SendeDirectMessage(string recipients, string message)
     {
         chatClient.SendPrivateMessage(recipients, message);
@@ -88,16 +91,16 @@ public class ChatController : MonoBehaviour, IChatClientListener
             }
             if (currentItem.name.Equals("r_img_player"))
             {
-                 string color = network.getPlayerColor();
-                 if (color == null) color = "Red_Char";
+                string color = network.getPlayerColor();
+                if (color == null) color = "Red_Char";
 
-                 print("CHAT Player-Color: " + color);
+                print("CHAT Player-Color: " + color);
+                Texture2D texture2D = new Texture2D(92, 92);                
+                string filename = "Player Color/" + senders[0];
 
-                 Texture2D texture2D = new Texture2D(92, 92);
-                 string filename = "PlayerColor_PNG/" + color;
-                 //byte[] bytes = File.ReadAllBytes(Path.Combine(Application.persistentDataPath, filename));
-                 texture2D = Resources.Load<Texture2D>(filename);
-                 chatElement.transform.GetChild(i).GetComponent<RawImage>().texture = texture2D;//= msg;
+                //byte[] bytes = File.ReadAllBytes(Path.Combine(Application.persistentDataPath, filename));
+                texture2D = Resources.Load<Texture2D>(filename);
+                chatElement.transform.GetChild(i).GetComponent<RawImage>().texture = texture2D;//= msg;
             }
         }
     }

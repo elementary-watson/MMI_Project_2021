@@ -34,13 +34,16 @@ public class Network : MonoBehaviourPunCallbacks
     [SerializeField] GameObject CounterObject;
 
     //Photon
+    [Header("Photon Chat")]
+    [SerializeField] private GameObject chatWindow;
+
     [Header("Photon")]
     private TypedLobby customLobby = new TypedLobby("customLobby", LobbyType.Default);
     private Dictionary<string, RoomInfo> cachedRoomList = new Dictionary<string, RoomInfo>();
     public string lobby_Room_Name;
     PhotonView photonView;
     int lobbySwitch;
-    //game logic
+    // intern game logic
     List<string> randomColorList;
     private string myPlayerColorPrefab;
     private string myPlayerColorFilename;
@@ -98,8 +101,19 @@ public class Network : MonoBehaviourPunCallbacks
     {
         return myPlayerColorFilename;
     }
+    public void callChatWindowRPC()
+    {
+        try {
+            print("i was called");
+            photonView.RPC("openChatWindow", RpcTarget.All);
+        }
+        catch (Exception e) 
+        {
+            print("Exception: " + e);
+        }
+    }
     #endregion
-    
+
     #region RPC
     [PunRPC]
     public void RefreshPlayerNumberOnJoin()
@@ -194,7 +208,11 @@ public class Network : MonoBehaviourPunCallbacks
     {
 
     }
-
+    [PunRPC]
+    public void openChatWindow()
+    {
+        chatWindow.SetActive(true);
+    }
     #endregion
     /*public void setPlayerReadyBtn()
     {
@@ -331,7 +349,7 @@ public class Network : MonoBehaviourPunCallbacks
                     PhotonNetwork.CurrentRoom.IsOpen = false;
                     //Randomize colors
                     RandomColor();
-                    photonView = gameObject.GetComponent<PhotonView>();
+                    //photonView = gameObject.GetComponent<PhotonView>();
                     int i = 0;
                     //setColor over RPC
                     foreach (Player player in PhotonNetwork.PlayerList)
