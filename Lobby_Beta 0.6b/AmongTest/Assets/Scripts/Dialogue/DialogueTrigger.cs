@@ -8,8 +8,9 @@ public class DialogueTrigger : MonoBehaviour
     public void setTutorial()
     {
         List<string> tutorialList = new List<string>();
-        tutorialList.Add("Hi");
+        tutorialList.Add("Hallo Mitspieler.");
         tutorialList.Add("This is a turorial.");
+        tutorialList.Add("You have to win!.");
         tutorialList.Add("Thank you, have fun!");
         string[] str = tutorialList.ToArray();
 
