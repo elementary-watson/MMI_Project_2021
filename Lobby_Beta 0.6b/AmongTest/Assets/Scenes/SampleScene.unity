@@ -2672,7 +2672,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &529203483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2800,7 +2800,7 @@ MonoBehaviour:
   txtCurrentRoomName: {fileID: 1497422891}
   lobbyOrRoom: {fileID: 0}
   countdown: {fileID: 180792950}
-  GameMapPanel: {fileID: 529203482}
+  GameMapPanel: {fileID: 786270577}
   LobbyRoomPanel: {fileID: 51137739}
   StartPanel: {fileID: 611667401}
   FadeObject: {fileID: 885737539}
@@ -3039,7 +3039,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &611667402
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4494,97 +4494,7 @@ CompositeCollider2D:
   m_GeometryType: 0
   m_GenerationType: 0
   m_EdgeRadius: 0
-  m_ColliderPaths:
-  - m_Collider: {fileID: 885287665}
-    m_ColliderPaths:
-    - - X: -260000000
-        Y: 160000000
-      - X: 250000000
-        Y: 160000000
-      - X: 250000000
-        Y: -170000000
-      - X: 260000000
-        Y: -170000000
-      - X: 260000000
-        Y: 170000000
-      - X: -270000000
-        Y: 170000000
-      - X: -270000000
-        Y: -170000000
-      - X: -260000000
-        Y: -170000000
-    - - X: 220000000
-        Y: 130000000
-      - X: 10000000
-        Y: 130000000
-      - X: 10000000
-        Y: 50000000
-      - X: 90000000
-        Y: 50000000
-      - X: 90000000
-        Y: 20000000
-      - X: 220000000
-        Y: 20000000
-    - - X: -90000000
-        Y: 50000000
-      - X: -20000000
-        Y: 50000000
-      - X: -20000000
-        Y: 130000000
-      - X: -230000000
-        Y: 130000000
-      - X: -230000000
-        Y: 20000000
-      - X: -90000000
-        Y: 20000000
-    - - X: -10000000
-        Y: -50000000
-      - X: -90000000
-        Y: -50000000
-      - X: -90000000
-        Y: -60000000
-      - X: -100000000
-        Y: -60000000
-      - X: -100000000
-        Y: -50000000
-      - X: -90000000
-        Y: -50000000
-      - X: -90000000
-        Y: -10000000
-      - X: -230000000
-        Y: -10000000
-      - X: -230000000
-        Y: -140000000
-      - X: -10000000
-        Y: -140000000
-    - - X: 220000000
-        Y: -10000000
-      - X: 90000000
-        Y: -10000000
-      - X: 90000000
-        Y: -50000000
-      - X: 100000000
-        Y: -50000000
-      - X: 100000000
-        Y: -60000000
-      - X: 90000000
-        Y: -60000000
-      - X: 90000000
-        Y: -50000000
-      - X: 20000000
-        Y: -50000000
-      - X: 20000000
-        Y: -140000000
-      - X: 220000000
-        Y: -140000000
-    - - X: 250000000
-        Y: -170000000
-      - X: -260000000
-        Y: -170000000
-      - X: -260000000
-        Y: -180000000
-      - X: 250000000
-        Y: -180000000
+  m_ColliderPaths: []
   m_CompositePaths:
     m_Paths:
     - - {x: -26.000029, y: -17}
@@ -14684,7 +14594,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loadingPanel: {fileID: 1912882541}
-  PanelMap: {fileID: 529203482}
+  PanelMap: {fileID: 786270577}
   progressBar: {fileID: 760595870}
   fadeOverlay: {fileID: 777425642}
   animImage: {fileID: 953421572}
