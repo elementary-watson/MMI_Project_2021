@@ -72,7 +72,6 @@ public class Network : MonoBehaviourPunCallbacks
             RandomColorList[i] = RandomColorList[r];
             RandomColorList[r] = tmp;
         }
-
         this.randomColorList = RandomColorList;
     }
 
@@ -87,8 +86,8 @@ public class Network : MonoBehaviourPunCallbacks
             playerReadyTexts[i].text = "";
         }
         RandomColor();
-        myRoomOptions = new RoomOptions() { MaxPlayers = 4, IsVisible = true, IsOpen = true };
-        roomMaxPlayerRef = 4;
+        myRoomOptions = new RoomOptions() { MaxPlayers = 2, IsVisible = true, IsOpen = true };
+        roomMaxPlayerRef = 2;
         //canJoin = true;
     }
     

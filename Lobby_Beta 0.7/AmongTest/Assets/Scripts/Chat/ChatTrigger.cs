@@ -13,13 +13,20 @@ public class ChatTrigger : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Hello");
-        networkReference.callChatWindowRPC();
+        //print("Name of Object" + circleTriggerElement.gameObject.name);
+        if (collision.gameObject.tag.Contains("player_all"))
+        {
+            Debug.Log("Task 00");
+            //networkReference.callChatWindowRPC();
+        }
+        if(collision.gameObject.name == "normalTask_01_A")
+        {
+            Debug.Log("Task 01");
+        }
     }
     // Update is called once per frame
     void Update()
     {
-
         /*if (Input.touchCount == 1)
         {
             Vector3 wp = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
