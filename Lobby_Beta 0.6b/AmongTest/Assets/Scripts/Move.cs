@@ -29,7 +29,7 @@ public class Move : Photon.Pun.MonoBehaviourPun
     {
         if (photonView.IsMine)
         {
-            rb.MovePosition(rb.position + velocity * speed * Time.fixedDeltaTime);
+            rb.MovePosition(rb.position + velocity * (speed/2) * Time.fixedDeltaTime);
         }
     }
 
