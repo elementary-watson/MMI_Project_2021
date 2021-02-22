@@ -1,0 +1,836 @@
+fileFormatVersion: 2
+guid: 6d9eb34573d73ff48bc69323541f34f9
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6360052155947565061
+    second: Charakter_Rot_0
+  - first:
+      213: 3659165900714774390
+    second: Charakter_Rot_1
+  - first:
+      213: -5657203899537252499
+    second: Charakter_Rot_2
+  - first:
+      213: 2536242158563619010
+    second: Charakter_Rot_3
+  - first:
+      213: -3503961518891784945
+    second: Charakter_Rot_4
+  - first:
+      213: 434386004213658782
+    second: Charakter_Rot_5
+  - first:
+      213: -8420741809729944716
+    second: Charakter_Rot_6
+  - first:
+      213: -5148823161409476766
+    second: Charakter_Rot_7
+  - first:
+      213: -660720311416218794
+    second: Charakter_Rot_8
+  - first:
+      213: 5676624825339409752
+    second: Charakter_Rot_9
+  - first:
+      213: -5610135974920194754
+    second: Charakter_Rot_10
+  - first:
+      213: 6478362478958757803
+    second: Charakter_Rot_11
+  - first:
+      213: 3364107316055100494
+    second: Charakter_Rot_12
+  - first:
+      213: 8268476454592816730
+    second: Charakter_Rot_13
+  - first:
+      213: 6195578466726825881
+    second: Charakter_Rot_14
+  - first:
+      213: -285735640403035440
+    second: Charakter_Rot_15
+  - first:
+      213: 4571560094737178339
+    second: Charakter_Rot_16
+  - first:
+      213: 2825131386762706987
+    second: Charakter_Rot_17
+  - first:
+      213: -6795344455598687103
+    second: Charakter_Rot_18
+  - first:
+      213: -4089906221005917215
+    second: Charakter_Rot_19
+  - first:
+      213: -6613183786375055457
+    second: Charakter_Rot_20
+  - first:
+      213: -8061717945234423368
+    second: Charakter_Rot_21
+  - first:
+      213: -4917147792627717731
+    second: Charakter_Rot_22
+  - first:
+      213: -5508846493754805168
+    second: Charakter_Rot_23
+  - first:
+      213: -4831896271164990009
+    second: Charakter_Rot_24
+  - first:
+      213: 5875247277254903167
+    second: Charakter_Rot_25
+  - first:
+      213: -6043261774554753632
+    second: Charakter_Rot_26
+  - first:
+      213: 6770227250856453371
+    second: Charakter_Rot_27
+  - first:
+      213: -6731592520636875248
+    second: Charakter_Rot_28
+  - first:
+      213: -547881521340188902
+    second: Charakter_Rot_29
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Charakter_Rot_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 600
+        width: 360
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 50046342db1734850800000000000000
+      internalID: 6360052155947565061
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charakter_Rot_1
+      rect:
+        serializedVersion: 2
+        x: 360
+        y: 600
+        width: 360
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67f8356eff7f7c230800000000000000
+      internalID: 3659165900714774390
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charakter_Rot_2
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 600
+        width: 360
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d6f902ac6039d71b0800000000000000
+      internalID: -5657203899537252499
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charakter_Rot_3
+      rect:
+        serializedVersion: 2
+        x: 1080
+        y: 600
+        width: 360
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c0fd8d3eca823320800000000000000
+      internalID: 2536242158563619010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charakter_Rot_4
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 600
+        width: 360
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0521d7309d6f5fc0800000000000000
+      internalID: -3503961518891784945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charakter_Rot_5
+      rect:
+        serializedVersion: 2
+        x: 1800
+        y: 600
+        width: 360
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e947e84f4cf370600800000000000000
+      internalID: 434386004213658782
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charakter_Rot_6
+      rect:
+        serializedVersion: 2
+        x: 2160
+        y: 600
+        width: 360
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 47344c560f3832b80800000000000000
+      internalID: -8420741809729944716
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charakter_Rot_7
+      rect:
+        serializedVersion: 2
+        x: 2520
+        y: 600
+        width: 360
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26762e44d94bb88b0800000000000000
+      internalID: -5148823161409476766
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charakter_Rot_8
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 600
+        width: 360
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 65b962e9066a4d6f0800000000000000
+      internalID: -660720311416218794
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charakter_Rot_9
+      rect:
+        serializedVersion: 2
+        x: 3240
+        y: 600
+        width: 360
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 855f48dd33c67ce40800000000000000
+      internalID: 5676624825339409752
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charakter_Rot_10
+      rect:
+        serializedVersion: 2
+        x: 3600
+        y: 600
+        width: 360
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e35fd39fd0bc422b0800000000000000
+      internalID: -5610135974920194754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charakter_Rot_11
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 300
+        width: 360
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba74e8cc954c7e950800000000000000
+      internalID: 6478362478958757803
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charakter_Rot_12
+      rect:
+        serializedVersion: 2
+        x: 360
+        y: 300
+        width: 360
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e4cc1c7b7c5bfae20800000000000000
+      internalID: 3364107316055100494
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charakter_Rot_13
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 300
+        width: 360
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a56afa5f6878fb270800000000000000
+      internalID: 8268476454592816730
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charakter_Rot_14
+      rect:
+        serializedVersion: 2
+        x: 1080
+        y: 300
+        width: 360
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99fcf473acd1bf550800000000000000
+      internalID: 6195578466726825881
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charakter_Rot_15
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 300
+        width: 360
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0dabb1ee2fcd80cf0800000000000000
+      internalID: -285735640403035440
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charakter_Rot_16
+      rect:
+        serializedVersion: 2
+        x: 1800
+        y: 300
+        width: 360
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ee192c5fa1717f30800000000000000
+      internalID: 4571560094737178339
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charakter_Rot_17
+      rect:
+        serializedVersion: 2
+        x: 2160
+        y: 300
+        width: 360
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b204ccf2702e43720800000000000000
+      internalID: 2825131386762706987
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charakter_Rot_18
+      rect:
+        serializedVersion: 2
+        x: 2520
+        y: 300
+        width: 360
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 18cbe9d883612b1a0800000000000000
+      internalID: -6795344455598687103
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charakter_Rot_19
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 300
+        width: 360
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1e3384416fbbd37c0800000000000000
+      internalID: -4089906221005917215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charakter_Rot_20
+      rect:
+        serializedVersion: 2
+        x: 3240
+        y: 300
+        width: 360
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f97fdba62604934a0800000000000000
+      internalID: -6613183786375055457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charakter_Rot_21
+      rect:
+        serializedVersion: 2
+        x: 3600
+        y: 300
+        width: 360
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b109eadd360f1090800000000000000
+      internalID: -8061717945234423368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charakter_Rot_22
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 360
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9924508228c2cbb0800000000000000
+      internalID: -4917147792627717731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charakter_Rot_23
+      rect:
+        serializedVersion: 2
+        x: 360
+        y: 0
+        width: 360
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 054b6911d45ac83b0800000000000000
+      internalID: -5508846493754805168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charakter_Rot_24
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 0
+        width: 360
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7cd1dad11f7a1fcb0800000000000000
+      internalID: -4831896271164990009
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charakter_Rot_25
+      rect:
+        serializedVersion: 2
+        x: 1080
+        y: 0
+        width: 360
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f750c503542198150800000000000000
+      internalID: 5875247277254903167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charakter_Rot_26
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 0
+        width: 360
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a597f24f65022ca0800000000000000
+      internalID: -6043261774554753632
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charakter_Rot_27
+      rect:
+        serializedVersion: 2
+        x: 1800
+        y: 0
+        width: 360
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf4e7ff70dda4fd50800000000000000
+      internalID: 6770227250856453371
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charakter_Rot_28
+      rect:
+        serializedVersion: 2
+        x: 2160
+        y: 0
+        width: 360
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 01e33ca94449492a0800000000000000
+      internalID: -6731592520636875248
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charakter_Rot_29
+      rect:
+        serializedVersion: 2
+        x: 2520
+        y: 0
+        width: 360
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a17748db8a88568f0800000000000000
+      internalID: -547881521340188902
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
