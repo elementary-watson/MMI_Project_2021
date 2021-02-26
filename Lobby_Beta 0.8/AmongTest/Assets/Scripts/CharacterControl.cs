@@ -43,7 +43,7 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
             interactIcon = GameObject.Find("test");//GetComponentInParent<GameObject>();
             if(interactIcon != null)
             {
-                interactIcon.SetActive(false);
+                interactIcon.transform.position = new Vector2(792,-9999);
                 print("FUUUUCKCKCKCK Print: " + interactIcon.GetComponentInChildren<Text>().text);
             }
             
@@ -78,7 +78,8 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
     {
         if (photonView.IsMine)
         {
-            interactIcon.SetActive(true);
+            //interactIcon.SetActive(true);
+            interactIcon.transform.position = new Vector2(792, -398);
             //image_interactable_controll.
         }
 
@@ -87,7 +88,8 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
     {
         if (photonView.IsMine)
         {
-            interactIcon.SetActive(false);
+            interactIcon.transform.position = new Vector2(792, -9999);
+            //interactIcon.SetActive(false);
         }
     }
     public void CheckInteraction()

@@ -5701,12 +5701,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 43264fc454cfa81429cbfff43322bf9f, type: 3}
---- !u!1 &363609217 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1286413562320511051, guid: 43264fc454cfa81429cbfff43322bf9f,
-    type: 3}
-  m_PrefabInstance: {fileID: 363609216}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &366072591
 GameObject:
   m_ObjectHideFlags: 0
@@ -6198,12 +6192,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 444656579}
   m_CullTransparentMesh: 0
---- !u!1 &456124373 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6757678766059194138, guid: ac05ced2c1c6b9946a77ef5c48cce104,
-    type: 3}
-  m_PrefabInstance: {fileID: 1630159937}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &502979334
 GameObject:
   m_ObjectHideFlags: 0
@@ -6683,7 +6671,6 @@ MonoBehaviour:
   txtCurrentRoomName: {fileID: 1497422891}
   lobbyOrRoom: {fileID: 0}
   countdown: {fileID: 180792950}
-  GameMapPanel: {fileID: 456124373}
   LobbyRoomPanel: {fileID: 51137739}
   StartPanel: {fileID: 611667401}
   FadeObject: {fileID: 885737539}
@@ -8983,7 +8970,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loadingPanel: {fileID: 1912882541}
-  PanelMap: {fileID: 363609217}
+  PanelMap: {fileID: 3780030305566217193}
   progressBar: {fileID: 760595870}
   fadeOverlay: {fileID: 777425642}
   animImage: {fileID: 953421572}
@@ -9333,7 +9320,7 @@ Sprite:
         format: 0
         dimension: 0
       m_DataSize: 80
-      _typelessdata: 000000bf0000003f000000000000003f0000003f00000000000000bf000000bf000000000000003f000000bf000000000000000000000000000000000000000000000000000000000000000000000000
+      _typelessdata: 000000bf0000003f000000000000003f0000003f00000000000000bf000000bf000000000000003f000000bf00000000000000000000803f0000803f0000803f00000000000000000000803f00000000
     m_Bindpose: []
     textureRect:
       serializedVersion: 2
@@ -10486,7 +10473,7 @@ Sprite:
         format: 0
         dimension: 0
       m_DataSize: 80
-      _typelessdata: 000000bf0000003f000000000000003f0000003f00000000000000bf000000bf000000000000003f000000bf000000000000000000000000000000000000000000000000000000000000000000000000
+      _typelessdata: 000000bf0000003f000000000000003f0000003f00000000000000bf000000bf000000000000003f000000bf00000000000000000000803f0000803f0000803f00000000000000000000803f00000000
     m_Bindpose: []
     textureRect:
       serializedVersion: 2
@@ -12612,7 +12599,7 @@ Sprite:
         format: 0
         dimension: 0
       m_DataSize: 80
-      _typelessdata: 000000bf0000003f000000000000003f0000003f00000000000000bf000000bf000000000000003f000000bf000000000000000000000000000000000000000000000000000000000000000000000000
+      _typelessdata: 000000bf0000003f000000000000003f0000003f00000000000000bf000000bf000000000000003f000000bf00000000000000000000803f0000803f0000803f00000000000000000000803f00000000
     m_Bindpose: []
     textureRect:
       serializedVersion: 2
@@ -143694,7 +143681,6 @@ GameObject:
   - component: {fileID: 3780030305566217196}
   - component: {fileID: 3780030305566217195}
   - component: {fileID: 3780030305566217194}
-  - component: {fileID: 3780030305566217197}
   m_Layer: 5
   m_Name: Panel_Map_Final Testground
   m_TagString: Untagged
@@ -143760,18 +143746,6 @@ RectTransform:
   m_AnchoredPosition: {x: 960, y: 540}
   m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &3780030305566217197
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3780030305566217193}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 260121bd23f72eb468f914e5b9d998b8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &3780030305933366309
 GameObject:
   m_ObjectHideFlags: 0
