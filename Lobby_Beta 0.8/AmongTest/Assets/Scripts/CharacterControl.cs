@@ -46,10 +46,10 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
                 interactIcon.transform.position = new Vector2(792,-9999);
                 print("FUUUUCKCKCKCK Print: " + interactIcon.GetComponentInChildren<Text>().text);
             }
-            
-            
-            //canvasreference.SetActive(false);
-            //interactIcon.SetActive(false);
+            else
+            {
+                print("DEBUG: InteractIcon not set yet");
+            }
             anim = GetComponent<Animator>();
             //Instantiate(interactIcon, new Vector2(792,-398), Quaternion.identity, GameObject.FindGameObjectWithTag("Respawn").transform);
             //GameObject temp =  temp.transform.SetParent(GameObject.FindGameObjectWithTag("Respawn").transform, false);
@@ -79,7 +79,7 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
         if (photonView.IsMine)
         {
             //interactIcon.SetActive(true);
-            interactIcon.transform.position = new Vector2(792, -398);
+            interactIcon.transform.position = new Vector2(1650, 10);
             //image_interactable_controll.
         }
 

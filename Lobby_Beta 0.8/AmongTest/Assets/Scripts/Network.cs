@@ -67,6 +67,7 @@ public class Network : MonoBehaviourPunCallbacks
         //useindicator = spawn.
         //spawn;
         playerCamera.target = spawn.transform;
+        //useindicator.transform.position = new Vector2(999, -999);
     }
 
     private void RandomColor()
