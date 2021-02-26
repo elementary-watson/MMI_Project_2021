@@ -8,6 +8,8 @@ TagManager:
   - nTask01_RoomA
   - nTask00_RoomA
   - player_all
+  - iconinteraction
+  - test
   layers:
   - Default
   - TransparentFX

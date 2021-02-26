@@ -27,11 +27,12 @@ public class Network : MonoBehaviourPunCallbacks
     public Text txtCurrentRoomName;
     public Text lobbyOrRoom;
     public Text countdown;
-    [SerializeField] GameObject GameMapPanel;
+    //[SerializeField] GameObject GameMapPanel;
     [SerializeField] GameObject LobbyRoomPanel;
     [SerializeField] GameObject StartPanel;
     [SerializeField] GameObject FadeObject;
     [SerializeField] GameObject CounterObject;
+    public GameObject useindicator;
 
     //Photon
     [Header("Photon Chat")]
@@ -52,16 +53,26 @@ public class Network : MonoBehaviourPunCallbacks
 
     private void SpawnPlayer()
     {
-        playerCamera.target = PhotonNetwork.Instantiate(myPlayerColorPrefab,
+        /*playerCamera.target = PhotonNetwork.Instantiate(myPlayerColorPrefab,
                  new Vector3(
                      UnityEngine.Random.Range(-4, 4),
                      UnityEngine.Random.Range(-4, 4),
-                     0), Quaternion.identity).transform;
+                     0), Quaternion.identity).transform; */
+        GameObject spawn = PhotonNetwork.Instantiate(myPlayerColorPrefab, new Vector3(
+            UnityEngine.Random.Range(-4, 4),
+            UnityEngine.Random.Range(-4, 4),
+            0), Quaternion.identity);
+        CharacterControl cc = spawn.GetComponent<CharacterControl>();
+        cc.interactIcon = useindicator;
+        //useindicator = spawn.
+        //spawn;
+        playerCamera.target = spawn.transform;
     }
 
     private void RandomColor()
     {
-        List<string> RandomColorList = new List<string> { "PlayerBlack", "PlayerBlue", "PlayerBrown", "PlayerCyan", "PlayerGreen", "PlayerOrange", "PlayerPurple", "PlayerRed", "PlayerWhite", "PlayerYellow" };
+        List<string> RandomColorList = new List<string> { "PlayerBlack", "PlayerBlue", "PlayerBrown", "PlayerPink", "PlayerGreen", "PlayerOrange", "PlayerPurple", "PlayerRed", "PlayerWhite", "PlayerYellow" };
+        /*List<string> RandomColorList = new List<string> { "PlayerBlack", "PlayerBlack", "PlayerBlack", "PlayerBlack", "PlayerBlack", "PlayerBlack", "PlayerBlack", "PlayerBlack", "PlayerBlack", "PlayerBlack" };*/
 
         var count = RandomColorList.Count;
         var last = count - 1;
@@ -173,7 +184,7 @@ public class Network : MonoBehaviourPunCallbacks
             {
                 myPlayerColorPrefab = parts[1];
             }
-        List<string> colorFileList = new List<string> { "Black_Char", "Blue_Char", "Brown_Char", "Cyan_Char", "Green_Char", "Orange_Char", "Purple_Char", "Red_Char", "White_Char", "Yellow_Char" };
+        List<string> colorFileList = new List<string> { "Black_Char", "Blue_Char", "Brown_Char", "Pink_Char", "Green_Char", "Orange_Char", "Purple_Char", "Red_Char", "White_Char", "Yellow_Char" };
         string temp = "";
         if (myPlayerColorPrefab != null)
             temp = myPlayerColorPrefab.Remove(0, 6);
@@ -324,18 +335,16 @@ public class Network : MonoBehaviourPunCallbacks
     //public void OnPhotonPlayerDisconnected(){}
     public override void OnJoinedRoom()
     {
-        
         print("DEBUG: I joined room");
         try { 
-           
             //else if (PhotonNetwork.CurrentRoom.PlayerCount == roomMaxPlayerRef+1) PhotonNetwork.LeaveRoom();
             if(PhotonNetwork.CurrentRoom.IsOpen == true)
             {
                 txtCurrentRoomName.text = PhotonNetwork.CurrentRoom.Name;
                 print("Name of room: " + PhotonNetwork.CurrentRoom.Name);
-                print("Player in current room: " + PhotonNetwork.CurrentRoom.PlayerCount);
-                print("Alle RaumStatistiken PlayerInRooms: " + PhotonNetwork.CountOfPlayersInRooms);
-                Debug.Log("DEBUG: (InRoom) Name of Player: " + PhotonNetwork.NickName);
+                print("Player in current room: " + PhotonNetwork.CurrentRoom.PlayerCount + 
+                    "\nAlle RaumStatistiken PlayerInRooms: " + PhotonNetwork.CountOfPlayersInRooms +
+                    "\nDEBUG: (InRoom) Name of Player: " + PhotonNetwork.NickName);
                 statusText.text = "Connected to Lobby: " + lobby_Room_Name;
 
                 photonView = gameObject.GetComponent<PhotonView>();
