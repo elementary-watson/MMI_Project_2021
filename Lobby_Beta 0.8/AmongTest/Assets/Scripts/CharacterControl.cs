@@ -8,6 +8,7 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
 {
     // Start is called before the first frame update
     public GameObject interactIcon;
+    [SerializeField] private Camera cam;
     private Animator anim;
     private float moveSpeed = 8;
     private float xVal;
@@ -32,18 +33,36 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
             }
         }*/
     }
+    public void setPosition()
+    {
+        RectTransform rt = (RectTransform)interactIcon.transform;
+        float xValue = (float)(Screen.width * 0.75 - rt.rect.width * 0.5);
+        float yValue = (float)(Screen.height * 0.1 + rt.rect.width * 0.5);
+        //Vector3 icon_position = new Vector3(cam.WorldToViewportPoint())
+        interactIcon.transform.position = new Vector2(xValue,yValue);
+    }
+    public void resetPosition()
+    {
+        RectTransform rt = (RectTransform)interactIcon.transform;
+        float xValue = (float)(Screen.width*2);
+        float yValue = (float)(Screen.height*2);
+        //Vector3 icon_position = new Vector3(cam.WorldToViewportPoint())
+        interactIcon.transform.position = new Vector2(xValue,yValue);
+    }
     void Start()
     {
-
+        if (cam == null)
+            cam = Camera.main;
+        //Invoke("resetPosition",1);
         print("Gefunden");
         //GameObject temp = gameObject.AddComponent<Image>();
         //temp.enabled = true;
 
         if (photonView.IsMine) {
-            interactIcon = GameObject.Find("test");//GetComponentInParent<GameObject>();
+            //interactIcon = GameObject.Find("test");//GetComponentInParent<GameObject>();
             if(interactIcon != null)
             {
-                interactIcon.transform.position = new Vector2(792,-9999);
+                //interactIcon.transform.position = new Vector2(792,-9999);
                 print("FUUUUCKCKCKCK Print: " + interactIcon.GetComponentInChildren<Text>().text);
             }
             else
@@ -66,20 +85,29 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
     // Update is called once per frame
     void Update()
     {
+        if (interactIcon.transform.position.x >= -1 && interactIcon.transform.position.x <= 1)
+        {
+            resetPosition();
+            print("Marco");
+        }
+        print("Polo");
         if (photonView.IsMine)
         {
-            interactIcon = GameObject.FindGameObjectWithTag("test");
+            //interactIcon = GameObject.FindGameObjectWithTag("test");
             if (Input.GetKeyDown(KeyCode.Space)) CheckInteraction();
+         
         }
         //xVal = Input.GetAxisRaw
     }
-
     public void OpenInteractableIcon()
     {
         if (photonView.IsMine)
         {
+            interactIcon.GetComponentInChildren<Image>().rectTransform.sizeDelta = new Vector2(100,100);
+            interactIcon.GetComponentInChildren<Text>().text = "Use";
             //interactIcon.SetActive(true);
-            interactIcon.transform.position = new Vector2(1650, 10);
+            setPosition();
+            //interactIcon.transform.position = new Vector2(1650, 10);
             //image_interactable_controll.
         }
 
@@ -88,8 +116,9 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
     {
         if (photonView.IsMine)
         {
-            interactIcon.transform.position = new Vector2(792, -9999);
+            //interactIcon.transform.position = new Vector2(Screen.width, Screen.height);
             //interactIcon.SetActive(false);
+            resetPosition();
         }
     }
     public void CheckInteraction()

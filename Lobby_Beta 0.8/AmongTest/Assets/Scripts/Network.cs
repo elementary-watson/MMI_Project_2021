@@ -64,12 +64,19 @@ public class Network : MonoBehaviourPunCallbacks
             0), Quaternion.identity);
         CharacterControl cc = spawn.GetComponent<CharacterControl>();
         cc.interactIcon = useindicator;
+        //cc.resetPosition();
+        spawn.GetComponent<CharacterControl>().interactIcon = useindicator;
+        //spawn.GetComponent<CharacterControl>().resetPosition(); ;
+        
         //useindicator = spawn.
         //spawn;
         playerCamera.target = spawn.transform;
         //useindicator.transform.position = new Vector2(999, -999);
     }
+    void setPosition()
+    {
 
+    }
     private void RandomColor()
     {
         List<string> RandomColorList = new List<string> { "PlayerBlack", "PlayerBlue", "PlayerBrown", "PlayerPink", "PlayerGreen", "PlayerOrange", "PlayerPurple", "PlayerRed", "PlayerWhite", "PlayerYellow" };
@@ -87,8 +94,10 @@ public class Network : MonoBehaviourPunCallbacks
         this.randomColorList = RandomColorList;
     }
 
+    
     public void Awake()
     {
+        // XOF PhotonNetwork.FetchServerTimestamp();
         lobbySwitch = 0;
         lobby_Room_Name = "LobbyRoom_A";
         for(int i = 0; i < 10; i++)

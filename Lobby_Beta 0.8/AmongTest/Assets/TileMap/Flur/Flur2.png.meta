@@ -110,42 +110,6 @@ TextureImporter:
   - first:
       213: 5670307058293972234
     second: Flur2_35
-  - first:
-      213: 5960254850600688006
-    second: Flur2_36
-  - first:
-      213: -5414070154379961336
-    second: Flur2_37
-  - first:
-      213: -713755808459555408
-    second: Flur2_38
-  - first:
-      213: 637592865159415886
-    second: Flur2_39
-  - first:
-      213: -5977180113915715909
-    second: Flur2_40
-  - first:
-      213: -2370238191628293450
-    second: Flur2_41
-  - first:
-      213: 909914067607311961
-    second: Flur2_42
-  - first:
-      213: 4274955261759029326
-    second: Flur2_43
-  - first:
-      213: 7177272570632235834
-    second: Flur2_44
-  - first:
-      213: -4185576380271317277
-    second: Flur2_45
-  - first:
-      213: -5428922914472647704
-    second: Flur2_46
-  - first:
-      213: 2765811133201706676
-    second: Flur2_47
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -247,7 +211,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 51
+        y: 34
         width: 16
         height: 16
       alignment: 0
@@ -268,7 +232,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 17
-        y: 51
+        y: 34
         width: 16
         height: 16
       alignment: 0
@@ -289,7 +253,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 34
-        y: 51
+        y: 34
         width: 16
         height: 16
       alignment: 0
@@ -310,7 +274,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 51
-        y: 51
+        y: 34
         width: 16
         height: 16
       alignment: 0
@@ -331,7 +295,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 68
-        y: 51
+        y: 34
         width: 16
         height: 16
       alignment: 0
@@ -352,7 +316,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 85
-        y: 51
+        y: 34
         width: 16
         height: 16
       alignment: 0
@@ -373,7 +337,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 102
-        y: 51
+        y: 34
         width: 16
         height: 16
       alignment: 0
@@ -394,7 +358,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 119
-        y: 51
+        y: 34
         width: 16
         height: 16
       alignment: 0
@@ -415,7 +379,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 136
-        y: 51
+        y: 34
         width: 16
         height: 16
       alignment: 0
@@ -436,7 +400,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 153
-        y: 51
+        y: 34
         width: 16
         height: 16
       alignment: 0
@@ -457,7 +421,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 170
-        y: 51
+        y: 34
         width: 16
         height: 16
       alignment: 0
@@ -478,7 +442,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 187
-        y: 51
+        y: 34
         width: 16
         height: 16
       alignment: 0
@@ -498,8 +462,8 @@ TextureImporter:
       name: Flur2_12
       rect:
         serializedVersion: 2
-        x: 204
-        y: 51
+        x: 0
+        y: 17
         width: 16
         height: 16
       alignment: 0
@@ -519,8 +483,8 @@ TextureImporter:
       name: Flur2_13
       rect:
         serializedVersion: 2
-        x: 221
-        y: 51
+        x: 17
+        y: 17
         width: 16
         height: 16
       alignment: 0
@@ -540,8 +504,8 @@ TextureImporter:
       name: Flur2_14
       rect:
         serializedVersion: 2
-        x: 238
-        y: 51
+        x: 34
+        y: 17
         width: 16
         height: 16
       alignment: 0
@@ -561,8 +525,8 @@ TextureImporter:
       name: Flur2_15
       rect:
         serializedVersion: 2
-        x: 255
-        y: 51
+        x: 51
+        y: 17
         width: 16
         height: 16
       alignment: 0
@@ -582,8 +546,8 @@ TextureImporter:
       name: Flur2_16
       rect:
         serializedVersion: 2
-        x: 272
-        y: 51
+        x: 68
+        y: 17
         width: 16
         height: 16
       alignment: 0
@@ -603,8 +567,8 @@ TextureImporter:
       name: Flur2_17
       rect:
         serializedVersion: 2
-        x: 0
-        y: 34
+        x: 85
+        y: 17
         width: 16
         height: 16
       alignment: 0
@@ -624,8 +588,8 @@ TextureImporter:
       name: Flur2_18
       rect:
         serializedVersion: 2
-        x: 17
-        y: 34
+        x: 102
+        y: 17
         width: 16
         height: 16
       alignment: 0
@@ -645,8 +609,8 @@ TextureImporter:
       name: Flur2_19
       rect:
         serializedVersion: 2
-        x: 34
-        y: 34
+        x: 119
+        y: 17
         width: 16
         height: 16
       alignment: 0
@@ -666,8 +630,8 @@ TextureImporter:
       name: Flur2_20
       rect:
         serializedVersion: 2
-        x: 51
-        y: 34
+        x: 136
+        y: 17
         width: 16
         height: 16
       alignment: 0
@@ -687,8 +651,8 @@ TextureImporter:
       name: Flur2_21
       rect:
         serializedVersion: 2
-        x: 68
-        y: 34
+        x: 153
+        y: 17
         width: 16
         height: 16
       alignment: 0
@@ -708,8 +672,8 @@ TextureImporter:
       name: Flur2_22
       rect:
         serializedVersion: 2
-        x: 85
-        y: 34
+        x: 170
+        y: 17
         width: 16
         height: 16
       alignment: 0
@@ -729,8 +693,8 @@ TextureImporter:
       name: Flur2_23
       rect:
         serializedVersion: 2
-        x: 102
-        y: 34
+        x: 187
+        y: 17
         width: 16
         height: 16
       alignment: 0
@@ -750,8 +714,8 @@ TextureImporter:
       name: Flur2_24
       rect:
         serializedVersion: 2
-        x: 119
-        y: 34
+        x: 0
+        y: 0
         width: 16
         height: 16
       alignment: 0
@@ -771,8 +735,8 @@ TextureImporter:
       name: Flur2_25
       rect:
         serializedVersion: 2
-        x: 136
-        y: 34
+        x: 17
+        y: 0
         width: 16
         height: 16
       alignment: 0
@@ -792,8 +756,8 @@ TextureImporter:
       name: Flur2_26
       rect:
         serializedVersion: 2
-        x: 153
-        y: 34
+        x: 34
+        y: 0
         width: 16
         height: 16
       alignment: 0
@@ -813,8 +777,8 @@ TextureImporter:
       name: Flur2_27
       rect:
         serializedVersion: 2
-        x: 170
-        y: 34
+        x: 51
+        y: 0
         width: 16
         height: 16
       alignment: 0
@@ -834,9 +798,9 @@ TextureImporter:
       name: Flur2_28
       rect:
         serializedVersion: 2
-        x: 187
-        y: 34
-        width: 7
+        x: 68
+        y: 0
+        width: 16
         height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -855,9 +819,9 @@ TextureImporter:
       name: Flur2_29
       rect:
         serializedVersion: 2
-        x: 213
-        y: 34
-        width: 7
+        x: 85
+        y: 0
+        width: 16
         height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -876,8 +840,8 @@ TextureImporter:
       name: Flur2_30
       rect:
         serializedVersion: 2
-        x: 238
-        y: 34
+        x: 102
+        y: 0
         width: 16
         height: 16
       alignment: 0
@@ -897,8 +861,8 @@ TextureImporter:
       name: Flur2_31
       rect:
         serializedVersion: 2
-        x: 255
-        y: 34
+        x: 119
+        y: 0
         width: 16
         height: 16
       alignment: 0
@@ -918,8 +882,8 @@ TextureImporter:
       name: Flur2_32
       rect:
         serializedVersion: 2
-        x: 272
-        y: 34
+        x: 136
+        y: 0
         width: 16
         height: 16
       alignment: 0
@@ -939,8 +903,8 @@ TextureImporter:
       name: Flur2_33
       rect:
         serializedVersion: 2
-        x: 0
-        y: 17
+        x: 153
+        y: 0
         width: 16
         height: 16
       alignment: 0
@@ -960,8 +924,8 @@ TextureImporter:
       name: Flur2_34
       rect:
         serializedVersion: 2
-        x: 17
-        y: 17
+        x: 170
+        y: 0
         width: 16
         height: 16
       alignment: 0
@@ -981,8 +945,8 @@ TextureImporter:
       name: Flur2_35
       rect:
         serializedVersion: 2
-        x: 34
-        y: 17
+        x: 187
+        y: 0
         width: 16
         height: 16
       alignment: 0
@@ -994,258 +958,6 @@ TextureImporter:
       bones: []
       spriteID: a0d90091a3af0be40800000000000000
       internalID: 5670307058293972234
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Flur2_36
-      rect:
-        serializedVersion: 2
-        x: 51
-        y: 17
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6895ad4353417b250800000000000000
-      internalID: 5960254850600688006
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Flur2_37
-      rect:
-        serializedVersion: 2
-        x: 68
-        y: 17
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 80c532b21eb5dd4b0800000000000000
-      internalID: -5414070154379961336
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Flur2_38
-      rect:
-        serializedVersion: 2
-        x: 85
-        y: 17
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0bd7564bfda3816f0800000000000000
-      internalID: -713755808459555408
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Flur2_39
-      rect:
-        serializedVersion: 2
-        x: 136
-        y: 17
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e48862f255f29d800800000000000000
-      internalID: 637592865159415886
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Flur2_40
-      rect:
-        serializedVersion: 2
-        x: 153
-        y: 17
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bbe5687da5acc0da0800000000000000
-      internalID: -5977180113915715909
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Flur2_41
-      rect:
-        serializedVersion: 2
-        x: 170
-        y: 17
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6ba6eea3ce83b1fd0800000000000000
-      internalID: -2370238191628293450
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Flur2_42
-      rect:
-        serializedVersion: 2
-        x: 238
-        y: 17
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9565dd7060aa0ac00800000000000000
-      internalID: 909914067607311961
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Flur2_43
-      rect:
-        serializedVersion: 2
-        x: 255
-        y: 17
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e4085df2921b35b30800000000000000
-      internalID: 4274955261759029326
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Flur2_44
-      rect:
-        serializedVersion: 2
-        x: 272
-        y: 17
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a3b60bc406bca9360800000000000000
-      internalID: 7177272570632235834
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Flur2_45
-      rect:
-        serializedVersion: 2
-        x: 238
-        y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3eea9a15578d9e5c0800000000000000
-      internalID: -4185576380271317277
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Flur2_46
-      rect:
-        serializedVersion: 2
-        x: 255
-        y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8e321e97f5798a4b0800000000000000
-      internalID: -5428922914472647704
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Flur2_47
-      rect:
-        serializedVersion: 2
-        x: 272
-        y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4beee4e5292226620800000000000000
-      internalID: 2765811133201706676
       vertices: []
       indices: 
       edges: []
