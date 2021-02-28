@@ -16,28 +16,12 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
     //Untere Werte 0.1f, 1f
     private Vector2 boxSize = new Vector2(1f, 1f);
     Image temp;
-    private void Awake()
-    {
-       /* print("FINDE MICH");
-        if (temp == null)
-        {
-            try 
-            { 
-                //Image temp = GameObject.FindGameObjectWithTag("Respawn").GetComponentInChildren<Image>();
-                temp = GetComponent<UnityEngine.UI.Image>();
-                temp.enabled = false;
-            }
-            catch (Exception e)
-            {
-                print("Yoyo " + e);
-            }
-        }*/
-    }
+
     public void setPosition()
     {
         RectTransform rt = (RectTransform)interactIcon.transform;
         float xValue = (float)(Screen.width * 0.75 - rt.rect.width * 0.5);
-        float yValue = (float)(Screen.height * 0.1 + rt.rect.width * 0.5);
+        float yValue = (float)(Screen.height * 0.1 + rt.rect.height * 0.5);
         //Vector3 icon_position = new Vector3(cam.WorldToViewportPoint())
         interactIcon.transform.position = new Vector2(xValue,yValue);
     }
@@ -70,9 +54,6 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
                 print("DEBUG: InteractIcon not set yet");
             }
             anim = GetComponent<Animator>();
-            //Instantiate(interactIcon, new Vector2(792,-398), Quaternion.identity, GameObject.FindGameObjectWithTag("Respawn").transform);
-            //GameObject temp =  temp.transform.SetParent(GameObject.FindGameObjectWithTag("Respawn").transform, false);
-            //temp.transform.position = new Vector2(792, -398);
         }
     }
     private void OnCollisionEnter2D(Collision2D collision)
@@ -85,12 +66,6 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
     // Update is called once per frame
     void Update()
     {
-        if (interactIcon.transform.position.x >= -1 && interactIcon.transform.position.x <= 1)
-        {
-            resetPosition();
-            print("Marco");
-        }
-        print("Polo");
         if (photonView.IsMine)
         {
             //interactIcon = GameObject.FindGameObjectWithTag("test");
