@@ -15,7 +15,7 @@ public class Task_Illuminate : Interactable
     {
         if (isOpen) { 
             sr.sprite = active_state;
-
+            task.SetActive(true);
             RectTransform rt = (RectTransform)task.transform;
             float xValue = (float)(Screen.width * 0.5 - rt.rect.width * 0.5);
             float yValue = (float)(Screen.height * 0.5 + rt.rect.width * 0.5);
