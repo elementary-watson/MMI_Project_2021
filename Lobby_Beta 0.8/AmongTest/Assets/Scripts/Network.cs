@@ -33,6 +33,7 @@ public class Network : MonoBehaviourPunCallbacks
     [SerializeField] GameObject FadeObject;
     [SerializeField] GameObject CounterObject;
     public GameObject useindicator;
+    public UI_Taskbar prog_reference;
 
     //Photon
     [Header("Photon Chat")]
@@ -73,10 +74,7 @@ public class Network : MonoBehaviourPunCallbacks
         playerCamera.target = spawn.transform;
         //useindicator.transform.position = new Vector2(999, -999);
     }
-    void setPosition()
-    {
 
-    }
     private void RandomColor()
     {
         List<string> RandomColorList = new List<string> { "PlayerBlack", "PlayerBlue", "PlayerBrown", "PlayerPink", "PlayerGreen", "PlayerOrange", "PlayerPurple", "PlayerRed", "PlayerWhite", "PlayerYellow" };
@@ -111,7 +109,16 @@ public class Network : MonoBehaviourPunCallbacks
         roomMaxPlayerRef = 2;
         //canJoin = true;
     }
-    
+
+    public void incrementTaskprogress(int increment)
+    {
+        photonView.RPC("incrementTaskprogressNetwork", RpcTarget.All,increment);
+    }
+    [PunRPC]
+    void incrementTaskprogressNetwork(int increment)
+    {
+        prog_reference.setTaskprogress(increment);
+    }
     #region Chatfunctions
     public int getActorId()
     {
@@ -281,8 +288,6 @@ public class Network : MonoBehaviourPunCallbacks
         print("2. Onconnected We are connected");
         base.OnConnected();
     }
-
-
     public override void OnConnectedToMaster()
     {
         print("OnConnectedToMaster is called");

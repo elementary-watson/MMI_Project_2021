@@ -10,6 +10,7 @@ TagManager:
   - player_all
   - iconinteraction
   - test
+  - lights
   layers:
   - Default
   - TransparentFX
