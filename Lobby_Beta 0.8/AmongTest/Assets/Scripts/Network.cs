@@ -174,6 +174,7 @@ public class Network : MonoBehaviourPunCallbacks
     [PunRPC]
     public void RoomPlayerLeave(string playerNickname)
     {
+        m_reference.deleteplayer(PhotonNetwork.LocalPlayer.ActorNumber);
         int i = 0;
         for (int j = 0; j < 10; j++)
         {
@@ -376,6 +377,7 @@ public class Network : MonoBehaviourPunCallbacks
             //else if (PhotonNetwork.CurrentRoom.PlayerCount == roomMaxPlayerRef+1) PhotonNetwork.LeaveRoom();
             if(PhotonNetwork.CurrentRoom.IsOpen == true)
             {
+                PhotonNetwork.NickName = PhotonNetwork.LocalPlayer.ActorNumber + "";
                 txtCurrentRoomName.text = PhotonNetwork.CurrentRoom.Name;
                 print("Name of room: " + PhotonNetwork.CurrentRoom.Name);
                 print("Player in current room: " + PhotonNetwork.CurrentRoom.PlayerCount + 
@@ -387,7 +389,7 @@ public class Network : MonoBehaviourPunCallbacks
                 photonView.RPC("RefreshPlayerNumberOnJoin", RpcTarget.All);
                 photonView.RPC("RoomPlayerJoin", RpcTarget.All);
                 //txtCounterPlayersInRoom.text = "("+ PhotonNetwork.CurrentRoom.PlayerCount + "/10)";
-                PhotonNetwork.NickName = PhotonNetwork.LocalPlayer.ActorNumber + "";
+                
                 if (PhotonNetwork.CurrentRoom.PlayerCount == roomMaxPlayerRef)
                 {
                     PhotonNetwork.CurrentRoom.IsOpen = false;
@@ -440,19 +442,12 @@ public class Network : MonoBehaviourPunCallbacks
     {
         print("2. I Disconnected");
         base.OnDisconnected(cause);
-        photonView.RPC("RoomPlayerLeave", RpcTarget.All, PhotonNetwork.NickName.ToString());
-        photonView.RPC("RefreshPlayerNumberOnLeave", RpcTarget.All);
-        // send event, add your code here
-        print("DEBUG: SendQuitEvent ausführen");
-        PhotonNetwork.SendAllOutgoingCommands(); // send it right now
+
     }
     //public override void OnPhoton
     public override void OnLeftLobby()
     {
         print("3. I left the lobby");
-        photonView.RPC("RoomPlayerLeave", RpcTarget.All, PhotonNetwork.NickName.ToString());
-        photonView.RPC("RefreshPlayerNumberOnLeave", RpcTarget.All);
-        PhotonNetwork.SendAllOutgoingCommands();
         base.OnLeftLobby();
     }
     public override void OnRoomListUpdate(List<RoomInfo> roomList)

@@ -18,6 +18,7 @@ public class Multiplayer_Reference : MonoBehaviour
     }
     public void addPlayer(int id, string charname)
     {
+        if(!allplayers.Keys.Contains(id))
         allplayers.Add(id, charname);
     }
     public void deleteplayer(int photonId)
@@ -29,8 +30,10 @@ public class Multiplayer_Reference : MonoBehaviour
     }
     public void readPlayer()
     {
-        foreach (KeyValuePair<int, string> kvp in allplayers)
+        foreach (KeyValuePair<int, string> kvp in allplayers) { 
             Console.WriteLine("Key: {0}, Value: {1}", kvp.Key, kvp.Value);
+            print("Key: " + kvp.Key + "Value" + kvp.Value);
+        }
     }
     void Start()
     {
