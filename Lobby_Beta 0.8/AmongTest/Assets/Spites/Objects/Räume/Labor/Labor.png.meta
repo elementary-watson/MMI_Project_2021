@@ -1,7 +1,28 @@
 fileFormatVersion: 2
-guid: 433682139ad3af74c9d0782f9d88b9d2
+guid: 577831f1d7d472c4c912baf74bbb1c87
 TextureImporter:
   internalIDToNameTable:
+  - first:
+      213: 4043746478219692607
+    second: LaborV2_0
+  - first:
+      213: 2203154495923839065
+    second: LaborV2_1
+  - first:
+      213: 1231195902076969739
+    second: LaborV2_2
+  - first:
+      213: 2919416121109754974
+    second: LaborV2_3
+  - first:
+      213: -7108877852725708772
+    second: LaborV2_4
+  - first:
+      213: -7331338260470185289
+    second: LaborV2_5
+  - first:
+      213: 8788699517819921746
+    second: LaborV2_6
   - first:
       213: -3661333420567949722
     second: Labor_0
@@ -14,6 +35,18 @@ TextureImporter:
   - first:
       213: 4365367455803603483
     second: Labor_3
+  - first:
+      213: 3852907499629163439
+    second: Labor_4
+  - first:
+      213: -6903746724694144318
+    second: Labor_5
+  - first:
+      213: 7044918267542493562
+    second: Labor_6
+  - first:
+      213: 5253135382681035669
+    second: Labor_7
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -114,10 +147,10 @@ TextureImporter:
       name: Labor_0
       rect:
         serializedVersion: 2
-        x: 21
-        y: 431
+        x: 9
+        y: 423
         width: 476
-        height: 174
+        height: 175
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -135,8 +168,8 @@ TextureImporter:
       name: Labor_1
       rect:
         serializedVersion: 2
-        x: 588
-        y: 432
+        x: 576
+        y: 424
         width: 476
         height: 152
       alignment: 0
@@ -156,9 +189,9 @@ TextureImporter:
       name: Labor_2
       rect:
         serializedVersion: 2
-        x: 21
-        y: 165
-        width: 501
+        x: 9
+        y: 157
+        width: 476
         height: 193
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -177,8 +210,8 @@ TextureImporter:
       name: Labor_3
       rect:
         serializedVersion: 2
-        x: 721
-        y: 20
+        x: 709
+        y: 12
         width: 343
         height: 304
       alignment: 0
@@ -190,6 +223,69 @@ TextureImporter:
       bones: []
       spriteID: b1a79358296e49c30800000000000000
       internalID: 4365367455803603483
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Labor_4
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 123
+        width: 17
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa3b5d315f6487530800000000000000
+      internalID: 3852907499629163439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Labor_5
+      rect:
+        serializedVersion: 2
+        x: 294
+        y: 18
+        width: 118
+        height: 122
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2cac6577ee6f030a0800000000000000
+      internalID: -6903746724694144318
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Labor_6
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 26
+        width: 52
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a79d788b6d394c160800000000000000
+      internalID: 7044918267542493562
       vertices: []
       indices: 
       edges: []

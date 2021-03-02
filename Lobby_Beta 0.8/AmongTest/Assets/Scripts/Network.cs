@@ -51,7 +51,7 @@ public class Network : MonoBehaviourPunCallbacks
     private string myPlayerColorFilename;
     int roomMaxPlayerRef;
     //bool canJoin;
-
+    public Multiplayer_Reference m_reference;
     private void SpawnPlayer()
     {
         /*playerCamera.target = PhotonNetwork.Instantiate(myPlayerColorPrefab,
@@ -105,8 +105,8 @@ public class Network : MonoBehaviourPunCallbacks
             playerReadyTexts[i].text = "";
         }
         RandomColor();
-        myRoomOptions = new RoomOptions() { MaxPlayers = 2, IsVisible = true, IsOpen = true };
-        roomMaxPlayerRef = 2;
+        myRoomOptions = new RoomOptions() { MaxPlayers = 3, IsVisible = true, IsOpen = true, /*PlayerTtl = 10000,*/ EmptyRoomTtl=60000 };
+        roomMaxPlayerRef = 3;
         //canJoin = true;
     }
 
@@ -196,6 +196,7 @@ public class Network : MonoBehaviourPunCallbacks
     [PunRPC]
     public void setColor(String idAndColor)
     {
+        //XOF
         String[] parts = idAndColor.Split('-');
             if (idAndColor.Contains(PhotonNetwork.NickName))
             {
@@ -215,6 +216,8 @@ public class Network : MonoBehaviourPunCallbacks
             i++;
         }
         //PhotonNetwork.NickName;
+        
+        m_reference.addPlayer(int.Parse(parts[0]),temp);
     }
     [PunRPC]
     public void startGame()
@@ -265,7 +268,7 @@ public class Network : MonoBehaviourPunCallbacks
         //In PUN 2 you would have to deal with the Room List in another way, since it isn't cached internally any longer. 
         //PhotonNetwork.CurrentLobby.Name = "";
         PhotonNetwork.JoinLobby(customLobby);
-        //PhotonNetwork.Roo
+        
         print(PhotonNetwork.CountOfPlayersOnMaster);
         try
         {
@@ -313,11 +316,22 @@ public class Network : MonoBehaviourPunCallbacks
         print("Nickname was created: " + PhotonNetwork.NickName);
         PhotonNetwork.ConnectUsingSettings();
     }
+    public void WebGLQuit()
+    {
+        this.SendQuitEvent();
+    }
     void OnApplicationQuit()
     {
         print("DEBUG: Player left Application");
         this.SendQuitEvent();
     }
+
+
+    /*unityInstance.Quit(function() {
+        console.log("done!");
+    });
+    unityInstance = null;*/
+
     void SendQuitEvent()
     {
         try {
@@ -347,7 +361,14 @@ public class Network : MonoBehaviourPunCallbacks
     }
 
     //XOF Funktion der Methode unbekannt. Steht in Relation mit Lobbyraum verlassen
-    //public void OnPhotonPlayerDisconnected(){}
+    public void OnPhotonPlayerDisconnected()
+    {
+        photonView.RPC("RoomPlayerLeave", RpcTarget.All, PhotonNetwork.NickName.ToString());
+        photonView.RPC("RefreshPlayerNumberOnLeave", RpcTarget.All);
+        // send event, add your code here
+        print("DEBUG: OnPhotonPlayerDisconnected");
+        PhotonNetwork.SendAllOutgoingCommands(); // send it right now
+    }
     public override void OnJoinedRoom()
     {
         print("DEBUG: I joined room");
@@ -366,7 +387,7 @@ public class Network : MonoBehaviourPunCallbacks
                 photonView.RPC("RefreshPlayerNumberOnJoin", RpcTarget.All);
                 photonView.RPC("RoomPlayerJoin", RpcTarget.All);
                 //txtCounterPlayersInRoom.text = "("+ PhotonNetwork.CurrentRoom.PlayerCount + "/10)";
-
+                PhotonNetwork.NickName = PhotonNetwork.LocalPlayer.ActorNumber + "";
                 if (PhotonNetwork.CurrentRoom.PlayerCount == roomMaxPlayerRef)
                 {
                     PhotonNetwork.CurrentRoom.IsOpen = false;
@@ -384,6 +405,8 @@ public class Network : MonoBehaviourPunCallbacks
                     photonView.RPC("RPCStartCounter", RpcTarget.All);
                     Invoke("RPCStartFading", 8);
                     Invoke("RPCStartgame", 10);
+
+                    m_reference.readPlayer();//print allplayer dictionary elements
                 }
 
             }
@@ -417,13 +440,21 @@ public class Network : MonoBehaviourPunCallbacks
     {
         print("2. I Disconnected");
         base.OnDisconnected(cause);
+        photonView.RPC("RoomPlayerLeave", RpcTarget.All, PhotonNetwork.NickName.ToString());
+        photonView.RPC("RefreshPlayerNumberOnLeave", RpcTarget.All);
+        // send event, add your code here
+        print("DEBUG: SendQuitEvent ausführen");
+        PhotonNetwork.SendAllOutgoingCommands(); // send it right now
     }
+    //public override void OnPhoton
     public override void OnLeftLobby()
     {
         print("3. I left the lobby");
+        photonView.RPC("RoomPlayerLeave", RpcTarget.All, PhotonNetwork.NickName.ToString());
+        photonView.RPC("RefreshPlayerNumberOnLeave", RpcTarget.All);
+        PhotonNetwork.SendAllOutgoingCommands();
         base.OnLeftLobby();
     }
-
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
         print("WE UPDATED THE LIST ROOMS");
