@@ -27,7 +27,6 @@ public class Single_Switch : MonoBehaviour
             {
                 if (i.tag.Contains("lights"))
                 {
-                    print("Found a match");
                     i.sprite = light_on;
                 }
             }
@@ -42,7 +41,6 @@ public class Single_Switch : MonoBehaviour
             {
                 if (i.tag.Contains("lights"))
                 {
-                    print("Found a match");
                     i.sprite = light_off;
                 }
             }
@@ -62,7 +60,6 @@ public class Single_Switch : MonoBehaviour
             {
                 if (i.tag.Contains("lights"))
                 {
-                    print("Found a match");
                     i.sprite = light_on;
                 }
             }
@@ -76,7 +73,6 @@ public class Single_Switch : MonoBehaviour
             {
                 if (i.tag.Contains("lights"))
                 {
-                    print("Found a match");
                     i.sprite = light_off;
                 }
             }

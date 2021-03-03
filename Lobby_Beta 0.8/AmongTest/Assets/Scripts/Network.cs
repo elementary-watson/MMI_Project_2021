@@ -218,7 +218,7 @@ public class Network : MonoBehaviourPunCallbacks
         }
         //PhotonNetwork.NickName;
         
-        m_reference.addPlayer(int.Parse(parts[0]),temp);
+        m_reference.addPlayer(int.Parse(parts[0]),parts[1].Remove(0,6));
     }
     [PunRPC]
     public void startGame()
@@ -377,6 +377,7 @@ public class Network : MonoBehaviourPunCallbacks
             //else if (PhotonNetwork.CurrentRoom.PlayerCount == roomMaxPlayerRef+1) PhotonNetwork.LeaveRoom();
             if(PhotonNetwork.CurrentRoom.IsOpen == true)
             {
+                print("XOF before nickname");
                 PhotonNetwork.NickName = PhotonNetwork.LocalPlayer.ActorNumber + "";
                 txtCurrentRoomName.text = PhotonNetwork.CurrentRoom.Name;
                 print("Name of room: " + PhotonNetwork.CurrentRoom.Name);
@@ -404,11 +405,13 @@ public class Network : MonoBehaviourPunCallbacks
                         photonView.RPC("setColor", RpcTarget.OthersBuffered, player.NickName + "-" + randomColorList[i]);
                         i++;
                     }
+                    print("XOF players");
+                    m_reference.readPlayer();//print allplayer dictionary elements
                     photonView.RPC("RPCStartCounter", RpcTarget.All);
                     Invoke("RPCStartFading", 8);
                     Invoke("RPCStartgame", 10);
 
-                    m_reference.readPlayer();//print allplayer dictionary elements
+                    
                 }
 
             }
