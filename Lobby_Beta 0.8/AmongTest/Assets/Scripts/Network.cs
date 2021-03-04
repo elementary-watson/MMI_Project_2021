@@ -52,6 +52,7 @@ public class Network : MonoBehaviourPunCallbacks
     int roomMaxPlayerRef;
     //bool canJoin;
     public Multiplayer_Reference m_reference;
+    [SerializeField] private Result_Voting_Panel result_vp;
     private void SpawnPlayer()
     {
         /*playerCamera.target = PhotonNetwork.Instantiate(myPlayerColorPrefab,
@@ -105,8 +106,8 @@ public class Network : MonoBehaviourPunCallbacks
             playerReadyTexts[i].text = "";
         }
         RandomColor();
-        myRoomOptions = new RoomOptions() { MaxPlayers = 3, IsVisible = true, IsOpen = true, /*PlayerTtl = 10000,*/ EmptyRoomTtl=60000 };
-        roomMaxPlayerRef = 3;
+        myRoomOptions = new RoomOptions() { MaxPlayers = 2, IsVisible = true, IsOpen = true, /*PlayerTtl = 10000,*/ EmptyRoomTtl=60000 };
+        roomMaxPlayerRef = 2;
         //canJoin = true;
     }
 
@@ -119,15 +120,22 @@ public class Network : MonoBehaviourPunCallbacks
     {
         prog_reference.setTaskprogress(increment);
     }
-    #region Chatfunctions
+
     public int getActorId()
     {
         return PhotonNetwork.LocalPlayer.ActorNumber;
-    } 
+    }
+    public int getActorInRoom()
+    {
+        return PhotonNetwork.CurrentRoom.PlayerCount;
+    }
     public string getPlayerColor()
     {
         return myPlayerColorFilename;
     }
+
+    #region Chatfunctions
+
     public void callChatWindowRPC()
     {
         try {
@@ -141,11 +149,23 @@ public class Network : MonoBehaviourPunCallbacks
     }
     #endregion
 
+    public void callSubmitVote(bool isSubmitted, string playerColor, int photonActorID, int indexPosition)
+    {
+        photonView.RPC("submitAllPlayers", RpcTarget.All, isSubmitted, playerColor, photonActorID, indexPosition);
+    }
     #region RPC
     [PunRPC]
     public void RefreshPlayerNumberOnJoin()
     {
         txtCounterPlayersInRoom.text = "(" + PhotonNetwork.CurrentRoom.PlayerCount + "/10)";
+    }    
+    [PunRPC]
+    public void submitAllPlayers(bool isSubmitted, string playerColor, int photonActorID, int indexPosition)
+    {
+        if (isSubmitted)
+            result_vp.submitVote( getActorId(), getPlayerColor(), playerColor, photonActorID, indexPosition);
+        else
+            result_vp.submitVote( getActorId(), getPlayerColor(), "", 0, -1);
     }
     [PunRPC]
     public void RefreshPlayerNumberOnLeave()

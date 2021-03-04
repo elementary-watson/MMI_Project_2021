@@ -22,12 +22,16 @@ public class Confirm_Panel_Logic : MonoBehaviour
 
     public void Timeout_ConfirmChoice()//läuft die zeit aus werden die auwahldaten geschickt
     {
-        print("DEBUG: "+_network.getActorId() +" " + _network.getPlayerColor() + " " + playerColor + " " + photonActorID + " " + indexPosition);
         timerPanel.SetActive(false);
         if (isSubmitted)
+           _network.callSubmitVote(true,playerColor,photonActorID,indexPosition);
+        else
+           _network.callSubmitVote(false,"",0,0);
+        
+        /*if (isSubmitted)
             result_vp.submitVote(_network.getActorId(), _network.getPlayerColor(), playerColor, photonActorID, indexPosition);
         else
-            result_vp.submitVote(_network.getActorId(), _network.getPlayerColor(), "", 0, 0);
+            result_vp.submitVote(_network.getActorId(), _network.getPlayerColor(), "", 0, 0);*/
     }
     public void setIsSubmitted(bool choice)
     {
