@@ -52,7 +52,6 @@ public class Single_Switch : MonoBehaviour
             isActive = true;
             img_button.sprite = on_Switch;
             img_lights.sprite = light_on;
-
         }
         else
         { 
@@ -61,5 +60,4 @@ public class Single_Switch : MonoBehaviour
             img_lights.sprite = light_off;
         }
     }
-
 }

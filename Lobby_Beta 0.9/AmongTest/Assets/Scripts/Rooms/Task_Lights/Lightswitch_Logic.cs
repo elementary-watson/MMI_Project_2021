@@ -8,7 +8,7 @@ public class Lightswitch_Logic : MonoBehaviour
     public GameObject winText;
     private int onCount = 0;
     [SerializeField] GameObject LightsPanel;
-    public Network progress_reference;
+    public Network _network;
     public Single_Switch[] switches = new Single_Switch[6];
     private void Start()
     {
@@ -39,7 +39,7 @@ public class Lightswitch_Logic : MonoBehaviour
         {
             winText.SetActive(true);
             Invoke("taskFinished", 1);
-            progress_reference.incrementTaskprogress(10);
+            _network.incrementTaskprogress(10);
         }
         else
         {
