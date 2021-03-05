@@ -10,6 +10,8 @@ public class Single_Switch : MonoBehaviour
     public Sprite light_on;
     public Sprite light_off;
     private bool isActive;
+    public Image img_button;
+    public Image img_lights;
     [SerializeField] private Lightswitch_Logic ll_object;
     
 
@@ -21,29 +23,23 @@ public class Single_Switch : MonoBehaviour
     {
         if(isActive == false)
         {
-            GetComponent<Image>().sprite = on_Switch;
-            var temp = GetComponentsInChildren<Image>();
-            foreach (Image i in temp)
-            {
-                if (i.tag.Contains("lights"))
-                {
-                    i.sprite = light_on;
-                }
-            }
+            img_button.sprite = on_Switch;
+            img_lights.sprite = light_on;
+
             ll_object.SwitchChange(1);
             isActive = true;            
         }
         else
         {
-            GetComponent<Image>().sprite = off_Switch;
-            var temp = GetComponentsInChildren<Image>();
+            img_lights.sprite = light_off;
+            /*var temp = GetComponentsInChildren<Image>();
             foreach (Image i in temp)
             {
                 if (i.tag.Contains("lights"))
                 {
                     i.sprite = light_off;
                 }
-            }
+            }*/
             ll_object.SwitchChange(-1);
             isActive = false;
         }
@@ -54,28 +50,15 @@ public class Single_Switch : MonoBehaviour
         if (state) 
         { 
             isActive = true;
-            GetComponent<Image>().sprite = on_Switch;
-            var temp = GetComponentsInChildren<Image>();
-            foreach (Image i in temp)
-            {
-                if (i.tag.Contains("lights"))
-                {
-                    i.sprite = light_on;
-                }
-            }
+            img_button.sprite = on_Switch;
+            img_lights.sprite = light_on;
+
         }
         else
         { 
             isActive = false;
-            GetComponent<Image>().sprite = off_Switch;
-            var temp = GetComponentsInChildren<Image>();
-            foreach (Image i in temp)
-            {
-                if (i.tag.Contains("lights"))
-                {
-                    i.sprite = light_off;
-                }
-            }
+            img_button.sprite = off_Switch;
+            img_lights.sprite = light_off;
         }
     }
 

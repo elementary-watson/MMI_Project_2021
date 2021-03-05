@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Lightswitch_Logic : MonoBehaviour
 {
-    public int switchCount;
+    private int switchCount = 6;
     public GameObject winText;
     private int onCount = 0;
     [SerializeField] GameObject LightsPanel;
@@ -32,7 +32,7 @@ public class Lightswitch_Logic : MonoBehaviour
             }
         }
     }
-    public void SwitchChange(int points)
+    public void SwitchChange(int points)//wenn button an oder aus gemacht wird diese methode gerufen
     {
         onCount = onCount + points;
         if (onCount == switchCount)
@@ -49,6 +49,10 @@ public class Lightswitch_Logic : MonoBehaviour
 
     private void taskFinished()
     {
+        for(int i = 0; i<5; i++)
+        {
+            //switches[0].interac
+        }
         LightsPanel.SetActive(false);
     }
 }
