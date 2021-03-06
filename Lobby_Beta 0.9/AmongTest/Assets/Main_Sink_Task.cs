@@ -35,7 +35,7 @@ public class Main_Sink_Task:MonoBehaviour
     public void SetupValves()
     {
         sst[0].setup(1);
-        for (int i = 1; i < 6; i++)
+        for (int i = 1; i < maxPoints; i++)
         {
             float temp = Random.value;
             print("Value "+ i + ": " + temp);

@@ -54,8 +54,8 @@ public class Single_Sink_Task : MonoBehaviour
         currentCardinal = cardinalPoint;
         if(cardinalPoint >= 0.75f)
         {
-            btn_valve.interactable = false;
             img_btn.sprite = cardinalCorrect;
+            btn_valve.interactable = false;                        
         }
         else if (currentCardinal >= 0.5f)
         {
