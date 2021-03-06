@@ -31,7 +31,7 @@ public class Single_Sink_Task : MonoBehaviour
             sst.disabledSprite = cardinalCorrect;
             sst.highlightedSprite = cardinalCorrect;
             btn_valve.spriteState = sst;
-            GetComponent<Button>().enabled = false;
+            btn_valve.enabled = false;
             mst.ValveSwitch(1);
         }
         else if (currentCardinal >= 0.25f)

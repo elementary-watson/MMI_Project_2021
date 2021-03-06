@@ -12,6 +12,7 @@ public class Single_Switch : MonoBehaviour
     private bool isActive;
     public Image img_button;
     public Image img_lights;
+    [SerializeField] Button btn;
     [SerializeField] private Lightswitch_Logic ll_object;
     
 
@@ -25,13 +26,19 @@ public class Single_Switch : MonoBehaviour
         {
             img_button.sprite = on_Switch;
             img_lights.sprite = light_on;
+            btn.interactable = false;
 
+            SpriteState sst = new SpriteState();
+            sst = btn.spriteState;
+            sst.disabledSprite = on_Switch;
+            btn.spriteState = sst;
             ll_object.SwitchChange(1);
             isActive = true;            
         }
         else
         {
             img_lights.sprite = light_off;
+            img_button.sprite = off_Switch;
             /*var temp = GetComponentsInChildren<Image>();
             foreach (Image i in temp)
             {
