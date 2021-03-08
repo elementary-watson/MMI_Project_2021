@@ -20,7 +20,7 @@ public class Confirm_Panel_Logic : MonoBehaviour
         this.indexPosition = indexPosition;
     }
 
-    public void Timeout_ConfirmChoice()//läuft die zeit aus werden die auwahldaten geschickt
+    public void photon_Timeout_ConfirmChoice()//läuft die zeit aus werden die auwahldaten geschickt
     {
         timerPanel.SetActive(false);
         if (isSubmitted)

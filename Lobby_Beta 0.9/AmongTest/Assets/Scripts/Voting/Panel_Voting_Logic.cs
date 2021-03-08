@@ -25,7 +25,7 @@ public class Panel_Voting_Logic : MonoBehaviour
             svl[i].setClassValues(item.Value,item.Key,i);//set (color, id, index) of buttons
             i++;
         }
-        for (i=i; i < 10; i++)
+        for (i=i; i < 10; i++) // "ab i" restliche Buttons aussschalten.
         {
             buttonVotings[i].interactable = false;
         }

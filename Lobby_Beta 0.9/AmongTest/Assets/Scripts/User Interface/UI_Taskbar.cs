@@ -11,16 +11,22 @@ public class UI_Taskbar : MonoBehaviour
     [SerializeField] private Image img_progressbar;
     [SerializeField] private TMP_Text tmp_progressValue;
     [SerializeField] private GameObject Panel_Voting;
+    [SerializeField] private GameObject preVoteTimer;
+    [SerializeField] private GameObject Score_Panel;
+    [SerializeField] private GameObject Player_Panel;
     [SerializeField] private GameObject thisMain_Progressbar;
 
     void getCurrentFill()
     {
         float fillamount = (float)current / (float)maximum;
         img_progressbar.fillAmount = fillamount;   
-        if(current == 100)
+        if(current == 100) // XOF timer einbauen
         {
             Panel_Voting.SetActive(true);
+            preVoteTimer.SetActive(true);
             thisMain_Progressbar.SetActive(false);
+            Score_Panel.SetActive(false);
+            Player_Panel.SetActive(false);
         }
     }
     private void Start()

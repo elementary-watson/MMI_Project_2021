@@ -22,7 +22,7 @@ public class Network : MonoBehaviourPunCallbacks
     //User Interface
     [Header("User Interface")]
     public CameraFollow playerCamera;
-    List<int> PlayerColor = new List<int>();    
+    List<int> PlayerColor = new List<int>();
     public Text txtCounterPlayersInRoom;
     public Text txtCurrentRoomName;
     public Text lobbyOrRoom;
@@ -45,14 +45,25 @@ public class Network : MonoBehaviourPunCallbacks
     public string lobby_Room_Name;
     PhotonView photonView;
     int lobbySwitch;
-    // intern game logic
+    int maxPlayersOfRoom;
+    // interne game logic
     List<string> randomColorList;
     private string myPlayerColorPrefab;
     private string myPlayerColorFilename;
-    int roomMaxPlayerRef;
-    //bool canJoin;
     public Multiplayer_Reference m_reference;
     [SerializeField] private Result_Voting_Panel result_vp;
+    IDictionary<int, string> listOfSuspects = new Dictionary<int, string>();
+    IDictionary<int, string> listOfVotekicks = new Dictionary<int, string>();
+
+    public void addSuspectToList(int actorId, string playerColor)
+    {
+        listOfSuspects.Add(actorId, playerColor);
+    }
+    public void addVotekickToList(int actorId, string playerColor)
+    {
+        listOfSuspects.Add(actorId, playerColor);
+    }
+
     private void SpawnPlayer()
     {
         /*playerCamera.target = PhotonNetwork.Instantiate(myPlayerColorPrefab,
@@ -107,7 +118,7 @@ public class Network : MonoBehaviourPunCallbacks
         }
         RandomColor();
         myRoomOptions = new RoomOptions() { MaxPlayers = 2, IsVisible = true, IsOpen = true, /*PlayerTtl = 10000,*/ EmptyRoomTtl=60000 };
-        roomMaxPlayerRef = 2;
+        maxPlayersOfRoom = 2;
         //canJoin = true;
     }
 
@@ -125,7 +136,7 @@ public class Network : MonoBehaviourPunCallbacks
     {
         return PhotonNetwork.LocalPlayer.ActorNumber;
     }
-    public int getActorInRoom()
+    public int getActorsInRoom()
     {
         return PhotonNetwork.CurrentRoom.PlayerCount;
     }
@@ -397,11 +408,10 @@ public class Network : MonoBehaviourPunCallbacks
             //else if (PhotonNetwork.CurrentRoom.PlayerCount == roomMaxPlayerRef+1) PhotonNetwork.LeaveRoom();
             if(PhotonNetwork.CurrentRoom.IsOpen == true)
             {
-                print("XOF before nickname");
                 PhotonNetwork.NickName = PhotonNetwork.LocalPlayer.ActorNumber + "";
                 txtCurrentRoomName.text = PhotonNetwork.CurrentRoom.Name;
-                print("Name of room: " + PhotonNetwork.CurrentRoom.Name);
-                print("Player in current room: " + PhotonNetwork.CurrentRoom.PlayerCount + 
+                print("Name of room: " + PhotonNetwork.CurrentRoom.Name +
+                    "Player in current room: " + PhotonNetwork.CurrentRoom.PlayerCount + 
                     "\nAlle RaumStatistiken PlayerInRooms: " + PhotonNetwork.CountOfPlayersInRooms +
                     "\nDEBUG: (InRoom) Name of Player: " + PhotonNetwork.NickName);
                 statusText.text = "Connected to Lobby: " + lobby_Room_Name;
@@ -411,7 +421,7 @@ public class Network : MonoBehaviourPunCallbacks
                 photonView.RPC("RoomPlayerJoin", RpcTarget.All);
                 //txtCounterPlayersInRoom.text = "("+ PhotonNetwork.CurrentRoom.PlayerCount + "/10)";
                 
-                if (PhotonNetwork.CurrentRoom.PlayerCount == roomMaxPlayerRef)
+                if (PhotonNetwork.CurrentRoom.PlayerCount == maxPlayersOfRoom)
                 {
                     PhotonNetwork.CurrentRoom.IsOpen = false;
                     //Randomize colors
@@ -425,7 +435,6 @@ public class Network : MonoBehaviourPunCallbacks
                         photonView.RPC("setColor", RpcTarget.OthersBuffered, player.NickName + "-" + randomColorList[i]);
                         i++;
                     }
-                    print("XOF players");
                     m_reference.readPlayer();//print allplayer dictionary elements
                     photonView.RPC("RPCStartCounter", RpcTarget.All);
                     Invoke("RPCStartFading", 8);

@@ -11,6 +11,23 @@ TagManager:
   - iconinteraction
   - test
   - lights
+  - chat_text
+  - chat_icon
+  - UpMax50
+  - UpMax100
+  - DownMin100
+  - UpMax10
+  - DownMin50
+  - DownMin10
+  - Result_Voting
+  - Confirm_Panel
+  - Min100
+  - Max10
+  - Min10
+  - Max100
+  - Max1000
+  - Min1000
+  - ChatManager
   layers:
   - Default
   - TransparentFX

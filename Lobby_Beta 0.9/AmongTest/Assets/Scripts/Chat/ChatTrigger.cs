@@ -37,23 +37,6 @@ public class ChatTrigger : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*if (Input.touchCount == 1)
-        {
-            Vector3 wp = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
-            Vector2 touchPos = new Vector2(wp.x, wp.y);
-            if (startChatElement.GetComponentInChildren<Collider2D>() == Physics2D.OverlapPoint(touchPos))
-            {
-                chatWindow.SetActive(true);
-            };
-        }*/
-        /*if (Input.touchCount > 0)
-        {
-            Vector3 wp = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
-            if (GetComponent<Collider2D>().OverlapPoint(wp))
-            {
-                //your code
-                Debug.Log("Hello");
-            }
-        }*/
+
     }
 }

@@ -19,7 +19,6 @@ public class Main_Sink_Task:MonoBehaviour
 
     public void ValveSwitch(int points)
     {
-        print(points + " was added!");
         currentPoints += points;
         if(maxPoints == currentPoints)
         {
@@ -38,7 +37,6 @@ public class Main_Sink_Task:MonoBehaviour
         for (int i = 1; i < maxPoints; i++)
         {
             float temp = Random.value;
-            print("Value "+ i + ": " + temp);
             if (temp >= 0.75f)
                 currentPoints += 1;
             sst[i].setup(temp);

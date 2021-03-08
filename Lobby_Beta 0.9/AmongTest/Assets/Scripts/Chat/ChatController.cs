@@ -17,7 +17,9 @@ public class ChatController : MonoBehaviour, IChatClientListener
     [SerializeField] private ScrollRect scrollRect;
     [SerializeField] private GameObject chatListing;
     [SerializeField] private Network network;
-
+    [SerializeField] private GameObject voting_panel;
+    [SerializeField] private GameObject postVotingTimer;
+    [SerializeField] private GameObject thisChatController;
     [Header("Photon Chat Logic")]
     private ChatClient chatClient;
 
@@ -36,6 +38,15 @@ public class ChatController : MonoBehaviour, IChatClientListener
     {
         chatClient.Service();
         if (Input.GetKeyUp(KeyCode.Return)) btnSendMessage();
+    }
+
+    public void startNextPhase() 
+    {
+        //Xof hier den chatverlauf loggen?
+        voting_panel.SetActive(true);
+        postVotingTimer.SetActive(true);
+        thisChatController.SetActive(false);
+
     }
 
     //Eigene Methoden 

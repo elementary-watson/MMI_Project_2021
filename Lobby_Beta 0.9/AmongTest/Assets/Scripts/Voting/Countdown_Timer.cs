@@ -7,10 +7,11 @@ public class Countdown_Timer : MonoBehaviour
 {
     [SerializeField] private Image countdownCircleTimer;
     [SerializeField] private Text countdownText;
-    [SerializeField] private float startTime = 30.0f;
-    [SerializeField] private Confirm_Panel_Logic confirm_pl;
-    [SerializeField] private GameObject result_VotingPanel ;
+    [SerializeField] private float startTime;
+    [SerializeField] private GameObject referenced;
+    [SerializeField] private GameObject result_VotingPanel;
     [SerializeField] private GameObject thisTimerPanel;
+    [SerializeField] private Multiplayer_Reference m_reference;
 
     int isFinished=0;
     private float currentTime;
@@ -25,12 +26,28 @@ public class Countdown_Timer : MonoBehaviour
         // update the countdown on the update
         updateTime = true;
     }
-    void finishUpVoting()
+    void finishedUp() // jed nachdem wo der der timer drin ist macht er die nächste phase auf
     {
         if (isFinished == 1)
         {
-            result_VotingPanel.SetActive(true);
-            confirm_pl.Timeout_ConfirmChoice();            
+            if (referenced.GetComponent<GameObject>().tag == "Confirm_Panel")
+            {
+                result_VotingPanel.SetActive(true);
+                Confirm_Panel_Logic confirm_pl = referenced.GetComponent<Confirm_Panel_Logic>();
+                confirm_pl.photon_Timeout_ConfirmChoice();
+            } 
+            else if (referenced.GetComponent<GameObject>().tag == "Result_Panel")
+            {
+                Result_Voting_Panel rv_pnl = result_VotingPanel.GetComponent<Result_Voting_Panel>();
+                rv_pnl.nextPhase();//wird in Voring Panel gehandelt
+
+            }
+            else if (referenced.GetComponent<GameObject>().tag == "ChatManager")
+            {                
+                m_reference.setCurrentStage(3);
+                ChatController cc = referenced.GetComponent<ChatController>();
+                cc.startNextPhase();
+            }
         }
     }
     private void Update()
@@ -44,7 +61,7 @@ public class Countdown_Timer : MonoBehaviour
                 updateTime = false;
                 currentTime = 0.0f;
                 isFinished += 1;
-                finishUpVoting();
+                finishedUp();
             }
             countdownText.text = (int)currentTime + "s";
             float normalizedValue = Mathf.Clamp(
