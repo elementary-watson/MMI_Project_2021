@@ -18,7 +18,7 @@ public class ChatController : MonoBehaviour, IChatClientListener
     [SerializeField] private GameObject chatListing;
     [SerializeField] private Network network;
     [SerializeField] private GameObject voting_panel;
-    [SerializeField] private GameObject postVotingTimer;
+    [SerializeField] private GameObject s30postVotingTimer;
     [SerializeField] private GameObject thisChatController;
     [Header("Photon Chat Logic")]
     private ChatClient chatClient;
@@ -44,7 +44,7 @@ public class ChatController : MonoBehaviour, IChatClientListener
     {
         //Xof hier den chatverlauf loggen?
         voting_panel.SetActive(true);
-        postVotingTimer.SetActive(true);
+        s30postVotingTimer.SetActive(true);
         thisChatController.SetActive(false);
 
     }

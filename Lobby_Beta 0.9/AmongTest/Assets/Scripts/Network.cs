@@ -124,6 +124,7 @@ public class Network : MonoBehaviourPunCallbacks
 
     public void incrementTaskprogress(int increment)
     {
+        print("DEBUG: IncrementProgress was called");
         photonView.RPC("incrementTaskprogressNetwork", RpcTarget.All,increment);
     }
     [PunRPC]

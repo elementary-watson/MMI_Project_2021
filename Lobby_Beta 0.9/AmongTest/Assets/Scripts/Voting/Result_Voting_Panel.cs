@@ -26,18 +26,23 @@ public class Result_Voting_Panel : MonoBehaviour
         int currentStage = m_reference.getCurrentStage();
         if (currentStage == 1) 
         {
-            _network.addSuspectToList(photonActorID, playerColor);
+            if ((playerColor == "") || (photonActorID == 0))
+                print("Actor " + myActorID + " - " + myplayerColor + " made no Choice");
+            else
+                _network.addSuspectToList(photonActorID, playerColor);
             // XOF Hier muss geloggt werden!
+            finalReveal(photonActorID, playerColor);
         }
         if (currentStage == 3) 
         {
-            _network.addSuspectToList(photonActorID, playerColor);
+            
             // XOF Hier muss geloggt werden!
         
             //print("DEBUG: " + myActorID + " " + myplayerColor + " " + playerColor + " " + photonActorID + " " + indexPosition);
             if ((playerColor == "") || (photonActorID == 0))
                 print("Actor " + myActorID + " - " + myplayerColor + " made no Choice");
             else {
+                _network.addSuspectToList(photonActorID, playerColor);
                 if (finalVotings == null) { //erster wert der dict
                     //KeyValuePair<int, int> item = 1,1;
                     finalVotings.Add(photonActorID, 1);
@@ -50,7 +55,7 @@ public class Result_Voting_Panel : MonoBehaviour
             receivedVotes += 1;
             print("Voting result \n-------------------------------------------\n" + "Actors: " + _network.getActorsInRoom() + "Submit: " + receivedVotes);
             if (receivedVotes == _network.getActorsInRoom()) //Wenn alle spieler einen vote gesendet haben ergebnis bildschirm öffnen
-                finalReveal();
+                finalReveal(photonActorID, playerColor);
         }
     }
     public void submitSuspicion(string playerColor)
@@ -60,37 +65,58 @@ public class Result_Voting_Panel : MonoBehaviour
         img_votedPlayer.sprite = sp;
         tmp_resultText.text = "Du verdaechtigst diesen Spieler.\nFinale Entscheidung nach der folgenden Diskussionsrunde.";
     }
-    public void finalReveal()
+    public void finalReveal(int photonActorID, string playerColor)
     {
-        int i = 0;
-        KeyValuePair<int, int> mostVoted;
-        KeyValuePair<int, int> equal;
-        player = m_reference.getPlayers();//Liste wird aktuell sein
-        foreach (KeyValuePair<int, int> item in finalVotings)
-        {
-            if (i == 0)
-                mostVoted = item;
-            else if (item.Value > mostVoted.Value)
-                mostVoted = item;
-            else if (item.Value == mostVoted.Value)
-                equal = item;
-            i++;
-            print("itemkey :" + item.Key + " itemvalue" + item.Value);
-            print("mostvoted: " + mostVoted);
-            print("equal: " + equal);
+        if (m_reference.getCurrentStage() == 3){ 
+            int i = 0;
+            KeyValuePair<int, int> mostVoted;
+            KeyValuePair<int, int> equal;
+            player = m_reference.getPlayers();//Liste wird aktuell sein
+            foreach (KeyValuePair<int, int> item in finalVotings)
+            {
+                if (i == 0)
+                    mostVoted = item;
+                else if (item.Value > mostVoted.Value)
+                    mostVoted = item;
+                else if (item.Value == mostVoted.Value)
+                    equal = item;
+                i++;
+                print("itemkey :" + item.Key + " itemvalue" + item.Value);
+                print("mostvoted: " + mostVoted);
+                print("equal: " + equal);
+            }
+            if (mostVoted.Value == 0) { 
+                print("No on was voted");
+                tmp_resultText.text = "Kein Spieler ist ausgeschieden.";
+            }
+            else if (mostVoted.Value == equal.Value) { 
+                print("We have a tie between: " + player[mostVoted.Key] + " and " + player[equal.Key]);
+                tmp_resultText.text = " Stimmengleichheit! Kein Spieler ist ausgeschieden.";
+            }
+            else if (mostVoted.Value > 0)
+            {
+                print("Most voted player: " + player[mostVoted.Key]);
+                string filename = "Player Color/" + player[mostVoted.Key] + "_Char";
+                Sprite sp = Resources.Load<Sprite>(filename);
+                img_votedPlayer.sprite = sp;
+                tmp_resultText.text = "Dieser Spieler ist ausgeschieden.";
+            }
         }
-        if (mostVoted.Value == 0)
-            print("No on was voted");
-        else if (mostVoted.Value == equal.Value)
-            print("We have a tie between: " + player[mostVoted.Key] + " and " + player[equal.Key]);
-        else if (mostVoted.Value > 0)
+        else
         {
-            print("Most voted player: " + player[mostVoted.Key]);
-            string filename = "Player Color/" + player[mostVoted.Key] + "_Char";
-            Sprite sp = Resources.Load<Sprite>(filename);
-            img_votedPlayer.sprite = sp;
+            if (playerColor =="" && photonActorID == 0) 
+            {
+                
+            }
+            else { 
+                print("MyChoice: " + photonActorID);
+                string filename = "Player Color/" + playerColor + "_Char";
+                Sprite sp = Resources.Load<Sprite>(filename);
+                img_votedPlayer.sprite = sp;
+                tmp_resultText.text = "Diesen Spieler wurde von dir verdaechtigt.";
+            }
         }
-        tmp_resultText.text = "Dieser Spieler ist ausgeschieden.";
+        s9_votetimerPanel.SetActive(true);
         //svl[i].setClassValues(item.Value, item.Key, i);//set (color, id, index) of buttons
     }
     public void nextPhase()//Wird von timerCountdown gerufen. Phase beenden und nächste beginnen.
@@ -106,8 +132,8 @@ public class Result_Voting_Panel : MonoBehaviour
         }
         else if (currentStage == 3 && m_reference.getGameRound() < 2) //Spiel fortsetzten?
         {
-            int crewPoints = m_reference.getCrewPoints();
-            int saboteurPoints = m_reference.getSaboteurPoints();
+            //int crewPoints = m_reference.getCrewPoints();
+            //int saboteurPoints = m_reference.getSaboteurPoints();
             int currentGameRound = m_reference.getGameRound();
             m_reference.setGameRound(currentGameRound + 1);
             m_reference.setCurrentStage(1); // phase zurücksetzten

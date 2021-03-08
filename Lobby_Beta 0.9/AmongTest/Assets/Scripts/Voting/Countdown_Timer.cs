@@ -30,7 +30,7 @@ public class Countdown_Timer : MonoBehaviour
     {
         if (isFinished == 1)
         {
-            if (referenced.GetComponent<GameObject>().tag == "Confirm_Panel")
+            if (referenced.GetComponent<Confirm_Panel_Logic>().tag == "Confirm_Panel")
             {
                 result_VotingPanel.SetActive(true);
                 Confirm_Panel_Logic confirm_pl = referenced.GetComponent<Confirm_Panel_Logic>();
