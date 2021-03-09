@@ -91,17 +91,33 @@ public class ChatController : MonoBehaviour, IChatClientListener
         Canvas.ForceUpdateCanvases();
         content.transform.parent.GetParentComponent<ScrollRect>().verticalNormalizedPosition = 0;
 
+        print("Chat element create call");
         string msg = messages[0].ToString();
+
+        //var findRawimage= chatElement.GetComponentInChildren<RawImage>();
+        string p_color = network.getPlayerColor();
+        Texture2D p_texture2D = new Texture2D(92, 92);
+        string p_filename = "Player Color/" + senders[0];
+        p_texture2D = Resources.Load<Texture2D>(p_filename);
+        chatElement.GetComponentInChildren<RawImage>().texture = p_texture2D;
+
+        chatElement.GetComponentInChildren<TextMeshProUGUI>().text = msg;
+
+
         for (int i = 0; i < chatElement.transform.childCount; i++)
         {
+            print("Enter loop search for components");
+
             Transform currentItem = chatElement.transform.GetChild(i);
-            if (currentItem.name.Equals("txt_usertext"))
+            if (currentItem.name.Contains("txt_usertext"))
             {
+                print("Found text");
                 chatElement.transform.GetChild(i).GetComponent<Text>().text = msg;
 
             }
-            if (currentItem.name.Equals("r_img_player"))
+            if (currentItem.name.Contains("r_img_player"))
             {
+                print("Found img");
                 string color = network.getPlayerColor();
                 if (color == null) color = "Red_Char";
 

@@ -87,6 +87,7 @@ public class Result_Voting_Panel : MonoBehaviour
             }
             if (mostVoted.Value == 0) { 
                 print("No on was voted");
+                thisVotingPanel.GetComponentInChildren<TextMeshProUGUI>().text = "Kein Spieler ist ausgeschieden.";
                 tmp_resultText.text = "Kein Spieler ist ausgeschieden.";
             }
             else if (mostVoted.Value == equal.Value) { 
@@ -106,7 +107,7 @@ public class Result_Voting_Panel : MonoBehaviour
         {
             if (playerColor =="" && photonActorID == 0) 
             {
-                
+                thisVotingPanel.GetComponentInChildren<TextMeshProUGUI>().text = "Keinen verdaechtigen";
             }
             else { 
                 print("MyChoice: " + photonActorID);

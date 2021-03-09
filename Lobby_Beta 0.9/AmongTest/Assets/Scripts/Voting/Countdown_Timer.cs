@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,9 +9,12 @@ public class Countdown_Timer : MonoBehaviour
     [SerializeField] private Image countdownCircleTimer;
     [SerializeField] private Text countdownText;
     [SerializeField] private float startTime;
-    [SerializeField] private GameObject referenced;
+    [SerializeField] public String referenced;
+    //[SerializeField] private GameObject referenced;
     [SerializeField] private GameObject result_VotingPanel;
     [SerializeField] private GameObject thisTimerPanel;
+    [SerializeField] private ChatController cc;
+    [SerializeField] private Confirm_Panel_Logic confirm_pl;
     [SerializeField] private Multiplayer_Reference m_reference;
 
     int isFinished=0;
@@ -30,23 +34,29 @@ public class Countdown_Timer : MonoBehaviour
     {
         if (isFinished == 1)
         {
-            if (referenced.GetComponent<Confirm_Panel_Logic>().tag == "Confirm_Panel")
+            try 
             {
-                result_VotingPanel.SetActive(true);
-                Confirm_Panel_Logic confirm_pl = referenced.GetComponent<Confirm_Panel_Logic>();
-                confirm_pl.photon_Timeout_ConfirmChoice();
-            } 
-            else if (referenced.GetComponent<GameObject>().tag == "Result_Panel")
-            {
-                Result_Voting_Panel rv_pnl = result_VotingPanel.GetComponent<Result_Voting_Panel>();
-                rv_pnl.nextPhase();//wird in Voring Panel gehandelt
+                //GameObject [] tmp = referenced.GetComponents<GameObject>();
+                //foreach( )
+                if (referenced == "Result_Panel")
+                {
+                    Result_Voting_Panel rv_pnl = result_VotingPanel.GetComponent<Result_Voting_Panel>();
+                    rv_pnl.nextPhase();//wird in Voring Panel gehandelt
 
-            }
-            else if (referenced.GetComponent<GameObject>().tag == "ChatManager")
-            {                
-                m_reference.setCurrentStage(3);
-                ChatController cc = referenced.GetComponent<ChatController>();
-                cc.startNextPhase();
+                }
+                else if (referenced == "ChatManager")
+                {                
+                    m_reference.setCurrentStage(3);
+                    cc.startNextPhase();
+                }
+                else if (referenced == "Confirm_Panel")
+                {
+                    result_VotingPanel.SetActive(true);
+                    confirm_pl.photon_Timeout_ConfirmChoice();
+                }    
+            } catch (Exception e) 
+            {
+                print("Failure" + e);
             }
         }
     }
