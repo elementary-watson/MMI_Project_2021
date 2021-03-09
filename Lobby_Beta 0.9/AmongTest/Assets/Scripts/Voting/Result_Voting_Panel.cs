@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class Result_Voting_Panel : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class Result_Voting_Panel : MonoBehaviour
     [SerializeField] private Network _network;
     private int receivedVotes;    
     [SerializeField] TextMeshProUGUI tmp_resultText;    
-    [SerializeField] private GameObject thisVotingPanel;
+    [SerializeField] private GameObject thisResultVotingPanel;
     [SerializeField] private GameObject Voting_Panel;
     [SerializeField] private GameObject s9_votetimerPanel;
     [Header("Extern")]
@@ -31,7 +32,6 @@ public class Result_Voting_Panel : MonoBehaviour
             else
                 _network.addSuspectToList(photonActorID, playerColor);
             // XOF Hier muss geloggt werden!
-            finalReveal(photonActorID, playerColor);
         }
         if (currentStage == 3) 
         {
@@ -52,10 +52,13 @@ public class Result_Voting_Panel : MonoBehaviour
                 else
                     finalVotings[photonActorID] += 1; //vote zu einer farbe hinzufügen
             }
-            receivedVotes += 1;
-            print("Voting result \n-------------------------------------------\n" + "Actors: " + _network.getActorsInRoom() + "Submit: " + receivedVotes);
-            if (receivedVotes == _network.getActorsInRoom()) //Wenn alle spieler einen vote gesendet haben ergebnis bildschirm öffnen
-                finalReveal(photonActorID, playerColor);
+        }
+        receivedVotes += 1;
+        print("Voting result \n-------------------------------------------\n" + "Actors: " + _network.getActorsInRoom() + "Submit: " + receivedVotes);
+        if (receivedVotes >= _network.getActorsInRoom())
+        { //Wenn alle spieler einen vote gesendet haben ergebnis bildschirm öffnen
+            receivedVotes = 0;
+            finalReveal(photonActorID, playerColor);
         }
     }
     public void submitSuspicion(string playerColor)
@@ -87,7 +90,7 @@ public class Result_Voting_Panel : MonoBehaviour
             }
             if (mostVoted.Value == 0) { 
                 print("No on was voted");
-                thisVotingPanel.GetComponentInChildren<TextMeshProUGUI>().text = "Kein Spieler ist ausgeschieden.";
+                thisResultVotingPanel.GetComponentInChildren<TextMeshProUGUI>().text = "Kein Spieler ist ausgeschieden.";
                 tmp_resultText.text = "Kein Spieler ist ausgeschieden.";
             }
             else if (mostVoted.Value == equal.Value) { 
@@ -107,7 +110,16 @@ public class Result_Voting_Panel : MonoBehaviour
         {
             if (playerColor =="" && photonActorID == 0) 
             {
-                thisVotingPanel.GetComponentInChildren<TextMeshProUGUI>().text = "Keinen verdaechtigen";
+                try
+                {
+                    var tmp = thisResultVotingPanel.GetComponentInChildren<TextMeshProUGUI>();//.text = "Keinen verdaechtigen";
+                    if (tmp.tag == "test") print("XOFXOF");
+                    else print("FAILURE XOF");
+                }
+                catch (Exception e)
+                {
+                    print("DEBUG AB HIER: " + e);
+                }
             }
             else { 
                 print("MyChoice: " + photonActorID);
@@ -127,21 +139,13 @@ public class Result_Voting_Panel : MonoBehaviour
         {
             currentStage += 1;
             m_reference.setCurrentStage(currentStage);
-            chatPanel.SetActive(true); //reihenfolge beachten!!
-            Voting_Panel.SetActive(false);
-            thisVotingPanel.SetActive(false);
+
         }
         else if (currentStage == 3 && m_reference.getGameRound() < 2) //Spiel fortsetzten?
         {
             //int crewPoints = m_reference.getCrewPoints();
             //int saboteurPoints = m_reference.getSaboteurPoints();
-            int currentGameRound = m_reference.getGameRound();
-            m_reference.setGameRound(currentGameRound + 1);
-            m_reference.setCurrentStage(1); // phase zurücksetzten
-
-            ScorePanel.SetActive(true);
-            Voting_Panel.SetActive(false);
-            thisVotingPanel.SetActive(false);
+            
         }
         else
         {

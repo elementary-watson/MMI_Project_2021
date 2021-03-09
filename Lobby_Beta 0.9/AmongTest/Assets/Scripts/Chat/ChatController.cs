@@ -17,9 +17,7 @@ public class ChatController : MonoBehaviour, IChatClientListener
     [SerializeField] private ScrollRect scrollRect;
     [SerializeField] private GameObject chatListing;
     [SerializeField] private Network network;
-    [SerializeField] private GameObject voting_panel;
-    [SerializeField] private GameObject s30postVotingTimer;
-    [SerializeField] private GameObject thisChatController;
+
     [Header("Photon Chat Logic")]
     private ChatClient chatClient;
 
@@ -42,10 +40,7 @@ public class ChatController : MonoBehaviour, IChatClientListener
 
     public void startNextPhase() 
     {
-        //Xof hier den chatverlauf loggen?
-        voting_panel.SetActive(true);
-        s30postVotingTimer.SetActive(true);
-        thisChatController.SetActive(false);
+
 
     }
 
@@ -103,7 +98,7 @@ public class ChatController : MonoBehaviour, IChatClientListener
 
         chatElement.GetComponentInChildren<TextMeshProUGUI>().text = msg;
 
-
+        /*
         for (int i = 0; i < chatElement.transform.childCount; i++)
         {
             print("Enter loop search for components");
@@ -129,7 +124,7 @@ public class ChatController : MonoBehaviour, IChatClientListener
                 texture2D = Resources.Load<Texture2D>(filename);
                 chatElement.transform.GetChild(i).GetComponent<RawImage>().texture = texture2D;//= msg;
             }
-        }
+        }*/
     }
 
     #endregion

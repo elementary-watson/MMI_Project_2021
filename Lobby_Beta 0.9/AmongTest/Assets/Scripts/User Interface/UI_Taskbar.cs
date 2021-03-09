@@ -23,15 +23,15 @@ public class UI_Taskbar : MonoBehaviour
         if(current == 100) // XOF timer einbauen
         {
             Panel_Voting.SetActive(true);
-            preVoteTimer.SetActive(true);
-            thisMain_Progressbar.SetActive(false);
+            preVoteTimer.SetActive(true);            
             Score_Panel.SetActive(false);
             Player_Panel.SetActive(false);
+            thisMain_Progressbar.SetActive(false);
         }
     }
     private void Start()
     {
-        current = 0;
+        current = 0;        
     }
     private void Update()
     {
