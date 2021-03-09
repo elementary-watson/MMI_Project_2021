@@ -17,7 +17,7 @@ public class Result_Voting_Panel : MonoBehaviour
     [SerializeField] TextMeshProUGUI tmp_resultText;    
     [SerializeField] private GameObject thisResultVotingPanel;
     [SerializeField] private GameObject Voting_Panel;
-    [SerializeField] private GameObject s9_votetimerPanel;
+    [SerializeField] private Panel_Manager_Script p_manager;
     [Header("Extern")]
     [SerializeField] private GameObject chatPanel;
     [SerializeField] private GameObject ScorePanel;
@@ -90,7 +90,7 @@ public class Result_Voting_Panel : MonoBehaviour
             }
             if (mostVoted.Value == 0) { 
                 print("No on was voted");
-                thisResultVotingPanel.GetComponentInChildren<TextMeshProUGUI>().text = "Kein Spieler ist ausgeschieden.";
+                //thisResultVotingPanel.GetComponentInChildren<TextMeshProUGUI>().text = "Kein Spieler ist ausgeschieden.";
                 tmp_resultText.text = "Kein Spieler ist ausgeschieden.";
             }
             else if (mostVoted.Value == equal.Value) { 
@@ -112,9 +112,10 @@ public class Result_Voting_Panel : MonoBehaviour
             {
                 try
                 {
-                    var tmp = thisResultVotingPanel.GetComponentInChildren<TextMeshProUGUI>();//.text = "Keinen verdaechtigen";
+                    p_manager.sendText( "Dieser Spieler ist ausgeschieden.");
+                    /*var tmp = thisResultVotingPanel.GetComponentInChildren<TextMeshProUGUI>();//.text = "Keinen verdaechtigen";
                     if (tmp.tag == "test") print("XOFXOF");
-                    else print("FAILURE XOF");
+                    else print("FAILURE XOF");*/
                 }
                 catch (Exception e)
                 {
@@ -129,7 +130,7 @@ public class Result_Voting_Panel : MonoBehaviour
                 tmp_resultText.text = "Diesen Spieler wurde von dir verdaechtigt.";
             }
         }
-        s9_votetimerPanel.SetActive(true);
+        
         //svl[i].setClassValues(item.Value, item.Key, i);//set (color, id, index) of buttons
     }
     public void nextPhase()//Wird von timerCountdown gerufen. Phase beenden und nächste beginnen.
