@@ -55,9 +55,11 @@ public class Network : MonoBehaviourPunCallbacks
     IDictionary<int, string> listOfSuspects = new Dictionary<int, string>();
     IDictionary<int, string> listOfVotekicks = new Dictionary<int, string>();
 
-    public void addSuspectToList(int actorId, string playerColor)
+    public void addSuspectToList(int stage, int gameround, string playerColor)
     {
-        listOfSuspects.Add(actorId, playerColor);
+        string value = stage + " " + playerColor;
+        // Runde pre/post Brown/Rot/Blau
+        listOfSuspects.Add(gameround, value);
     }
     public void addVotekickToList(int actorId, string playerColor)
     {

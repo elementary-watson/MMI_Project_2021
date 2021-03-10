@@ -11,7 +11,7 @@ public class Confirm_Panel_Logic : MonoBehaviour
     bool isSubmitted = false;
     [SerializeField] private Result_Voting_Panel result_vp;
     [SerializeField] private Network _network;
-    [SerializeField] private GameObject timerPanel;
+    //[SerializeField] private GameObject timerPanel;
 
     public void setTemporaryVote(string playerColor, int photonActorID, int indexPosition)
     {
@@ -22,7 +22,7 @@ public class Confirm_Panel_Logic : MonoBehaviour
 
     public void photon_Timeout_ConfirmChoice()//läuft die zeit aus werden die auwahldaten geschickt
     {
-        timerPanel.SetActive(false);
+        //timerPanel.SetActive(false);
         if (isSubmitted)
            _network.callSubmitVote(true,playerColor,photonActorID,indexPosition);
         else

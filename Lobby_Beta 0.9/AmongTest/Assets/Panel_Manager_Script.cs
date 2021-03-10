@@ -23,6 +23,7 @@ public class Panel_Manager_Script : MonoBehaviour
     [SerializeField] private GameObject main_Progressbar;
 
     string msg = "empty";
+    bool showmessage = false;
 
     public void sendText(string msg)
     {
@@ -37,7 +38,7 @@ public class Panel_Manager_Script : MonoBehaviour
             //Result_Voting_Panel rv_pnl = result_VotingPanel.GetComponent<Result_Voting_Panel>();
             result_VotingPanel.SetActive(true); //Ergebnisse zeigen
             confirm_pl.photon_Timeout_ConfirmChoice();
-            resultTxt.text = msg;
+            showmessage = true; //resultTxt.text = msg;            
             s15postVotingTimer.SetActive(false);
             s9_votetimerPanel.SetActive(true);
         }
@@ -80,6 +81,7 @@ public class Panel_Manager_Script : MonoBehaviour
         {
             result_VotingPanel.SetActive(true);
             confirm_pl.photon_Timeout_ConfirmChoice();
+            showmessage = true;//resultTxt.text = msg;
             second_9s_Timer_Panel.SetActive(true);
         }
     }
@@ -120,6 +122,9 @@ public class Panel_Manager_Script : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (showmessage) { 
+            //resultTxt.text = msg;
+            showmessage = false;
+        }
     }
 }

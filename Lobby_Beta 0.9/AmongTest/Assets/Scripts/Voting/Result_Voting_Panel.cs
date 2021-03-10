@@ -16,6 +16,8 @@ public class Result_Voting_Panel : MonoBehaviour
     private int receivedVotes;    
     [SerializeField] TextMeshProUGUI tmp_resultText;    
     [SerializeField] private GameObject thisResultVotingPanel;
+    [SerializeField] private GameObject[] tmp_resultTexts = new GameObject[0];
+
     [SerializeField] private GameObject Voting_Panel;
     [SerializeField] private Panel_Manager_Script p_manager;
     [Header("Extern")]
@@ -24,26 +26,23 @@ public class Result_Voting_Panel : MonoBehaviour
     // Start is called before the first frame update
     public void submitVote(int myActorID, string myplayerColor, string playerColor, int photonActorID,int indexPosition)
     {
-        print("DEBUG: submitVote");
         int currentStage = m_reference.getCurrentStage();
         if (currentStage == 1) 
         {
             if ((playerColor == "") || (photonActorID == 0))
                 print("Actor " + myActorID + " - " + myplayerColor + " made no Choice");
             else
-                _network.addSuspectToList(photonActorID, playerColor);
+                _network.addSuspectToList(m_reference.getCurrentStage(),m_reference.getGameRound(), playerColor);
             // XOF Hier muss geloggt werden!
         }
         if (currentStage == 3) 
         {
-            
             // XOF Hier muss geloggt werden!
-        
             //print("DEBUG: " + myActorID + " " + myplayerColor + " " + playerColor + " " + photonActorID + " " + indexPosition);
             if ((playerColor == "") || (photonActorID == 0))
                 print("Actor " + myActorID + " - " + myplayerColor + " made no Choice");
             else {
-                _network.addSuspectToList(photonActorID, playerColor);
+                _network.addSuspectToList(m_reference.getCurrentStage(), m_reference.getGameRound(), playerColor);
                 if (finalVotings == null) { //erster wert der dict
                     //KeyValuePair<int, int> item = 1,1;
                     finalVotings.Add(photonActorID, 1);
@@ -94,6 +93,9 @@ public class Result_Voting_Panel : MonoBehaviour
             if (mostVoted.Value == 0) { 
                 print("No on was voted");
                 //thisResultVotingPanel.GetComponentInChildren<TextMeshProUGUI>().text = "Kein Spieler ist ausgeschieden.";
+                tmp_resultTexts[0].SetActive(false);
+
+                tmp_resultTexts[1].SetActive(true);
                 p_manager.sendText("Kein Spieler ist ausgeschieden.");
             }
             else if (mostVoted.Value == equal.Value) { 
@@ -116,6 +118,8 @@ public class Result_Voting_Panel : MonoBehaviour
             {
                 try
                 {
+                    tmp_resultTexts[0].SetActive(true);
+
                     p_manager.sendText( "Kein Spieler wurde ausgewählt.");
                     /*var tmp = thisResultVotingPanel.GetComponentInChildren<TextMeshProUGUI>();//.text = "Keinen verdaechtigen";
                     if (tmp.tag == "test") print("XOFXOF");
