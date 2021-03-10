@@ -24,6 +24,7 @@ public class Result_Voting_Panel : MonoBehaviour
     // Start is called before the first frame update
     public void submitVote(int myActorID, string myplayerColor, string playerColor, int photonActorID,int indexPosition)
     {
+        print("DEBUG: submitVote");
         int currentStage = m_reference.getCurrentStage();
         if (currentStage == 1) 
         {
@@ -66,11 +67,13 @@ public class Result_Voting_Panel : MonoBehaviour
         string filename = "Player Color/" + playerColor + "_Char";
         Sprite sp = Resources.Load<Sprite>(filename);
         img_votedPlayer.sprite = sp;
-        tmp_resultText.text = "Du verdaechtigst diesen Spieler.\nFinale Entscheidung nach der folgenden Diskussionsrunde.";
+        p_manager.sendText("Du verdaechtigst diesen Spieler.\nFinale Entscheidung nach der folgenden Diskussionsrunde.");
     }
     public void finalReveal(int photonActorID, string playerColor)
     {
-        if (m_reference.getCurrentStage() == 3){ 
+        print("DEBUG: finalReveal");
+        if (m_reference.getCurrentStage() == 3){
+            print("DEBUG: finalReveal Stage 3");
             int i = 0;
             KeyValuePair<int, int> mostVoted;
             KeyValuePair<int, int> equal;
@@ -91,11 +94,11 @@ public class Result_Voting_Panel : MonoBehaviour
             if (mostVoted.Value == 0) { 
                 print("No on was voted");
                 //thisResultVotingPanel.GetComponentInChildren<TextMeshProUGUI>().text = "Kein Spieler ist ausgeschieden.";
-                tmp_resultText.text = "Kein Spieler ist ausgeschieden.";
+                p_manager.sendText("Kein Spieler ist ausgeschieden.");
             }
             else if (mostVoted.Value == equal.Value) { 
                 print("We have a tie between: " + player[mostVoted.Key] + " and " + player[equal.Key]);
-                tmp_resultText.text = " Stimmengleichheit! Kein Spieler ist ausgeschieden.";
+                p_manager.sendText("Stimmengleichheit! Kein Spieler ist ausgeschieden.");
             }
             else if (mostVoted.Value > 0)
             {
@@ -103,16 +106,17 @@ public class Result_Voting_Panel : MonoBehaviour
                 string filename = "Player Color/" + player[mostVoted.Key] + "_Char";
                 Sprite sp = Resources.Load<Sprite>(filename);
                 img_votedPlayer.sprite = sp;
-                tmp_resultText.text = "Dieser Spieler ist ausgeschieden.";
+                p_manager.sendText("Dieser Spieler ist ausgeschieden.");
             }
         }
         else
         {
+            print("DEBUG: finalReveal Stage 1");
             if (playerColor =="" && photonActorID == 0) 
             {
                 try
                 {
-                    p_manager.sendText( "Dieser Spieler ist ausgeschieden.");
+                    p_manager.sendText( "Kein Spieler wurde ausgewählt.");
                     /*var tmp = thisResultVotingPanel.GetComponentInChildren<TextMeshProUGUI>();//.text = "Keinen verdaechtigen";
                     if (tmp.tag == "test") print("XOFXOF");
                     else print("FAILURE XOF");*/
@@ -127,7 +131,7 @@ public class Result_Voting_Panel : MonoBehaviour
                 string filename = "Player Color/" + playerColor + "_Char";
                 Sprite sp = Resources.Load<Sprite>(filename);
                 img_votedPlayer.sprite = sp;
-                tmp_resultText.text = "Diesen Spieler wurde von dir verdaechtigt.";
+                p_manager.sendText("Diesen Spieler wurde von dir verdaechtigt.");
             }
         }
         
@@ -135,6 +139,7 @@ public class Result_Voting_Panel : MonoBehaviour
     }
     public void nextPhase()//Wird von timerCountdown gerufen. Phase beenden und nächste beginnen.
     {
+        print("DEBUG: nextPhase");
         int currentStage = m_reference.getCurrentStage();
         if (currentStage == 1) // In Chat Panel übergehen und dieses Panel schließen
         {

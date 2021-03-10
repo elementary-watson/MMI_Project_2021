@@ -17,7 +17,6 @@ public class Task_Illuminate : Interactable
             //Sprite austauschen und Task erscheinen lassen
             sr.sprite = active_state;
             task.SetActive(true);
-            print("It Worked until here");
             //setPosition();
         }
         else

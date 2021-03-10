@@ -27,6 +27,9 @@ public class Countdown_Timer : MonoBehaviour
             case "9s_Timer_Panel":
                 startTime = 9f;
                 break;
+            case "second_9s_Timer_Panel":
+                startTime = 9f;
+                break;
             case "15s_Timer_Panel":
                 startTime = 5f;
                 break;

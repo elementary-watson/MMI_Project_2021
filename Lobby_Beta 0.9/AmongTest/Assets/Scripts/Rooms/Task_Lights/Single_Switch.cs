@@ -53,7 +53,6 @@ public class Single_Switch : MonoBehaviour
     }
     public void setup_Task(bool state)
     {
-        print("DEBUG: Setup is called");
         if (state) 
         { 
             isActive = true;

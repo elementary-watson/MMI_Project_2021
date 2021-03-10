@@ -14,9 +14,9 @@ public class Panel_Manager_Script : MonoBehaviour
     [SerializeField] private GameObject s30postVotingTimer;
     [SerializeField] private GameObject s15postVotingTimer;
     [SerializeField] private GameObject s9_votetimerPanel;
-
+    [SerializeField] private GameObject second_9s_Timer_Panel;
+    
     [SerializeField] private TextMeshProUGUI resultTxt;
-
 
     [SerializeField] private GameObject Score_Panel;
     [SerializeField] private GameObject Player_Panel;
@@ -55,6 +55,7 @@ public class Panel_Manager_Script : MonoBehaviour
             }
             else if (stage == 3)
             {
+                voting_panel.SetActive(false);
                 if (m_reference.getMaxRounds() == 5)
                 { //BestofFive
                     thirdPhase(3);
@@ -79,7 +80,7 @@ public class Panel_Manager_Script : MonoBehaviour
         {
             result_VotingPanel.SetActive(true);
             confirm_pl.photon_Timeout_ConfirmChoice();
-            s9_votetimerPanel.SetActive(true);
+            second_9s_Timer_Panel.SetActive(true);
         }
     }
     void thirdPhase(int maxrounds)
@@ -95,6 +96,7 @@ public class Panel_Manager_Script : MonoBehaviour
         }
         else
         {
+            print("called this");
             int currentGameRound = m_reference.getGameRound();
             m_reference.setGameRound(currentGameRound + 1);
             Panel_Voting_Logic pvl = voting_panel.GetComponent<Panel_Voting_Logic>();
