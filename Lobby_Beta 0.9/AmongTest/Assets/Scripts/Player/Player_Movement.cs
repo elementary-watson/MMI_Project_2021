@@ -17,7 +17,8 @@ public class Player_Movement : Photon.Pun.MonoBehaviourPun
     }
     private void FixedUpdate()
     {
-        if (photonView.IsMine) { 
+        if (photonView.IsMine) {
+            print("Move info" + movement);
             rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
         }
         /*Vector2 velocity = rb.position + movement * moveSpeed * Time.fixedDeltaTime;
