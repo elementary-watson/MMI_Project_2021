@@ -18,12 +18,12 @@ public class Player_Movement : Photon.Pun.MonoBehaviourPun
     private void FixedUpdate()
     {
         if (photonView.IsMine) {
-            print("Move info" + movement);
+            if(movement.sqrMagnitude > 1) //wenn jemand diagonal läuft wird der wert angepasst. Normal 1 / diagonal auf 1,02
+                movement = new Vector2(movement.x/1.4f,movement.y/1.4f );
             rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
         }
         /*Vector2 velocity = rb.position + movement * moveSpeed * Time.fixedDeltaTime;
-        Vector3 scale = transform.localScale;
-        
+        Vector3 scale = transform.localScale;        
         scale.x = scaleX * (velocity.x >= 0 ? 1 : -1);
         transform.localScale = scale;*/
         //Input.GetKeyDown(KeyCode.Space);
