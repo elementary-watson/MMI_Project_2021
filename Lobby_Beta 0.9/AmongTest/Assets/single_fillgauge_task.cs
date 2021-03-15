@@ -8,7 +8,6 @@ using UnityEngine.UI;
 public class Single_Fillgauge_Task : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     [SerializeField] Main_Fillgauge_Task mft_object;
-    public Button btn_fill;
     public Image img_fillGauge;
     [SerializeField] Image[] img_randomVisuals = new Image[0];
     [SerializeField] float current;
@@ -88,28 +87,9 @@ public class Single_Fillgauge_Task : MonoBehaviour, IPointerDownHandler, IPointe
     {
         if (!isInteractable)
         {
-            btn_fill.enabled = false;
             isInteractable = false;
             print("btncall");
         }
     }
-    public void btn_startFillgauge()
-    {
-
-        print("contact");
-        if (Input.GetMouseButton(0))
-        {
-            print("inner if");
-            if (maximum < 0.89f)
-            {
-                if (current == 0.5f) { btn_fill.enabled = false; }
-                current += (.1f * Time.deltaTime);
-                float fillamount = (float)current / (float)maximum;
-                img_fillGauge.fillAmount = fillamount;
-            }
-        }
-
-    }
-
 
 }
