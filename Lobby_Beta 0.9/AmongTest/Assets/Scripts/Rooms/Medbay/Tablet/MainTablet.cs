@@ -13,6 +13,9 @@ public class MainTablet : MonoBehaviour
     private int fixedcounter = 10;
     private int count = 0;
 
+    public AudioSource taskfin_sound;
+    public GameObject win_message;
+
     public TextMeshProUGUI infoBoxText;
     [SerializeField] GameObject TabletPanel;
     [SerializeField] SingleTablet[] s_numberlabor = new SingleTablet[0];
@@ -90,7 +93,7 @@ public class MainTablet : MonoBehaviour
             tenNumbers = tenNumbers + " " + randomNumberforTaskList[i];
             tenNumberList[i] = randomNumberforTaskList[i];
         }
-        infoBoxText.text = "Drücke von " + randomNumberforTaskList[0] + " bis " + randomNumberforTaskList[9];
+        infoBoxText.text = "Klicke alle Zahlen von " + randomNumberforTaskList[0] + " bis " + randomNumberforTaskList[9] + " an";
     }
 
     public void checkCounter(int cp)
@@ -98,8 +101,9 @@ public class MainTablet : MonoBehaviour
         count = count + cp;
         if (count == fixedcounter)
         {
-            infoBoxText.text = "Aufgabe erledigt";
-            Invoke("taskfinished", 1);
+            taskfin_sound.Play();
+            win_message.SetActive(true);
+            Invoke("taskfinished", 3);
             //_network.incrementTaskprogress(10);
         }
     }

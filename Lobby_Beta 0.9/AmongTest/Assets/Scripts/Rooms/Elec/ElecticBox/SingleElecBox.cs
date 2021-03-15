@@ -11,14 +11,15 @@ public class SingleElecBox : MonoBehaviour
     private bool isActive;
     [SerializeField] Button btn;
     [SerializeField] private MainElecBox mainlogic;
+    public AudioSource switchfin_sound;
+
 
     public void btnturntool()
     {
         if (isActive == false)
         {
             img_Button.sprite = on_Tool;
-
-
+            switchfin_sound.Play();
             btn.interactable = false;
             mainlogic.switchtool(1);
             isActive = true;

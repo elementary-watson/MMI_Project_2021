@@ -11,13 +11,15 @@ public class MainElecBox : MonoBehaviour
 
     [SerializeField] GameObject ElecBoxPanel;
     public TextMeshProUGUI infoBoxText;
+    public GameObject win_message;
     public Image img_Light;
 
+    public AudioSource taskfin_sound;
 
     void Start()
     {
         img_Light.enabled = false;
-        infoBoxText.text = "Bringe die Schalter in die richtige Position";
+        infoBoxText.text = "Bringe den Strom zum fließen";
     }
     
     public void switchtool(int cp)
@@ -25,9 +27,10 @@ public class MainElecBox : MonoBehaviour
         count = count + cp;
         if (count == fixedcounter)
         {
+            taskfin_sound.Play();
+            win_message.SetActive(true);
             img_Light.enabled = true;
-            infoBoxText.text = "Aufgabe erledigt";
-            Invoke("taskfinished", 2);
+            Invoke("taskfinished", 3);
             //_network.incrementTaskprogress(10);
         }
     }

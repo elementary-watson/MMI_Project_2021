@@ -15,13 +15,18 @@ public class MainNumberBox : MonoBehaviour
     int irn2 = 0;
     int irn3 = 0;
 
-    public GameObject winText;
-    public Network _network;
+    //public Network _network;
     [SerializeField] GameObject BoxPanel;
     [SerializeField] private TextMeshProUGUI[] randomnubertext = new TextMeshProUGUI[0];
     [SerializeField] private TextMeshProUGUI[] currentvalue = new TextMeshProUGUI[0];
     [SerializeField] Button[] button = new Button[0];
     [SerializeField] private Image[] Thump = new Image[0];
+
+    public AudioSource taskfin_sound;
+    public AudioSource switchfin_sound;
+    public GameObject win_message;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -53,7 +58,8 @@ public class MainNumberBox : MonoBehaviour
         else
             irn3 = 10;
 
-        Invoke("setText", 1);
+        setText();
+        //Invoke("setText", 1);
     }
 
     public void setText()
@@ -81,10 +87,10 @@ public class MainNumberBox : MonoBehaviour
 
             if (irn1 == srn1)
             {
+                switchfin_sound.Play();
                 button[0].interactable = false;
                 button[1].interactable = false;
-                Invoke("ShowThump", 1);
-
+                ShowThump();
                 checkcounter(1);
             }
         }
@@ -102,10 +108,10 @@ public class MainNumberBox : MonoBehaviour
 
             if (irn2 == srn2)
             {
+                switchfin_sound.Play();
                 button[2].interactable = false;
                 button[3].interactable = false;
-                Invoke("ShowThump", 1);
-
+                ShowThump();
                 checkcounter(1);
             }
         }
@@ -122,9 +128,10 @@ public class MainNumberBox : MonoBehaviour
 
             if (irn3 == srn3)
             {
+                switchfin_sound.Play();
                 button[4].interactable = false;
                 button[5].interactable = false;
-                Invoke("ShowThump", 1);
+                ShowThump();
                 checkcounter(1);
             }
         }
@@ -156,9 +163,11 @@ public class MainNumberBox : MonoBehaviour
         count = count + cp;
         if (count == fixcount)
         {
-            winText.SetActive(true);
-            Invoke("taskfinished", 2);
-            _network.incrementTaskprogress(10);
+            taskfin_sound.Play();
+            win_message.SetActive(true);
+
+            Invoke("taskfinished", 3);
+            //_network.incrementTaskprogress(10);
         }
     }
 

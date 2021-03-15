@@ -16,7 +16,7 @@ public class Result_Voting_Panel : MonoBehaviour
     private int receivedVotes;    
     [SerializeField] TextMeshProUGUI tmp_resultText;    
     [SerializeField] private GameObject thisResultVotingPanel;
-    [SerializeField] private GameObject[] tmp_resultTexts = new GameObject[0];
+    [SerializeField] private GameObject[] tmp_resultTexts = new GameObject[0]; // Prevote: 0 novote, 1 vote - Postbote 2 votekick, 3 tie, 4 novotes
 
     [SerializeField] private GameObject Voting_Panel;
     [SerializeField] private Panel_Manager_Script p_manager;
@@ -42,7 +42,7 @@ public class Result_Voting_Panel : MonoBehaviour
             if ((playerColor == "") || (photonActorID == 0))
                 print("Actor " + myActorID + " - " + myplayerColor + " made no Choice");
             else {
-                _network.addSuspectToList(m_reference.getCurrentStage(), m_reference.getGameRound(), playerColor);
+                //_network.addSuspectToList(m_reference.getCurrentStage(), m_reference.getGameRound(), playerColor);
                 if (finalVotings == null) { //erster wert der dict
                     //KeyValuePair<int, int> item = 1,1;
                     finalVotings.Add(photonActorID, 1);
@@ -71,6 +71,7 @@ public class Result_Voting_Panel : MonoBehaviour
     public void finalReveal(int photonActorID, string playerColor)
     {
         print("DEBUG: finalReveal");
+
         if (m_reference.getCurrentStage() == 3){
             print("DEBUG: finalReveal Stage 3");
             int i = 0;
@@ -93,14 +94,13 @@ public class Result_Voting_Panel : MonoBehaviour
             if (mostVoted.Value == 0) { 
                 print("No on was voted");
                 //thisResultVotingPanel.GetComponentInChildren<TextMeshProUGUI>().text = "Kein Spieler ist ausgeschieden.";
-                tmp_resultTexts[0].SetActive(false);
-
-                tmp_resultTexts[1].SetActive(true);
+                tmp_resultTexts[4].SetActive(true);
                 p_manager.sendText("Kein Spieler ist ausgeschieden.");
             }
             else if (mostVoted.Value == equal.Value) { 
                 print("We have a tie between: " + player[mostVoted.Key] + " and " + player[equal.Key]);
-                p_manager.sendText("Stimmengleichheit! Kein Spieler ist ausgeschieden.");
+               
+                tmp_resultTexts[3].SetActive(true);
             }
             else if (mostVoted.Value > 0)
             {
@@ -108,7 +108,7 @@ public class Result_Voting_Panel : MonoBehaviour
                 string filename = "Player Color/" + player[mostVoted.Key] + "_Char";
                 Sprite sp = Resources.Load<Sprite>(filename);
                 img_votedPlayer.sprite = sp;
-                p_manager.sendText("Dieser Spieler ist ausgeschieden.");
+                tmp_resultTexts[2].SetActive(true);
             }
         }
         else
@@ -135,10 +135,10 @@ public class Result_Voting_Panel : MonoBehaviour
                 string filename = "Player Color/" + playerColor + "_Char";
                 Sprite sp = Resources.Load<Sprite>(filename);
                 img_votedPlayer.sprite = sp;
-                p_manager.sendText("Diesen Spieler wurde von dir verdaechtigt.");
+                tmp_resultTexts[1].SetActive(true);
             }
-        }
-        
+           
+        } // else (stage 1)
         //svl[i].setClassValues(item.Value, item.Key, i);//set (color, id, index) of buttons
     }
     public void nextPhase()//Wird von timerCountdown gerufen. Phase beenden und nächste beginnen.
@@ -164,7 +164,10 @@ public class Result_Voting_Panel : MonoBehaviour
     }
     public void Setup() 
     {
-        
+        for(int i = 0; i < tmp_resultTexts.Length; i++)
+        {
+            tmp_resultTexts[i].SetActive(false);
+        }
     }
     void Start()
     {

@@ -8,6 +8,7 @@ public class SingleEnterNumber : MonoBehaviour
     [SerializeField] Button btn;
     [SerializeField] private MainNumberBox mainobject;
 
+
     public void btn_switchup()
     {
         if (btn.tag == "Max1000")

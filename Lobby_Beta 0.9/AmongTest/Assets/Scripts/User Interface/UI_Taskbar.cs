@@ -44,7 +44,7 @@ public class UI_Taskbar : MonoBehaviour
     }
     public void setTaskprogress(int increment)
     {
-        current += increment*5;
+        current += increment * 10; //XOF hier wird der wert manipuliert
     }
 
 }

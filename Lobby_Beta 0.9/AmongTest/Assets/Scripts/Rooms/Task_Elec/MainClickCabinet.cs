@@ -7,8 +7,10 @@ public class MainClickCabinet : MonoBehaviour
     private int fixedcounter = 6;
     private int count = 0;
 
-    public GameObject winText;
     public Network _network;
+    public GameObject win_message;
+    public AudioSource taskfin_sound;
+
     [SerializeField] GameObject CabinetPanel;
     SingleSwitchTool[] tools = new SingleSwitchTool[6];
     
@@ -17,8 +19,9 @@ public class MainClickCabinet : MonoBehaviour
         count = count + cp;
         if (count == fixedcounter)
         {
-            winText.SetActive(true);
-            Invoke("taskfinished", 1);
+            taskfin_sound.Play();
+            win_message.SetActive(true);
+            Invoke("taskfinished", 3);
             //_network.incrementTaskprogress(10);
         }
     }

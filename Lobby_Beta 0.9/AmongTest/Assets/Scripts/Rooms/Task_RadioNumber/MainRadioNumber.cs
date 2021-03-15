@@ -17,7 +17,11 @@ public class MainRadioNumber : MonoBehaviour
     int irn3=0;
 
 
-    public GameObject winText;
+    public GameObject win_message;
+    public AudioSource taskfin_sound;
+    public AudioSource switchfin_sound;
+
+
     public Network _network;
     [SerializeField] GameObject RadioPanel;
     public TextMeshProUGUI randomnubertext;
@@ -55,7 +59,7 @@ public class MainRadioNumber : MonoBehaviour
         else
             irn3 = 10;//UnityEngine.Random.Range(5, 10);
 
-        Invoke("setText",1); 
+        setText(); 
 
     }
 
@@ -81,9 +85,10 @@ public class MainRadioNumber : MonoBehaviour
 
             if (irn1 == rn1)
             {
+                switchfin_sound.Play();
                 button[0].interactable = false;
                 button[1].interactable = false;
-                Invoke("ShowThump", 1);
+                ShowThump();
 
                 checkcounter(1);
             }
@@ -104,9 +109,10 @@ public class MainRadioNumber : MonoBehaviour
 
             if (irn2 == rn2)
             {
+                switchfin_sound.Play();
                 button[2].interactable = false;
                 button[3].interactable = false;
-                Invoke("ShowThump", 1);
+                ShowThump();
 
                 checkcounter(1);
 
@@ -129,9 +135,10 @@ public class MainRadioNumber : MonoBehaviour
 
             if (irn3 == rn3)
             {
+                switchfin_sound.Play();
                 button[4].interactable = false;
                 button[5].interactable = false;
-                Invoke("ShowThump", 1);
+                ShowThump();
                 checkcounter(1);                
             }
         }
@@ -156,8 +163,6 @@ public class MainRadioNumber : MonoBehaviour
             Thump[2].enabled = true;
             currentvalue[2].text = "";
         }
-        
-
     }
 
     public void checkcounter(int cp)
@@ -165,9 +170,10 @@ public class MainRadioNumber : MonoBehaviour
         count = count + cp;
         if (count == fixcount)
         {
-            winText.SetActive(true);
+            taskfin_sound.Play();
+            win_message.SetActive(true);
             Invoke("taskfinished", 2);
-            _network.incrementTaskprogress(10);
+            //_network.incrementTaskprogress(10);
         }
     }
 

@@ -12,6 +12,8 @@ public class SingleComputer : MonoBehaviour
     public Sprite red;
     private Sprite white;
     public GameObject thisObject;
+    public AudioSource switchfin_sound;
+
 
     public void btn_switch()
     {
@@ -20,6 +22,7 @@ public class SingleComputer : MonoBehaviour
         {
             img_button.sprite = green;
             thisObject.GetComponent<Button>().interactable = false;
+            switchfin_sound.Play();
             mainobject.checkCounter(1);
         }
         else

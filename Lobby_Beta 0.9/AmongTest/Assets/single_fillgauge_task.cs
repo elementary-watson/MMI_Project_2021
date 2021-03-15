@@ -34,11 +34,11 @@ public class Single_Fillgauge_Task : MonoBehaviour, IPointerDownHandler, IPointe
         }
         else if (current > 0.55f && current < 0.65f && randomValue == 1)
         {
-            isInteractable = false; disableBtn();
+            isInteractable = false; disableBtn(); mft_object.setCurrent();
         }
         else if (current > 0.80f && current < 0.90f && randomValue == 2)
         {
-            isInteractable = false; disableBtn();
+            isInteractable = false; disableBtn(); mft_object.setCurrent();
         }
         Reset();        
     }
@@ -54,10 +54,12 @@ public class Single_Fillgauge_Task : MonoBehaviour, IPointerDownHandler, IPointe
     void Start()
     {
         randomValue = Random.Range(0,2);
+        print("Random " + randomValue);
         if (randomValue == 0) img_randomVisuals[0].enabled = true;
         if (randomValue == 1) img_randomVisuals[1].enabled = true;
         if (randomValue == 2) img_randomVisuals[2].enabled = true;
-             isInteractable = true;
+
+        isInteractable = true;
         img_fillGauge.fillAmount = start;
         current = start;
         maximum = end;
@@ -75,7 +77,7 @@ public class Single_Fillgauge_Task : MonoBehaviour, IPointerDownHandler, IPointe
                     print("Current2: " +current);
                     if (onHoldClick != null)
                     {
-                        isInteractable = false;
+                        //isInteractable = false;
                         onHoldClick.Invoke(); 
                     }
                 }

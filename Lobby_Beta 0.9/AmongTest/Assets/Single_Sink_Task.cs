@@ -14,6 +14,7 @@ public class Single_Sink_Task : MonoBehaviour
 
     float currentCardinal;
     public Main_Sink_Task mst;
+    public AudioSource switchfin_sound;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +33,7 @@ public class Single_Sink_Task : MonoBehaviour
             sst.highlightedSprite = cardinalCorrect;
             btn_valve.spriteState = sst;
             btn_valve.enabled = false;
+            switchfin_sound.Play();
             mst.ValveSwitch(1);
         }
         else if (currentCardinal >= 0.25f)

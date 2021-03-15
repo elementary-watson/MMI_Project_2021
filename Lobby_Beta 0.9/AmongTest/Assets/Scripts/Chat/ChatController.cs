@@ -28,7 +28,7 @@ public class ChatController : MonoBehaviour, IChatClientListener
     void Start()
     {
         chatClient = new ChatClient(this);
-        print("CHAT: chatClient created");
+        //print("CHAT: chatClient created");
         ConnectToPhotonChat();
     }
     // Update is called once per frame
@@ -48,12 +48,12 @@ public class ChatController : MonoBehaviour, IChatClientListener
     #region Eigene Methode
     private void ConnectToPhotonChat()
     {
-        print("CHAT: Connect to Photonchat startet:");
+        //print("CHAT: Connect to Photonchat startet:");
         nickName = network.getPlayerColor();
         chatClient.AuthValues = new Photon.Chat.AuthenticationValues(nickName);
         ChatAppSettings chatSettings = PhotonNetwork.PhotonServerSettings.AppSettings.GetChatSettings();
         chatClient.ConnectUsingSettings(chatSettings);
-        print("CHAT: Connect Methode wurde ausgeführt");
+        //print("CHAT: Connect Methode wurde ausgeführt");
     }
 
     public void SendeDirectMessage(string recipients, string message)
@@ -66,8 +66,13 @@ public class ChatController : MonoBehaviour, IChatClientListener
         print("Current Actor id: " + network.getActorId());
         var tempUInput = tmp_userInput.GetComponent<TMP_InputField>();
         string userInputText = tempUInput.text;
-        chatClient.PublishMessage("channelA", userInputText);
-        tmp_userInput.GetComponent<TMP_InputField>().text = "";
+        if(userInputText == "") { } // Keine leeren Nachrichten
+        else 
+        {
+            chatClient.PublishMessage("channelA", userInputText);
+            tmp_userInput.GetComponent<TMP_InputField>().text = "";
+        }
+        
 
     }
 
@@ -184,9 +189,9 @@ public class ChatController : MonoBehaviour, IChatClientListener
     
     public void OnSubscribed(string[] channels, bool[] results)
     {
-        print("CHAT: OnSubscribed wird ausgeführt");
+        //print("CHAT: OnSubscribed wird ausgeführt");
         int i = 0;
-        print("CHAT: We subscribed to Channel/s: ");
+        //print("CHAT: We subscribed to Channel/s: ");
         foreach(string item in channels)
         {
             print(item);

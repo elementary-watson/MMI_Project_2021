@@ -5,11 +5,13 @@ using UnityEngine;
 public class Main_Sink_Task:MonoBehaviour
 {
     public Network _network;
-    public GameObject winText;
+    public GameObject win_message;
+    public AudioSource taskfin_sound;
+
     int currentPoints;
     int maxPoints = 12;
     public Single_Sink_Task[] sst = new Single_Sink_Task[0];
-    [SerializeField] 
+    [SerializeField] GameObject SinkPanel;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,18 +24,16 @@ public class Main_Sink_Task:MonoBehaviour
         currentPoints += points;
         if(maxPoints == currentPoints)
         {
-            winText.SetActive(true);
-            Invoke("taskFinished", 1);
-            _network.incrementTaskprogress(10);
-        }
-        else
-        {
-            winText.SetActive(false);
+            taskfin_sound.Play();
+            win_message.SetActive(true);
+            Invoke("taskfinished", 3);
+            //_network.incrementTaskprogress(10);
         }
     }
+
     public void SetupValves()
     {
-        sst[0].setup(1);
+        sst[0].setup(0);
         for (int i = 1; i < maxPoints; i++)
         {
             float temp = Random.value;
@@ -42,9 +42,8 @@ public class Main_Sink_Task:MonoBehaviour
             sst[i].setup(temp);
         }
     }
-    // Update is called once per frame
-    void Update()
+    private void taskfinished()
     {
-        
+        SinkPanel.SetActive(false);
     }
 }

@@ -12,6 +12,7 @@ public class SingleTablet : MonoBehaviour
     public Sprite red;
     private Sprite white;
     public GameObject thisObject;
+    public AudioSource switchfin_sound;
 
     public void btn_switch()
     {
@@ -19,6 +20,7 @@ public class SingleTablet : MonoBehaviour
         if (isCorrect == true)
         {
             img_button.sprite = green;
+            switchfin_sound.Play();
             thisObject.GetComponent<Button>().interactable = false;
             mainobject.checkCounter(1);
         }
