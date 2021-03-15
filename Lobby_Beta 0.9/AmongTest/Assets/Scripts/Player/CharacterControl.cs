@@ -16,6 +16,12 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
     //Untere Werte 0.1f, 1f
     private Vector2 boxSize = new Vector2(1f, 1f);
     Image temp;
+    public Map_Control_Script mcs_object;
+
+    public void setMCSScript(Map_Control_Script mcs_object)
+    {
+        this.mcs_object = mcs_object;
+    }
 
     public void setPosition()
     {
@@ -61,6 +67,56 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
         if (collision.gameObject.CompareTag("Player"))
         {
             Physics2D.IgnoreCollision(collision.collider, GetComponent<Collider2D>());
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)  //XOF
+    {
+        if (photonView.IsMine)
+        {
+            if (collision.gameObject.CompareTag("Collidor_Hauptraum"))
+            {
+                mcs_object.SetRoomName("Hauptraum", 0);
+            }
+            else if (collision.gameObject.CompareTag("Collidor_Freizeitraum"))
+            {
+                mcs_object.SetRoomName("Freizeitraum", 1);
+            }
+            else if (collision.gameObject.CompareTag("Collidor_NR_no"))
+            {
+                mcs_object.SetRoomName("", 2);
+            }
+            else if (collision.gameObject.CompareTag("Collidor_Elektrik"))
+            {
+                mcs_object.SetRoomName("Elektrikraum", 3);
+            }
+            else if (collision.gameObject.CompareTag("Collidor_NR_so"))
+            {
+                mcs_object.SetRoomName("", 4);
+            }
+            else if (collision.gameObject.CompareTag("Collidor_Energie"))
+            {
+                mcs_object.SetRoomName("Energieraum", 5);
+            }
+            else if (collision.gameObject.CompareTag("Collidor_Medizinraum"))
+            {
+                mcs_object.SetRoomName("Medizinraum", 6);
+            }
+            else if (collision.gameObject.CompareTag("Collidor_NR_sw"))
+            {
+                mcs_object.SetRoomName("", 7);
+            }
+            else if (collision.gameObject.CompareTag("Collidor_Labor"))
+            {
+                mcs_object.SetRoomName("Labor", 8);
+            }
+            else if (collision.gameObject.CompareTag("Collidor_NR_nw"))
+            {
+                mcs_object.SetRoomName("", 9);
+            }
+            else if (collision.gameObject.CompareTag("Collidor_Flur"))
+            {
+                mcs_object.SetRoomName("", 10);
+            }
         }
     }
     // Update is called once per frame

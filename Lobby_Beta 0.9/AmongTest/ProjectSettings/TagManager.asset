@@ -28,6 +28,18 @@ TagManager:
   - Max1000
   - Min1000
   - ChatManager
+  - thumb
+  - Collidor_Flur
+  - Collidor_Labor
+  - Collidor_Energie
+  - Collidor_Freizeitraum
+  - Collidor_NR_so
+  - Collidor_Elektrik
+  - Collidor_Hauptraum
+  - Collidor_NR_nw
+  - Collidor_NR_sw
+  - Collidor_Medizinraum
+  - Collidor_NR_no
   layers:
   - Default
   - TransparentFX
@@ -38,7 +50,7 @@ TagManager:
   - 
   - 
   - PlayerNumber
-  - 
+  - Collider_Room
   - 
   - 
   - 

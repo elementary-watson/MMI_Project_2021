@@ -27,6 +27,7 @@ public class Network : MonoBehaviourPunCallbacks
     public Text txtCurrentRoomName;
     public Text lobbyOrRoom;
     public Text countdown;
+    public Map_Control_Script msc_object;
     //[SerializeField] GameObject GameMapPanel;
     [SerializeField] GameObject LobbyRoomPanel;
     [SerializeField] GameObject StartPanel;
@@ -79,6 +80,7 @@ public class Network : MonoBehaviourPunCallbacks
             0), Quaternion.identity);
         CharacterControl cc = spawn.GetComponent<CharacterControl>();
         cc.interactIcon = useindicator;
+        cc.setMCSScript(msc_object);
         //cc.resetPosition();
         spawn.GetComponent<CharacterControl>().interactIcon = useindicator;
         //spawn.GetComponent<CharacterControl>().resetPosition(); ;
@@ -119,8 +121,8 @@ public class Network : MonoBehaviourPunCallbacks
             playerReadyTexts[i].text = "";
         }
         RandomColor();
-        myRoomOptions = new RoomOptions() { MaxPlayers = 10, IsVisible = true, IsOpen = true, /*PlayerTtl = 10000, EmptyRoomTtl=60000*/ };
-        maxPlayersOfRoom = 10;
+        myRoomOptions = new RoomOptions() { MaxPlayers = 2, IsVisible = true, IsOpen = true, /*PlayerTtl = 10000, EmptyRoomTtl=60000*/ };
+        maxPlayersOfRoom = 2;
         //canJoin = true;
     }
 
@@ -435,7 +437,7 @@ public class Network : MonoBehaviourPunCallbacks
                     foreach (Player player in PhotonNetwork.PlayerList)
                     {
                         photonView.RPC("setColor", RpcTarget.All, player.NickName + "-" + randomColorList[i]);
-                        photonView.RPC("setColor", RpcTarget.OthersBuffered, player.NickName + "-" + randomColorList[i]);
+                        //photonView.RPC("setColor", RpcTarget.OthersBuffered, player.NickName + "-" + randomColorList[i]);
                         i++;
                     }
                     m_reference.readPlayer();//print allplayer dictionary elements
