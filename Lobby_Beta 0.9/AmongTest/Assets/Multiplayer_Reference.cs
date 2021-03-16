@@ -95,6 +95,7 @@ public class Multiplayer_Reference : MonoBehaviour
         saboteurPoints = 0;
         crewPoints = 0;
         numberOfPlayer = 0;
+        maxGameRounds = 3; //XOF muss dynamisch werden
     }
 
     #region getundset

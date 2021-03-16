@@ -5,6 +5,7 @@ using TMPro;
 public class Panel_Manager_Script : MonoBehaviour
 {
     [SerializeField] private Multiplayer_Reference m_reference;
+    [SerializeField] private Network _network;
 
     [SerializeField] private Confirm_Panel_Logic confirm_pl;
     [SerializeField] private GameObject result_VotingPanel;    
@@ -53,16 +54,19 @@ public class Panel_Manager_Script : MonoBehaviour
             }
             else if (stage == 3)
             {
+                Panel_Voting_Logic pvl = voting_panel.GetComponent<Panel_Voting_Logic>();
+                pvl.enableButtons(); // Button-Votes erlauben
                 print("enter third stage");
-                if (m_reference.getMaxRounds() == 5)//BestofFive
+                
+                if (m_reference.getMaxRounds() == 3)//BestofFive
                 { 
                     thirdPhase(3);
                 }
-                else if (m_reference.getMaxRounds() == 3) //BestofThree 
+                else if (m_reference.getMaxRounds() == 2) //BestofThree 
                 {
                     thirdPhase(2);
                 }
-                voting_panel.SetActive(false);
+                //voting_panel.SetActive(false);
             }
         }
         else if (referenced == "ChatManager")
@@ -85,8 +89,10 @@ public class Panel_Manager_Script : MonoBehaviour
     }
     void thirdPhase(int maxrounds)
     {
+        print("ThirdPhasecalled");
         if (m_reference.getSaboteurPoints() == maxrounds || m_reference.getCrewPoints() == maxrounds) // Spiel vorbei und letztes Voting
         {
+            print("final reached");
             int currentGameRound = m_reference.getGameRound();
             m_reference.setGameRound(currentGameRound + 1);
             result_VotingPanel.SetActive(false);
@@ -99,11 +105,15 @@ public class Panel_Manager_Script : MonoBehaviour
             print("called this");
             int currentGameRound = m_reference.getGameRound();
             m_reference.setGameRound(currentGameRound + 1);
-            Panel_Voting_Logic pvl = voting_panel.GetComponent<Panel_Voting_Logic>();
-            pvl.enableButtons(); // Voting erlauben
+            
             m_reference.setCurrentStage(1); // phase zurücksetzten
-            result_VotingPanel.SetActive(false);
-            voting_panel.SetActive(false);            
+            if (result_VotingPanel)
+                print("object result still exists");
+            result_VotingPanel.gameObject.SetActive(false);
+            if (voting_panel)
+                print("voting still exists");
+            voting_panel.gameObject.SetActive(false);
+            //_network.setPlayerMovement(true);
 
             main_Progressbar.SetActive(true);
             Score_Panel.SetActive(true);

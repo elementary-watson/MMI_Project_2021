@@ -95,7 +95,14 @@ public class Network : MonoBehaviourPunCallbacks
         spawnedPlayerObject = spawn;
         //useindicator.transform.position = new Vector2(999, -999);
     }
-
+    public void setPlayerMovement(bool canWalk)
+    {
+        Player_Movement pm_object = spawnedPlayerObject.GetComponent<Player_Movement>();
+        if (canWalk)
+            pm_object.enableMovementSpeed();
+        else
+            pm_object.disableMovementSpeed();        
+    }
     public void resetPlayerPosition()
     {
         photonView.RPC("RPCresetPlayerPosition", RpcTarget.All);

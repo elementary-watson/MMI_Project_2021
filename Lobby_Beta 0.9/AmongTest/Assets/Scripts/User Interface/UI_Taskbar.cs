@@ -24,6 +24,7 @@ public class UI_Taskbar : MonoBehaviour
         if(current == 100) // XOF timer einbauen
         {
             _network.resetPlayerPosition();
+            _network.setPlayerMovement(false);
             Panel_Voting.SetActive(true);
             preVoteTimer.SetActive(true);            
             Score_Panel.SetActive(false);
