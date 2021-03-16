@@ -32,7 +32,7 @@ public class Result_Voting_Panel : MonoBehaviour
 
         if (currentStage == 1) 
         {
-            if ((playerColor == "") || (photonActorID == 0))
+            if ((playerColor == "") && (photonActorID == 0))
                 print("Actor " + myActorID + " - " + myplayerColor + " made no Choice");
             else
                 _network.addSuspectToList(m_reference.getCurrentStage(),m_reference.getGameRound(), playerColor);
@@ -43,7 +43,7 @@ public class Result_Voting_Panel : MonoBehaviour
         {
             // XOF Hier muss geloggt werden!
             print("DEBUG: " + myActorID + " " + myplayerColor + " " + playerColor + " " + photonActorID + " " + indexPosition);
-            if ((playerColor == "") || (photonActorID == 0))
+            if ((playerColor == "") && (photonActorID == 0))
                 print("Actor " + myActorID + " - " + myplayerColor + " made no Choice");
             else {
                 //_network.addSuspectToList(m_reference.getCurrentStage(), m_reference.getGameRound(), playerColor);
