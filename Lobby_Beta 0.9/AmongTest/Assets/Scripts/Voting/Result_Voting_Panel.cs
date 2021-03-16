@@ -24,9 +24,12 @@ public class Result_Voting_Panel : MonoBehaviour
     [SerializeField] private GameObject chatPanel;
     [SerializeField] private GameObject ScorePanel;
     // Start is called before the first frame update
+    
+    
     public void submitVote(int myActorID, string myplayerColor, string playerColor, int photonActorID,int indexPosition)
     {
         int currentStage = m_reference.getCurrentStage();
+
         if (currentStage == 1) 
         {
             if ((playerColor == "") || (photonActorID == 0))
@@ -34,6 +37,7 @@ public class Result_Voting_Panel : MonoBehaviour
             else
                 _network.addSuspectToList(m_reference.getCurrentStage(),m_reference.getGameRound(), playerColor);
             // XOF Hier muss geloggt werden!
+            finalReveal(photonActorID, playerColor);
         }
         if (currentStage == 3) 
         {
@@ -52,11 +56,13 @@ public class Result_Voting_Panel : MonoBehaviour
                 else
                     finalVotings[photonActorID] += 1; //vote zu einer farbe hinzufügen
             }
+            receivedVotes += 1;
         }
-        receivedVotes += 1;
-        print("Voting result \n-------------------------------------------\n" + "Actors: " + _network.getActorsInRoom() + "Submit: " + receivedVotes);
+        
+        
         if (receivedVotes >= _network.getActorsInRoom())
         { //Wenn alle spieler einen vote gesendet haben ergebnis bildschirm öffnen
+            print("Voting result \n-------------------------------------------\n" + "Actors: " + _network.getActorsInRoom() + "Submit: " + receivedVotes);
             receivedVotes = 0;
             finalReveal(photonActorID, playerColor);
         }
@@ -94,12 +100,19 @@ public class Result_Voting_Panel : MonoBehaviour
             if (mostVoted.Value == 0) { 
                 print("No on was voted");
                 //thisResultVotingPanel.GetComponentInChildren<TextMeshProUGUI>().text = "Kein Spieler ist ausgeschieden.";
+                string filename = "Player Color/Saboteur_Char";
+                Sprite sp = Resources.Load<Sprite>(filename);
+                img_votedPlayer.sprite = sp;
+                Setup();
                 tmp_resultTexts[4].SetActive(true);
                 p_manager.sendText("Kein Spieler ist ausgeschieden.");
             }
             else if (mostVoted.Value == equal.Value) { 
                 print("We have a tie between: " + player[mostVoted.Key] + " and " + player[equal.Key]);
-               
+                string filename = "Player Color/Saboteur_Char";
+                Sprite sp = Resources.Load<Sprite>(filename);
+                img_votedPlayer.sprite = sp;
+                Setup();
                 tmp_resultTexts[3].SetActive(true);
             }
             else if (mostVoted.Value > 0)
@@ -108,10 +121,11 @@ public class Result_Voting_Panel : MonoBehaviour
                 string filename = "Player Color/" + player[mostVoted.Key] + "_Char";
                 Sprite sp = Resources.Load<Sprite>(filename);
                 img_votedPlayer.sprite = sp;
+                Setup();
                 tmp_resultTexts[2].SetActive(true);
             }
         }
-        else
+        else if (m_reference.getCurrentStage() == 1)
         {
             print("DEBUG: finalReveal Stage 1");
             if (playerColor =="" && photonActorID == 0) 
@@ -119,7 +133,7 @@ public class Result_Voting_Panel : MonoBehaviour
                 try
                 {
                     tmp_resultTexts[0].SetActive(true);
-
+                    Invoke("setPreNoChoiceActive", 0.5f);
                     p_manager.sendText( "Kein Spieler wurde ausgewählt.");
                     /*var tmp = thisResultVotingPanel.GetComponentInChildren<TextMeshProUGUI>();//.text = "Keinen verdaechtigen";
                     if (tmp.tag == "test") print("XOFXOF");
@@ -135,33 +149,21 @@ public class Result_Voting_Panel : MonoBehaviour
                 string filename = "Player Color/" + playerColor + "_Char";
                 Sprite sp = Resources.Load<Sprite>(filename);
                 img_votedPlayer.sprite = sp;
-                tmp_resultTexts[1].SetActive(true);
+                Invoke("setPreChoiceActive", 0.5f); tmp_resultTexts[1].SetActive(true);
             }
            
         } // else (stage 1)
         //svl[i].setClassValues(item.Value, item.Key, i);//set (color, id, index) of buttons
     }
-    public void nextPhase()//Wird von timerCountdown gerufen. Phase beenden und nächste beginnen.
+    public void setPreChoiceActive()
     {
-        print("DEBUG: nextPhase");
-        int currentStage = m_reference.getCurrentStage();
-        if (currentStage == 1) // In Chat Panel übergehen und dieses Panel schließen
-        {
-            currentStage += 1;
-            m_reference.setCurrentStage(currentStage);
-
-        }
-        else if (currentStage == 3 && m_reference.getGameRound() < 2) //Spiel fortsetzten?
-        {
-            //int crewPoints = m_reference.getCrewPoints();
-            //int saboteurPoints = m_reference.getSaboteurPoints();
-            
-        }
-        else
-        {
-            print("Game Ends");
-        }
+        tmp_resultTexts[1].SetActive(true);
+    }  
+    public void setPreNoChoiceActive()
+    {
+        tmp_resultTexts[0].SetActive(true);
     }
+
     public void Setup() 
     {
         for(int i = 0; i < tmp_resultTexts.Length; i++)

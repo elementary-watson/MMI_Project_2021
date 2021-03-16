@@ -58,13 +58,15 @@ public class Network : MonoBehaviourPunCallbacks
 
     public void addSuspectToList(int stage, int gameround, string playerColor)
     {
-        string value = stage + " " + playerColor;
+        string value = gameround + " " + playerColor;
         // Runde pre/post Brown/Rot/Blau
         listOfSuspects.Add(gameround, value);
     }
-    public void addVotekickToList(int actorId, string playerColor)
+    public void addVotekickToList(int gameround, string playerColor)
     {
-        listOfSuspects.Add(actorId, playerColor);
+        string value = gameround + " " + playerColor;
+        // Runde pre/post Brown/Rot/Blau
+        listOfVotekicks.Add(gameround, value);
     }
 
     private void SpawnPlayer()
@@ -167,6 +169,7 @@ public class Network : MonoBehaviourPunCallbacks
 
     public void callSubmitVote(bool isSubmitted, string playerColor, int photonActorID, int indexPosition)
     {
+        addVotekickToList(m_reference.getGameRound(), playerColor); // in die votekickliste speichern
         photonView.RPC("submitAllPlayers", RpcTarget.All, isSubmitted, playerColor, photonActorID, indexPosition);
     }
     #region RPC
