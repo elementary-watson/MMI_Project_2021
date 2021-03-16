@@ -19,10 +19,12 @@ public class Panel_Manager_Script : MonoBehaviour
     
     [SerializeField] private TextMeshProUGUI resultTxt;
 
+    [SerializeField] private GameObject Summary_Panel;
     [SerializeField] private GameObject Score_Panel;
     [SerializeField] private GameObject Player_Panel;
     [SerializeField] private GameObject main_Progressbar;
 
+    Panel_Voting_Logic pvl;
     string msg = "empty";
     bool showmessage = false;
 
@@ -54,11 +56,11 @@ public class Panel_Manager_Script : MonoBehaviour
             }
             else if (stage == 3)
             {
-                Panel_Voting_Logic pvl = voting_panel.GetComponent<Panel_Voting_Logic>();
+                //Panel_Voting_Logic pvl = voting_panel.GetComponent<Panel_Voting_Logic>();
                 pvl.enableButtons(); // Button-Votes erlauben
                 print("enter third stage");
                 
-                if (m_reference.getMaxRounds() == 3)//BestofFive
+                if (m_reference.getMaxRounds() == 5)//BestofFive
                 { 
                     thirdPhase(3);
                 }
@@ -66,7 +68,9 @@ public class Panel_Manager_Script : MonoBehaviour
                 {
                     thirdPhase(2);
                 }
-                //voting_panel.SetActive(false);
+                result_VotingPanel.SetActive(false);
+                voting_panel.SetActive(false);
+                Summary_Panel.SetActive(true);
             }
         }
         else if (referenced == "ChatManager")
@@ -74,7 +78,7 @@ public class Panel_Manager_Script : MonoBehaviour
             m_reference.setCurrentStage(3);
             cc.startNextPhase();
             voting_panel.SetActive(true);
-            Panel_Voting_Logic pvl = voting_panel.GetComponent<Panel_Voting_Logic>();
+            
             pvl.enableButtons();
             s30postVotingTimer.SetActive(true);
             chat_panel.SetActive(false);
@@ -105,26 +109,23 @@ public class Panel_Manager_Script : MonoBehaviour
             print("called this");
             int currentGameRound = m_reference.getGameRound();
             m_reference.setGameRound(currentGameRound + 1);
-            
             m_reference.setCurrentStage(1); // phase zurücksetzten
-            if (result_VotingPanel)
-                print("object result still exists");
-            result_VotingPanel.gameObject.SetActive(false);
-            if (voting_panel)
-                print("voting still exists");
-            voting_panel.gameObject.SetActive(false);
-            //_network.setPlayerMovement(true);
-
+            _network.setPlayerMovement(true);
             main_Progressbar.SetActive(true);
             Score_Panel.SetActive(true);
             Player_Panel.SetActive(true);
+            print("called this again");
+            fuckthis();
         }
     }
+    public void fuckthis()
+    {
 
+    }
     // Start is called before the first frame update
     void Start()
     {
-        
+        pvl = voting_panel.GetComponent<Panel_Voting_Logic>();
     }
 
     // Update is called once per frame

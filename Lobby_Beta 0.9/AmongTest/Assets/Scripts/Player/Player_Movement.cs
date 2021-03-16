@@ -17,11 +17,11 @@ public class Player_Movement : Photon.Pun.MonoBehaviourPun
     }
     public void enableMovementSpeed()
     {
-        this.moveSpeed = 8f;
+        moveSpeed = 8f;
     }    
     public void disableMovementSpeed()
     {
-        this.moveSpeed = 0f;
+        moveSpeed = 0f;
     }
     private void FixedUpdate()
     {

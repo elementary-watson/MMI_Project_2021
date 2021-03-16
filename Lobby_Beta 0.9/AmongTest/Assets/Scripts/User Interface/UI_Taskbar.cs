@@ -11,11 +11,14 @@ public class UI_Taskbar : MonoBehaviour
     [SerializeField] private Image img_progressbar;
     [SerializeField] private TMP_Text tmp_progressValue;
     [SerializeField] private GameObject Panel_Voting;
+    [SerializeField] private GameObject result_VotingPanel;
     [SerializeField] private GameObject preVoteTimer;
     [SerializeField] private GameObject Score_Panel;
     [SerializeField] private GameObject Player_Panel;
     [SerializeField] private GameObject thisMain_Progressbar;
+
     [SerializeField] private Network _network;
+    [SerializeField] private Multiplayer_Reference m_reference;
 
     void getCurrentFill()
     {
@@ -34,7 +37,12 @@ public class UI_Taskbar : MonoBehaviour
     }
     private void Start()
     {
-        current = 0;        
+        current = 0;
+        if(m_reference.getGameRound() > 1)
+        {
+            result_VotingPanel.gameObject.SetActive(false);
+            Panel_Voting.SetActive(false);
+        }
     }
     private void Update()
     {
