@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Multiplayer_Reference : MonoBehaviour
 {
@@ -12,7 +13,13 @@ public class Multiplayer_Reference : MonoBehaviour
     private int crewPoints;
     private int saboteurPoints;
     private IDictionary<int, string> allplayers = new Dictionary<int, string>();
-    
+    private Vector3[] spawnPositions = new[] {
+        new Vector3(1f, 4f, 0f), new Vector3(-2.1f, 4f, 0f), //Nordposition
+        new Vector3(5.45f, 1.99f, 0f), new Vector3(5.45f, 0f, 0f), new Vector3(5.45f, -1.89f, 0f), //Ostposition
+        new Vector3(1f, -4f, 0f), new Vector3(-2.1f, -4f, 0f), //Südposition
+        new Vector3(-5.45f, 1.99f, 0f), new Vector3(-5.45f, 0f, 0f), new Vector3(-5.45f, -1.89f, 0f)}; //Westposition
+    List<string> RandomColorList;
+
     public void setPlayers(IDictionary<int, string> allplayers)
     {
         this.allplayers = allplayers;
@@ -42,15 +49,44 @@ public class Multiplayer_Reference : MonoBehaviour
             print("Key: " + kvp.Key + "Value" + kvp.Value);
         }
     }
+    public Vector3 setupPositions(int actorId) // Logik arbeitet mit INDEX Werten vom Vektor3 Array und Farben Array.   
+    { //Farben werden vorher gemischt-Jeder Spieler hat eigene Farbe- Die position der Farbe bestimmt die anschließende Vector3 position
+        foreach (string item in RandomColorList)
+        {
+            print("" + item);
+        }
+        print("SetupPos Called");
+        foreach(KeyValuePair<int, string> kvp in allplayers) // suche nach spielerfarbe
+        {
+            if(kvp.Key == actorId) // wenn id gefunden kann spielerposition in randomcolorlist gesucht werden um die INDEX 
+            {
+                for(int i = 0; i< RandomColorList.Count; i++)
+                {
+                    if(kvp.Value == RandomColorList[i])
+                    {
+                        print("Found Position for " + kvp.Value + " at pos " + i);
+                        return spawnPositions[i]; // an der I-ten Stelle gefunden und gleiche stelle für player reservieren!
+                    }
+                }
+
+            }            
+        }
+        return new Vector3(0,0,0);
+    }
     public void setupMultiplayerGame()
     {
-        if(numberOfPlayer == 5 || numberOfPlayer == 6){
+        if(numberOfPlayer == 5 || numberOfPlayer == 6)
+        {
             maxGameRounds = 3;
         }
         else
         {
             maxGameRounds = 5;
         }
+    }
+    public void setRandomColorList(List<string> RandomColorList) // Farben werden randomized um zufällige positionen für spieler zu erstellen
+    {
+        this.RandomColorList = RandomColorList;
     }
     void Start()
     {

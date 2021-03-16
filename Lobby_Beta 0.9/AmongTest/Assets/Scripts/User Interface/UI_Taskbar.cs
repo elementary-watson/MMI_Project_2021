@@ -15,6 +15,7 @@ public class UI_Taskbar : MonoBehaviour
     [SerializeField] private GameObject Score_Panel;
     [SerializeField] private GameObject Player_Panel;
     [SerializeField] private GameObject thisMain_Progressbar;
+    [SerializeField] private Network _network;
 
     void getCurrentFill()
     {
@@ -22,6 +23,7 @@ public class UI_Taskbar : MonoBehaviour
         img_progressbar.fillAmount = fillamount;   
         if(current == 100) // XOF timer einbauen
         {
+            _network.resetPlayerPosition();
             Panel_Voting.SetActive(true);
             preVoteTimer.SetActive(true);            
             Score_Panel.SetActive(false);

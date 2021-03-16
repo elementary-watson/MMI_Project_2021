@@ -41,27 +41,28 @@ public class Panel_Manager_Script : MonoBehaviour
         }
         else if (referenced == "nextPhase")
         {
-        s9_votetimerPanel.SetActive(false);
-        int stage = m_reference.getCurrentStage();
+            print("Next stage");
+            s9_votetimerPanel.SetActive(false);
+            int stage = m_reference.getCurrentStage();
             if (stage == 1)
             {
                 m_reference.setCurrentStage(stage + 1);
-
                 chat_panel.SetActive(true); //reihenfolge beachten!!
                 voting_panel.SetActive(false);
                 result_VotingPanel.SetActive(false);
             }
             else if (stage == 3)
             {
-                voting_panel.SetActive(false);
-                if (m_reference.getMaxRounds() == 5)
-                { //BestofFive
+                print("enter third stage");
+                if (m_reference.getMaxRounds() == 5)//BestofFive
+                { 
                     thirdPhase(3);
                 }
                 else if (m_reference.getMaxRounds() == 3) //BestofThree 
                 {
                     thirdPhase(2);
                 }
+                voting_panel.SetActive(false);
             }
         }
         else if (referenced == "ChatManager")
@@ -102,7 +103,7 @@ public class Panel_Manager_Script : MonoBehaviour
             pvl.enableButtons(); // Voting erlauben
             m_reference.setCurrentStage(1); // phase zurücksetzten
             result_VotingPanel.SetActive(false);
-            voting_panel.SetActive(false);
+            voting_panel.SetActive(false);            
 
             main_Progressbar.SetActive(true);
             Score_Panel.SetActive(true);

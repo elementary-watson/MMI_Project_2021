@@ -27,14 +27,20 @@ public class Confirm_Panel_Logic : MonoBehaviour
         if (isSubmitted)
             result_vp.submitVote(_network.getActorId(), _network.getPlayerColor(), playerColor, photonActorID, indexPosition);
         else
-            result_vp.submitVote(_network.getActorId(), _network.getPlayerColor(), "", 0, 0);        
+            result_vp.submitVote(_network.getActorId(), _network.getPlayerColor(), "", 0, 0);
+        this.playerColor = "";
+        this.photonActorID = 0;
+        this.indexPosition = 0;
     }
     public void photon_Timeout_ConfirmChoice()//läuft die zeit aus werden die auwahldaten geschickt
     {
         if (isSubmitted)
            _network.callSubmitVote(true,playerColor,photonActorID,indexPosition);
         else
-           _network.callSubmitVote(false,"",0,0);      
+           _network.callSubmitVote(false,"",0,0);
+        this.playerColor = "";
+        this.photonActorID = 0;
+        this.indexPosition = 0;
     }
     public void setIsSubmitted(bool choice)
     {
@@ -43,7 +49,9 @@ public class Confirm_Panel_Logic : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        this.playerColor = "";
+        this.photonActorID = 0;
+        this.indexPosition = 0;
     }
 
     // Update is called once per frame

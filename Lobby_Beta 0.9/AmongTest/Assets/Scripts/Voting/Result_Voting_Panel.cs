@@ -42,7 +42,7 @@ public class Result_Voting_Panel : MonoBehaviour
         if (currentStage == 3) 
         {
             // XOF Hier muss geloggt werden!
-            //print("DEBUG: " + myActorID + " " + myplayerColor + " " + playerColor + " " + photonActorID + " " + indexPosition);
+            print("DEBUG: " + myActorID + " " + myplayerColor + " " + playerColor + " " + photonActorID + " " + indexPosition);
             if ((playerColor == "") || (photonActorID == 0))
                 print("Actor " + myActorID + " - " + myplayerColor + " made no Choice");
             else {

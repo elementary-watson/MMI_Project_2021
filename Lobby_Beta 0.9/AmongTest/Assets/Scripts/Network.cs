@@ -4,6 +4,7 @@ using Photon.Realtime;
 using System;
 //using System.Windows.Forms;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -55,6 +56,8 @@ public class Network : MonoBehaviourPunCallbacks
     [SerializeField] private Result_Voting_Panel result_vp;
     IDictionary<int, string> listOfSuspects = new Dictionary<int, string>();
     IDictionary<int, string> listOfVotekicks = new Dictionary<int, string>();
+    private Vector3 spawnPositions;
+    GameObject spawnedPlayerObject;
 
     public void addSuspectToList(int stage, int gameround, string playerColor)
     {
@@ -71,26 +74,36 @@ public class Network : MonoBehaviourPunCallbacks
 
     private void SpawnPlayer()
     {
+        
         /*playerCamera.target = PhotonNetwork.Instantiate(myPlayerColorPrefab,
                  new Vector3(
                      UnityEngine.Random.Range(-4, 4),
                      UnityEngine.Random.Range(-4, 4),
                      0), Quaternion.identity).transform; */
-        GameObject spawn = PhotonNetwork.Instantiate(myPlayerColorPrefab, new Vector3(
-            UnityEngine.Random.Range(-4, 4),
-            UnityEngine.Random.Range(-4, 4),
-            0), Quaternion.identity);
+        
+        GameObject spawn = PhotonNetwork.Instantiate(myPlayerColorPrefab, spawnPositions, Quaternion.identity);
         CharacterControl cc = spawn.GetComponent<CharacterControl>();
         cc.interactIcon = useindicator;
         cc.setMCSScript(msc_object);
         //cc.resetPosition();
         spawn.GetComponent<CharacterControl>().interactIcon = useindicator;
         //spawn.GetComponent<CharacterControl>().resetPosition(); ;
-        
+
         //useindicator = spawn.
-        //spawn;
+       
         playerCamera.target = spawn.transform;
+        spawnedPlayerObject = spawn;
         //useindicator.transform.position = new Vector2(999, -999);
+    }
+
+    public void resetPlayerPosition()
+    {
+        photonView.RPC("RPCresetPlayerPosition", RpcTarget.All);
+    }
+    [PunRPC]
+    public void RPCresetPlayerPosition()
+    {
+        spawnedPlayerObject.transform.position = spawnPositions;
     }
 
     private void RandomColor()
@@ -234,14 +247,14 @@ public class Network : MonoBehaviourPunCallbacks
         }
     }
     [PunRPC]
-    public void setColor(String idAndColor)
+    public void setupPlayer(String idAndColor)
     {
         //XOF
         String[] parts = idAndColor.Split('-');
-            if (idAndColor.Contains(PhotonNetwork.NickName))
-            {
-                myPlayerColorPrefab = parts[1];
-            }
+        if (parts[0] == (PhotonNetwork.NickName))
+        {
+            myPlayerColorPrefab = parts[1];
+        }
         List<string> colorFileList = new List<string> { "Black_Char", "Blue_Char", "Brown_Char", "Pink_Char", "Green_Char", "Orange_Char", "Purple_Char", "Red_Char", "White_Char", "Yellow_Char" };
         string temp = "";
         if (myPlayerColorPrefab != null)
@@ -258,6 +271,7 @@ public class Network : MonoBehaviourPunCallbacks
         //PhotonNetwork.NickName;
         
         m_reference.addPlayer(int.Parse(parts[0]),parts[1].Remove(0,6));
+        print("DICT ID: "+ int.Parse(parts[0]) + " Color" + parts[1].Remove(0, 6));
     }
     [PunRPC]
     public void startGame()
@@ -283,21 +297,9 @@ public class Network : MonoBehaviourPunCallbacks
     {
         chatWindow.SetActive(true);
     }
+
     #endregion
-    /*public void setPlayerReadyBtn()
-    {
-        if (readyState == false) readyState = true;
-        else if (readyState == true) readyState = false;
-        
-        photonView.RPC("setPlayerReady", RpcTarget.All);
-    }
-    [PunRPC]
-    private void setPlayerReady()
-    {
-        if (readyState == true) intPlayerReady++;
-        else if (readyState == false) intPlayerReady--;
-        //counterPlayerReady.text = "(" + intPlayerReady + "/10)";
-    }*/
+
     private void Start()
     {
         //MessageBox.Show(Callback, "Hello World!", "Hello");
@@ -366,12 +368,6 @@ public class Network : MonoBehaviourPunCallbacks
         this.SendQuitEvent();
     }
 
-
-    /*unityInstance.Quit(function() {
-        console.log("done!");
-    });
-    unityInstance = null;*/
-
     void SendQuitEvent()
     {
         try {
@@ -409,10 +405,44 @@ public class Network : MonoBehaviourPunCallbacks
         print("DEBUG: OnPhotonPlayerDisconnected");
         PhotonNetwork.SendAllOutgoingCommands(); // send it right now
     }
+    public void setPlayerSpawnPosition()
+    {
+        List<string> setColorPosition = new List<string> { "Black", "Blue", "Brown", "Pink", "Green", "Orange", "Purple", "Red", "White", "Yellow" };
+
+        var count = setColorPosition.Count;
+        var last = count - 1;
+        for (var i = 0; i < last; ++i)
+        {
+            var r = UnityEngine.Random.Range(i, count);
+            var tmp = setColorPosition[i];
+            setColorPosition[i] = setColorPosition[r];
+            setColorPosition[r] = tmp;
+        }
+        
+        string chain = "";
+        foreach (string item in setColorPosition)
+        {
+            chain = chain + item + "-";
+        }
+        photonView.RPC("senColorPositionForMultiplayer", RpcTarget.All, chain);
+        print("NetworkCall from: " + PhotonNetwork.LocalPlayer.ActorNumber);
+    }
+    [PunRPC]
+    public void senColorPositionForMultiplayer(string chain)       
+    {
+        String[] parts = chain.Split('-');
+        List<string> setColorPosition = parts.ToList();
+        m_reference.setRandomColorList(setColorPosition);
+        Vector3 spawnPos = m_reference.setupPositions(PhotonNetwork.LocalPlayer.ActorNumber);
+        if (spawnPos == new Vector3(0, 0, 0))
+            print("ERROR: Player was not found position faulty!");
+        else
+            spawnPositions = spawnPos;
+    }
     public override void OnJoinedRoom()
     {
         print("DEBUG: I joined room");
-        try { 
+        //try { 
             //else if (PhotonNetwork.CurrentRoom.PlayerCount == roomMaxPlayerRef+1) PhotonNetwork.LeaveRoom();
             if(PhotonNetwork.CurrentRoom.IsOpen == true)
             {
@@ -436,28 +466,27 @@ public class Network : MonoBehaviourPunCallbacks
                     RandomColor();
                     //photonView = gameObject.GetComponent<PhotonView>();
                     int i = 0;
-                    //setColor over RPC
+                    //setupPlayer over RPC
                     foreach (Player player in PhotonNetwork.PlayerList)
                     {
-                        photonView.RPC("setColor", RpcTarget.All, player.NickName + "-" + randomColorList[i]);
-                        //photonView.RPC("setColor", RpcTarget.OthersBuffered, player.NickName + "-" + randomColorList[i]);
+                        print("Id and Color: " + player.NickName + "-" + randomColorList[i]);
+                        photonView.RPC("setupPlayer", RpcTarget.All, player.NickName + "-" + randomColorList[i]);
+                        //photonView.RPC("setupPlayer", RpcTarget.OthersBuffered, player.NickName + "-" + randomColorList[i]);
                         i++;
                     }
-                    m_reference.readPlayer();//print allplayer dictionary elements
+                    setPlayerSpawnPosition();
                     photonView.RPC("RPCStartCounter", RpcTarget.All);
                     Invoke("RPCStartFading", 8);
-                    Invoke("RPCStartgame", 10);
-
-                    
+                    Invoke("RPCStartgame", 10); 
                 }
 
             }
             else { print("ERROR: Joining Room failed"); }
-            
-        }catch (Exception e) 
+
+        /*}catch (Exception e) 
         {
             print("ERROR: " + e);
-        }
+        }*/
     }
     public override void OnJoinRoomFailed(short returnCode, string message)
     {

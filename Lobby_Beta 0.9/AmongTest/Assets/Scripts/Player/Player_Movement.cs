@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player_Movement : Photon.Pun.MonoBehaviourPun
 {
-    public float moveSpeed = 8f;
+    [SerializeField] float moveSpeed = 8f;
     public Animator animator;
     public Rigidbody2D rb;
     float scaleX;
@@ -14,6 +14,10 @@ public class Player_Movement : Photon.Pun.MonoBehaviourPun
     void Start()
     {
         scaleX = transform.localScale.x;
+    }
+    public void enableMovementSpeed()
+    {
+        this.moveSpeed = 8f;
     }
     private void FixedUpdate()
     {

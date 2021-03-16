@@ -15,7 +15,6 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
     private bool isWalking;
     //Untere Werte 0.1f, 1f
     private Vector2 boxSize = new Vector2(1f, 1f);
-    Image temp;
     public Map_Control_Script mcs_object;
 
     public void setMCSScript(Map_Control_Script mcs_object)
