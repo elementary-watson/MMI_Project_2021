@@ -11,6 +11,8 @@ public class Main_Fillgauge_Task : MonoBehaviour
     [SerializeField] GameObject Fillgauge_panel;
     [SerializeField] Single_Fillgauge_Task[] sft_object = new Single_Fillgauge_Task[0];
     Network _network;
+    public AudioSource taskfin_sound;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +26,7 @@ public class Main_Fillgauge_Task : MonoBehaviour
         {
             _network.incrementTaskprogress(10);
             win_panel.SetActive(true);
+            taskfin_sound.Play();
             Invoke("taskfinished",3);
         }
     }

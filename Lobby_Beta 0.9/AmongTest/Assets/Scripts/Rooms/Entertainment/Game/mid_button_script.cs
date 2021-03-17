@@ -15,7 +15,7 @@ public class mid_button_script : MonoBehaviour
     [SerializeField] MainSkriptGame msg_object;
     SpriteState ss;
     bool isState;
-
+    public AudioSource switchfin_sound;
     // Start is called before the first frame update
     public void setup(int order)
     {
@@ -37,6 +37,7 @@ public class mid_button_script : MonoBehaviour
     {
         if (isState)
         {
+            switchfin_sound.Play();
             img_midBtn.sprite = active_pressed;
             btn_mid.interactable = false;
             msg_object.nextMidButton();

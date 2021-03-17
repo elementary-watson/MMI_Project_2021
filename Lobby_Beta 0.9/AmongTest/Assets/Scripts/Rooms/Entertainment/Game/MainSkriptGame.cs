@@ -31,6 +31,9 @@ public class MainSkriptGame : MonoBehaviour
     [SerializeField] GameObject[] img_explosion = new GameObject[0];
     [SerializeField] GameObject minigameContainer;
     List<string> RandomColorList = new List<string>();
+    public AudioSource taskfin_sound;
+    public AudioSource switchfin_sound;
+    public AudioSource shoot_sound;
     int targetPosition;
     // Start is called before the first frame update
     void Start()
@@ -53,6 +56,7 @@ public class MainSkriptGame : MonoBehaviour
     }    
     private void setupPartTwo()
     {
+        infoBoxText.text = "Die mittleren gruenen Knoepfe druecken";
         currenPositionMid = 0;
         List<int> nums= new List<int> {0,1,2};
         var count = nums.Count;
@@ -74,6 +78,7 @@ public class MainSkriptGame : MonoBehaviour
     }
     public void setupPartThree() 
     {
+        infoBoxText.text = "Einen der erschienenen Gegner anklicken!";
         minigameContainer.SetActive(true);
         List<string> RandomColorList = new List<string> { "Black", "Blue", "Brown", "Pink", "Green", "Orange", "Purple", "Red", "White", "Yellow" };
         var count = RandomColorList.Count;
@@ -101,13 +106,16 @@ public class MainSkriptGame : MonoBehaviour
         loadSpaceship();
         Invoke("loadLasebeam", 1);
         Invoke("loadExplosion", 1.5f);
+        Invoke("taskfinished", 3);
+
     }
     public void loadSpaceship()
-    {
+    {        
         img_spaceship[targetPosition].SetActive(true);
     }
     public void loadLasebeam()
     {
+        shoot_sound.Play();
         img_laserbeam[targetPosition].SetActive(true);
     }    
     public void loadExplosion()
@@ -208,6 +216,7 @@ public class MainSkriptGame : MonoBehaviour
 
     private void taskfinished()
     {
+        taskfin_sound.Play();
         GamePanel.SetActive(false);
     }
     #endregion

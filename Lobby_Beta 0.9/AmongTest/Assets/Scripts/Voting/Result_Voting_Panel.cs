@@ -23,8 +23,7 @@ public class Result_Voting_Panel : MonoBehaviour
     [Header("Extern")]
     [SerializeField] private GameObject chatPanel;
     [SerializeField] private GameObject ScorePanel;
-    // Start is called before the first frame update
-    
+    // Start is called before the first frame update    
     
     public void submitVote(int myActorID, string myplayerColor, string playerColor, int photonActorID,int indexPosition)
     {
@@ -57,11 +56,10 @@ public class Result_Voting_Panel : MonoBehaviour
                     finalVotings[photonActorID] += 1; //vote zu einer farbe hinzufügen
             }
             receivedVotes += 1;
-        }
+        }        
         
-        
-        if (receivedVotes >= _network.getActorsInRoom())
-        { //Wenn alle spieler einen vote gesendet haben ergebnis bildschirm öffnen
+        if (receivedVotes >= _network.getActorsInRoom())//Wenn alle spieler einen vote gesendet haben ergebnis bildschirm öffnen
+        { 
             print("Voting result \n-------------------------------------------\n" + "Actors: " + _network.getActorsInRoom() + "Submit: " + receivedVotes);
             receivedVotes = 0;
             finalReveal(photonActorID, playerColor);

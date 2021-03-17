@@ -11,12 +11,13 @@ public class SingleSkriptGame : MonoBehaviour
     public Sprite thumbs_up;
     public Sprite thumbs_down;
     public GameObject thisObject;
-
+    public AudioSource switchfin_sound;
     public void btn_switch()
     {
         bool isCorrect = mainobject.checkPositionLetter(letter);
         if (isCorrect == true)
         {
+            switchfin_sound.Play();
             img_thumb.SetActive(true);
             Image[] temp = img_thumb.GetComponentsInChildren<Image>();
             temp[1].sprite = thumbs_up;

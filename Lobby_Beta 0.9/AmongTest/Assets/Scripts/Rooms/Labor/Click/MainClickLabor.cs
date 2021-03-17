@@ -7,7 +7,7 @@ public class MainClickLabor : MonoBehaviour
 {
     List<string> randomTestTubeList;
     List<string> randomTestTubeforTaskList;
-    List<string> TestTubeList = new List<string> { "Blau", "Grün", "Gelb", "Lila", "Braun", "Orange", "Blau", "Grün", "Gelb", "Lila", "Braun", "Orange", "Blau", "Grün", "Gelb", "Lila", "Braun", "Orange", "Blau", "Grün", "Gelb", "Lila", "Braun", "Orange" };
+    List<string> TestTubeList = new List<string> { "Blau", "Grün", "Gelb", "Lila", "Braun", "Weiß", "Blau", "Grün", "Gelb", "Lila", "Braun", "Weiß", "Blau", "Grün", "Gelb", "Lila", "Braun", "Weiß", "Blau", "Grün", "Gelb", "Lila", "Braun", "Weiß" };
     public TextMeshProUGUI infotext;
     private int fixedcounter = 12;
     private int count = 0;
@@ -39,7 +39,7 @@ public class MainClickLabor : MonoBehaviour
 
     public void RandomTestTube()
     {
-        List<string> RandomTestTubeList = new List<string> { "Blau", "Grün", "Gelb", "Lila", "Braun", "Orange" };
+        List<string> RandomTestTubeList = new List<string> { "Blau", "Grün", "Gelb", "Lila", "Braun", "Weiß" };
 
         var count = RandomTestTubeList.Count;
         var last = count - 1;

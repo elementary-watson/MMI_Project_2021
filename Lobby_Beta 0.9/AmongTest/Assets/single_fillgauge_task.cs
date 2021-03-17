@@ -18,6 +18,7 @@ public class Single_Fillgauge_Task : MonoBehaviour, IPointerDownHandler, IPointe
     float start = 0.15f;
     float end = 0.90f;
     int randomValue;
+    public AudioSource switchfin_sound;
     public void OnPointerDown(PointerEventData eventData)
     {
         pointerDown = true;
@@ -25,20 +26,23 @@ public class Single_Fillgauge_Task : MonoBehaviour, IPointerDownHandler, IPointe
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        print("pointup");
-        print(randomValue);
-        print("Current: " + current);
-        if (current > 0.30f && current < 0.40f && randomValue == 0)
+        if (isInteractable) 
         {
-            isInteractable = false; disableBtn(); mft_object.setCurrent();
-        }
-        else if (current > 0.55f && current < 0.65f && randomValue == 1)
-        {
-            isInteractable = false; disableBtn(); mft_object.setCurrent();
-        }
-        else if (current > 0.80f && current < 0.90f && randomValue == 2)
-        {
-            isInteractable = false; disableBtn(); mft_object.setCurrent();
+            print("pointup");
+            print(randomValue);
+            print("Current: " + current);
+            if (current > 0.30f && current < 0.40f && randomValue == 0)
+            {
+                isInteractable = false; disableBtn(); switchfin_sound.Play(); mft_object.setCurrent();
+            }
+            else if (current > 0.55f && current < 0.65f && randomValue == 1)
+            {
+                isInteractable = false; disableBtn(); switchfin_sound.Play(); mft_object.setCurrent();
+            }
+            else if (current > 0.80f && current < 0.90f && randomValue == 2)
+            {
+                isInteractable = false; disableBtn(); switchfin_sound.Play(); mft_object.setCurrent();
+            }
         }
         Reset();        
     }
@@ -53,7 +57,7 @@ public class Single_Fillgauge_Task : MonoBehaviour, IPointerDownHandler, IPointe
     }
     void Start()
     {
-        randomValue = Random.Range(0,2);
+        randomValue = Random.Range(0,3);
         print("Random " + randomValue);
         if (randomValue == 0) img_randomVisuals[0].enabled = true;
         if (randomValue == 1) img_randomVisuals[1].enabled = true;
@@ -87,7 +91,7 @@ public class Single_Fillgauge_Task : MonoBehaviour, IPointerDownHandler, IPointe
     }
     public void disableBtn()
     {
-        if (!isInteractable)
+        if (isInteractable)
         {
             isInteractable = false;
             print("btncall");

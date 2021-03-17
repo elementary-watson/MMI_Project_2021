@@ -43,21 +43,11 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
         if (cam == null)
             cam = Camera.main;
         //Invoke("resetPosition",1);
-        print("Gefunden");
         //GameObject temp = gameObject.AddComponent<Image>();
         //temp.enabled = true;
 
         if (photonView.IsMine) {
-            //interactIcon = GameObject.Find("test");//GetComponentInParent<GameObject>();
-            if(interactIcon != null)
-            {
-                //interactIcon.transform.position = new Vector2(792,-9999);
-                print("FUUUUCKCKCKCK Print: " + interactIcon.GetComponentInChildren<Text>().text);
-            }
-            else
-            {
-                print("DEBUG: InteractIcon not set yet");
-            }
+
             anim = GetComponent<Animator>();
         }
     }
