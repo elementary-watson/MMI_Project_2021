@@ -85,7 +85,7 @@ public class Network : MonoBehaviourPunCallbacks
 
         playerCamera.target = spawn.transform;
         spawnedPlayerObject = spawn;
-        Invoke("startme", 5);
+        //Invoke("startme", 5);
         //useindicator.transform.position = new Vector2(999, -999);
     }
     public void startme()
