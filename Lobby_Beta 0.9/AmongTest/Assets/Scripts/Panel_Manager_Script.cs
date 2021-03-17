@@ -115,13 +115,10 @@ public class Panel_Manager_Script : MonoBehaviour
             Score_Panel.SetActive(true);
             Player_Panel.SetActive(true);
             print("called this again");
-            fuckthis();
+
         }
     }
-    public void fuckthis()
-    {
 
-    }
     // Start is called before the first frame update
     void Start()
     {

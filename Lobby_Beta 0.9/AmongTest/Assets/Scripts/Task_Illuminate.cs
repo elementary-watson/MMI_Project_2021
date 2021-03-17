@@ -35,7 +35,7 @@ public class Task_Illuminate : Interactable
     public void setStateActive(bool status)
     {        
         sr.sprite = active_state;
-        isOpen = true;
+        isOpen = status;
     }
 
     // Start is called before the first frame update
@@ -44,7 +44,7 @@ public class Task_Illuminate : Interactable
         sr = GetComponent<SpriteRenderer>();
         sr.sprite = passive_state;
         isOpen = false;
-        this.GetComponent<BoxCollider2D>().isTrigger = false;
+        this.GetComponent<BoxCollider2D>().isTrigger = true;
     }
 
     // Update is called once per frame
