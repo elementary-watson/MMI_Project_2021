@@ -16,7 +16,7 @@ public class Panel_Voting_Logic : MonoBehaviour
     {
         int i = 0;
         player = m_reference.getPlayers();
-        foreach (KeyValuePair<int, string> item in player )
+        foreach (KeyValuePair<int, string> item in player)
         {
             string filename = "Player Color/" + item.Value +"_Char";
             Sprite sp = Resources.Load<Sprite>(filename);

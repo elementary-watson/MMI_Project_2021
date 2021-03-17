@@ -10,7 +10,7 @@ public class Main_Fillgauge_Task : MonoBehaviour
     [SerializeField] GameObject win_panel;
     [SerializeField] GameObject Fillgauge_panel;
     [SerializeField] Single_Fillgauge_Task[] sft_object = new Single_Fillgauge_Task[0];
-    Network _network;
+    [SerializeField] Network _network;
     public AudioSource taskfin_sound;
 
     // Start is called before the first frame update

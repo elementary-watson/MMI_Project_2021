@@ -26,7 +26,6 @@ public class Network : MonoBehaviourPunCallbacks
     List<int> PlayerColor = new List<int>();
     public Text txtCounterPlayersInRoom;
     public Text txtCurrentRoomName;
-    public Text lobbyOrRoom;
     public Text countdown;
     public Map_Control_Script msc_object;
     //[SerializeField] GameObject GameMapPanel;
@@ -44,11 +43,12 @@ public class Network : MonoBehaviourPunCallbacks
     [Header("Photon")]
     private TypedLobby customLobby = new TypedLobby("customLobby", LobbyType.Default);
     private Dictionary<string, RoomInfo> cachedRoomList = new Dictionary<string, RoomInfo>();
-    public string lobby_Room_Name;
+    [SerializeField] string lobby_Room_Name;
     PhotonView photonView;
     int lobbySwitch;
     int maxPlayersOfRoom;
-    // interne game logic
+
+    [Header("Game logic")]
     List<string> randomColorList;
     private string myPlayerColorPrefab;
     private string myPlayerColorFilename;
@@ -58,6 +58,7 @@ public class Network : MonoBehaviourPunCallbacks
     IDictionary<int, string> listOfVotekicks = new Dictionary<int, string>();
     private Vector3 spawnPositions;
     GameObject spawnedPlayerObject;
+    [SerializeField] Camera cam;
 
     public void addSuspectToList(int stage, int gameround, string playerColor)
     {
@@ -75,26 +76,33 @@ public class Network : MonoBehaviourPunCallbacks
     private void SpawnPlayer()
     {
         
-        /*playerCamera.target = PhotonNetwork.Instantiate(myPlayerColorPrefab,
-                 new Vector3(
-                     UnityEngine.Random.Range(-4, 4),
-                     UnityEngine.Random.Range(-4, 4),
-                     0), Quaternion.identity).transform; */
-        
         GameObject spawn = PhotonNetwork.Instantiate(myPlayerColorPrefab, spawnPositions, Quaternion.identity);
         CharacterControl cc = spawn.GetComponent<CharacterControl>();
         cc.interactIcon = useindicator;
         cc.setMCSScript(msc_object);
         //cc.resetPosition();
         spawn.GetComponent<CharacterControl>().interactIcon = useindicator;
-        //spawn.GetComponent<CharacterControl>().resetPosition(); ;
 
-        //useindicator = spawn.
-       
         playerCamera.target = spawn.transform;
         spawnedPlayerObject = spawn;
+        Invoke("startme", 5);
         //useindicator.transform.position = new Vector2(999, -999);
     }
+    public void startme()
+    {
+        photonView.RPC("RPC_setPlayerToGhost", RpcTarget.All, getActorId());
+    }
+    [PunRPC]
+    public void RPC_setPlayerToGhost(int kickedActorID)
+    {
+        if(kickedActorID == PhotonNetwork.LocalPlayer.ActorNumber)
+        {
+            spawnedPlayerObject.layer = 11; //set player to invisibleLayer
+            int oldMask = cam.cullingMask;
+            //cam.cullingMask |= ~(1 << 11);
+        }
+    }
+
     public void setPlayerMovement(bool canWalk)
     {
         Player_Movement pm_object = spawnedPlayerObject.GetComponent<Player_Movement>();
@@ -105,10 +113,10 @@ public class Network : MonoBehaviourPunCallbacks
     }
     public void resetPlayerPosition()
     {
-        photonView.RPC("RPCresetPlayerPosition", RpcTarget.All);
+        photonView.RPC("RPC_resetPlayerPosition", RpcTarget.All);
     }
     [PunRPC]
-    public void RPCresetPlayerPosition()
+    public void RPC_resetPlayerPosition()
     {
         spawnedPlayerObject.transform.position = spawnPositions;
     }
