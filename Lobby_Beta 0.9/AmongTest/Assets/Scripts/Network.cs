@@ -339,20 +339,16 @@ public class Network : MonoBehaviourPunCallbacks
     }
     public void setupMultiplayerGame() //wird nur einmal vom letzten playerausgeführt
     {
-        IDictionary<int, string> allplayers allplayers m_reference.getPlayers();
+        IDictionary<int, string> allplayers = m_reference.getPlayers();
         int rand = UnityEngine.Random.Range(0, 10);
         int i = 0;
         foreach (KeyValuePair<int, string> kvp in allplayers)
         {
             if (rand == i)
-                m_reference.setImposterActorID = kvp.Key;
+                m_reference.setImposterActorID(kvp.Key);
         }
-
-        UnityEngine.Random rand = new UnityEngine.Random();
-        //int size = actorIDs.Count;
-        //values[rand.Next(size)];
-
-        if (numberOfPlayer == 5 || numberOfPlayer == 6)
+        //XOFXOF
+        /*if (numberOfPlayer == 5 || numberOfPlayer == 6)
         {
             maxGameRounds = 3;
             playerIncrementPower = 10;
@@ -363,7 +359,7 @@ public class Network : MonoBehaviourPunCallbacks
             maxGameRounds = 5;
             playerIncrementPower = 10;
             ghostIncrementPower = playerIncrementPower / 4;
-        }
+        }*/
     }
 
     [PunRPC]
