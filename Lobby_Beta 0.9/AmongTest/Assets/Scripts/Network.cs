@@ -59,6 +59,8 @@ public class Network : MonoBehaviourPunCallbacks
     private Vector3 spawnPositions;
     GameObject spawnedPlayerObject;
     [SerializeField] Camera cam;
+    [SerializeField] private bool isSaboteur; //Wichtige Variable
+    [SerializeField] private bool isGhost; //Wichtige Variable
 
     public void addSuspectToList(int stage, int gameround, string playerColor)
     {
@@ -113,6 +115,8 @@ public class Network : MonoBehaviourPunCallbacks
         {
             print(PhotonNetwork.LocalPlayer.ActorNumber + " Found " + myPlayerColorPrefab +   " with viewID: " + spawnedPlayerObject.GetComponent<PhotonView>().ViewID);
             spawnedPlayerObject.layer = 11; //set player to invisibleLayer
+            spawnedPlayerObject.GetComponent<CharacterControl>().setStatusToGhost();
+            isGhost = true;
             int oldMask = cam.cullingMask;
             cam.cullingMask = -1; // |= ~(1 << 11);
             var allObjects = spawnedPlayerObject.GetComponentsInChildren<SpriteRenderer>(false);
@@ -191,7 +195,9 @@ public class Network : MonoBehaviourPunCallbacks
         // XOF PhotonNetwork.FetchServerTimestamp();
         lobbySwitch = 0;
         lobby_Room_Name = "LobbyRoom_A";
-        for(int i = 0; i < 10; i++)
+        isSaboteur = false;
+        isGhost = false;
+        for (int i = 0; i < 10; i++)
         {
             playerImageContainer[i].enabled = false;
             playerNameTexts[i].text = "";
@@ -311,7 +317,7 @@ public class Network : MonoBehaviourPunCallbacks
     [PunRPC]
     public void setupPlayer(String idAndColor)
     {
-        //XOF
+        //XOF hier werden farben eingestellt und die multiplayer referenz aufgefüllt
         String[] parts = idAndColor.Split('-');
         if (parts[0] == (PhotonNetwork.NickName))
         {
@@ -330,7 +336,6 @@ public class Network : MonoBehaviourPunCallbacks
             }
             i++;
         }
-        //PhotonNetwork.NickName;
         
         bool isMaxPlayer = m_reference.addPlayer(int.Parse(parts[0]), parts[1].Remove(0, 6), maxPlayersOfRoom);
         if(isMaxPlayer == true)
@@ -340,13 +345,17 @@ public class Network : MonoBehaviourPunCallbacks
     public void setupMultiplayerGame() //wird nur einmal vom letzten playerausgeführt
     {
         IDictionary<int, string> allplayers = m_reference.getPlayers();
-        int rand = UnityEngine.Random.Range(0, 10);
+        int rand = UnityEngine.Random.Range(0, allplayers.Count);
         int i = 0;
+        int saboteurID = -1;
         foreach (KeyValuePair<int, string> kvp in allplayers)
         {
             if (rand == i)
-                m_reference.setImposterActorID(kvp.Key);
+            {
+                saboteurID = kvp.Key;
+            }
         }
+        photonView.RPC("RPC_setupMultiplayerGame", RpcTarget.All, saboteurID); 
         //XOFXOF
         /*if (numberOfPlayer == 5 || numberOfPlayer == 6)
         {
@@ -360,6 +369,17 @@ public class Network : MonoBehaviourPunCallbacks
             playerIncrementPower = 10;
             ghostIncrementPower = playerIncrementPower / 4;
         }*/
+    }
+    [PunRPC] 
+    public void RPC_setupMultiplayerGame(int saboteurID) // Spielbalance und saboteur einstellen
+    {
+        if(getActorId() == saboteurID)
+        {
+            isSaboteur = true;
+        }
+        m_reference.setSaboteurActorID(saboteurID);
+        m_reference.setupGamestyle();
+        //absichern falls method durch playerleave gerufen wurde
     }
 
     [PunRPC]

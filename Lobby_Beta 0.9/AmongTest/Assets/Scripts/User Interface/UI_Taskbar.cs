@@ -16,6 +16,7 @@ public class UI_Taskbar : MonoBehaviour
     [SerializeField] private GameObject Score_Panel;
     [SerializeField] private GameObject Player_Panel;
     [SerializeField] private GameObject thisMain_Progressbar;
+    [SerializeField] private GameObject Stage_Panel;
 
     [SerializeField] private Network _network;
     [SerializeField] private Multiplayer_Reference m_reference;
@@ -30,6 +31,7 @@ public class UI_Taskbar : MonoBehaviour
             _network.resetPlayerPosition();
             _network.setPlayerMovement(false);
             Panel_Voting.SetActive(true);
+            Stage_Panel.SetActive(true);
             preVoteTimer.SetActive(true);            
             Score_Panel.SetActive(false);
             Player_Panel.SetActive(false);
@@ -43,6 +45,7 @@ public class UI_Taskbar : MonoBehaviour
         {
             result_VotingPanel.gameObject.SetActive(false);
             Panel_Voting.SetActive(false);
+            Stage_Panel.SetActive(false);
         }
     }
     private void Update()

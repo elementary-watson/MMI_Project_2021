@@ -16,6 +16,9 @@ public class Panel_Manager_Script : MonoBehaviour
     [SerializeField] private GameObject s15postVotingTimer;
     [SerializeField] private GameObject s9_votetimerPanel;
     [SerializeField] private GameObject second_9s_Timer_Panel;
+
+    [SerializeField] private Stage_Panel_Script sss_object;
+    [SerializeField] GameObject Stage_Panel;
     
     [SerializeField] private TextMeshProUGUI resultTxt;
 
@@ -46,15 +49,15 @@ public class Panel_Manager_Script : MonoBehaviour
         {
             print("Next stage");
             s9_votetimerPanel.SetActive(false);
-            int stage = m_reference.getCurrentStage();
-            if (stage == 1)
+            if (m_reference.getCurrentStage() == 1)
             {
-                m_reference.setCurrentStage(stage + 1);
+                sss_object.switchOnNextstage(); //start the stage panel
+                m_reference.setCurrentStage(2);
                 chat_panel.SetActive(true); //reihenfolge beachten!!
                 voting_panel.SetActive(false);
                 result_VotingPanel.SetActive(false);
             }
-            else if (stage == 3)
+            else if (m_reference.getCurrentStage() == 3)
             {
                 //Panel_Voting_Logic pvl = voting_panel.GetComponent<Panel_Voting_Logic>();
                 pvl.enableButtons(); // Button-Votes erlauben
@@ -72,8 +75,9 @@ public class Panel_Manager_Script : MonoBehaviour
                 //Summary_Panel.SetActive(true);
             }
         }
-        else if (referenced == "ChatManager")
+        else if (referenced == "ChatManager") // wenn chat vorbei ist dann...
         {
+            sss_object.switchOnNextstage();
             m_reference.setCurrentStage(3);
             cc.startNextPhase();
             voting_panel.SetActive(true);

@@ -13,10 +13,12 @@ public class Multiplayer_Reference : MonoBehaviour
     private int crewPoints;
     private int saboteurPoints;
     private int playerIncrementPower;
+    private int saboteurDecrementPower;
     private int ghostIncrementPower;
-    private int imposterActorID;
+    private int saboteurActorID;
     private IDictionary<int, string> allplayers = new Dictionary<int, string>();
     private IDictionary<int, int> allPhotonplayers = new Dictionary<int, int>();
+
     private Vector3[] spawnPositions = new[] {
         new Vector3(1f, 4f, 0f), new Vector3(-2.1f, 4f, 0f), //Nordposition
         new Vector3(5.45f, 1.99f, 0f), new Vector3(5.45f, 0f, 0f), new Vector3(5.45f, -1.89f, 0f), //Ostposition
@@ -24,6 +26,21 @@ public class Multiplayer_Reference : MonoBehaviour
         new Vector3(-5.45f, 1.99f, 0f), new Vector3(-5.45f, 0f, 0f), new Vector3(-5.45f, -1.89f, 0f)}; //Westposition
     List<string> RandomColorList;
 
+    public void setupGamestyle()
+    {
+        if (numberOfPlayer == 5 || numberOfPlayer == 6)
+        {
+            maxGameRounds = 3;
+            playerIncrementPower = 10;
+            ghostIncrementPower = playerIncrementPower / 4;
+        }
+        else
+        {
+            maxGameRounds = 5;
+            playerIncrementPower = 10;
+            ghostIncrementPower = playerIncrementPower / 4;
+        }
+    }
     public void setPlayers(IDictionary<int, string> allplayers)
     {
         this.allplayers = allplayers;
@@ -104,6 +121,7 @@ public class Multiplayer_Reference : MonoBehaviour
     }
     void Start()
     {
+        saboteurActorID = -1;
         gameRound = 1;
         currentStage = 1;
         saboteurPoints = 0;
@@ -112,6 +130,7 @@ public class Multiplayer_Reference : MonoBehaviour
         maxGameRounds = 3; //XOF muss dynamisch werden
         playerIncrementPower = 10;
         ghostIncrementPower = playerIncrementPower / 4;
+        saboteurDecrementPower = 10;
     }
 
     #region getundset
@@ -131,10 +150,16 @@ public class Multiplayer_Reference : MonoBehaviour
     public void setPlayerIncrementPower(int playerIncrementPower) { this.playerIncrementPower = playerIncrementPower; }
 
     public int getGhostIncrementPower() { return ghostIncrementPower; }
-    public void setGhostIncrementPower(int playerIncrementPower) { this.ghostIncrementPower = ghostIncrementPower; }
+    public void setGhostIncrementPower(int ghostIncrementPower) { this.ghostIncrementPower = ghostIncrementPower; }
     
-    public int getImposterActorID() { return imposterActorID; }
-    public void setImposterActorID(int imposterActorID) { this.imposterActorID = imposterActorID; }
+    public int getSaboteurActorID() { return saboteurActorID; }
+    public void setSaboteurActorID(int saboteurActorID) { if(this.saboteurActorID == -1) this.saboteurActorID = saboteurActorID; }
+    
+    public int getNumberOfPlayer() { return numberOfPlayer; }
+    public void setNumberOfPlayer(int numberOfPlayer) { this.numberOfPlayer = numberOfPlayer; }
+
+    public int getSaboteurDecrementPower() { return saboteurDecrementPower; }
+    public void setSaboteurDecrementPower(int saboteurDecrementPower) { this.saboteurDecrementPower = saboteurDecrementPower; }
 
     public int getMaxRounds() { return maxGameRounds; }
     #endregion
