@@ -7,15 +7,17 @@ public class Task_Illuminate : Interactable
 {
     public Sprite passive_state;
     public Sprite active_state;
+    public SpriteRenderer the_active_state;
     public GameObject task;
     private SpriteRenderer sr;
     private bool isOpen;
 
     public override void Interact()
     {
-        if (isOpen) { 
+        if (isOpen) {
             //Sprite austauschen und Task erscheinen lassen
-            sr.sprite = active_state;
+            //sr.sprite = active_state;
+            the_active_state.enabled = true;
             task.SetActive(true);
             //setPosition();
         }
@@ -33,14 +35,15 @@ public class Task_Illuminate : Interactable
         task.transform.position = new Vector2(xValue, yValue);
     }
     public void setStateActive(bool status)
-    {        
-        sr.sprite = active_state;
+    {
+        the_active_state.enabled = true; //sr.sprite = active_state;
         isOpen = status;
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        the_active_state.enabled = false;
         sr = GetComponent<SpriteRenderer>();
         sr.sprite = passive_state;
         isOpen = false;

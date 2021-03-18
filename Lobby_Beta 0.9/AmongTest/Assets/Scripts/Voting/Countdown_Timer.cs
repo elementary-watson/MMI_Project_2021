@@ -25,7 +25,7 @@ public class Countdown_Timer : MonoBehaviour
         switch (findTimer)
         {
             case "9s_Timer_Panel":
-                startTime = 9f; 
+                startTime = 9f;
                 break;
             case "second_9s_Timer_Panel":
                 startTime = 9f;
@@ -50,8 +50,11 @@ public class Countdown_Timer : MonoBehaviour
     }
     void finishedUp() // jed nachdem wo der der timer drin ist macht er die nächste phase auf
     {
-        if (isFinished == 1)
-            p_manager.timeFinished(referenced);        
+        if (isFinished == 1) 
+        { 
+            voting_countdown_sound.Stop();
+            p_manager.timeFinished(referenced);
+        }
     }
 
     private void Update()

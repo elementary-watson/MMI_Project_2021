@@ -68,9 +68,8 @@ public class Panel_Manager_Script : MonoBehaviour
                 {
                     thirdPhase(2);
                 }
-                result_VotingPanel.SetActive(false);
-                voting_panel.SetActive(false);
-                Summary_Panel.SetActive(true);
+                Invoke("closeVoting", 3);
+                //Summary_Panel.SetActive(true);
             }
         }
         else if (referenced == "ChatManager")
@@ -90,6 +89,11 @@ public class Panel_Manager_Script : MonoBehaviour
             //showmessage = true;//resultTxt.text = msg;
             second_9s_Timer_Panel.SetActive(true);
         }
+    }
+    public void closeVoting()
+    {
+        result_VotingPanel.SetActive(false);
+        voting_panel.SetActive(false);
     }
     void thirdPhase(int maxrounds)
     {

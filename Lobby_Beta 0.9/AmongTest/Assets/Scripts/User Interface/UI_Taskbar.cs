@@ -6,8 +6,8 @@ using TMPro;
 public class UI_Taskbar : MonoBehaviour
 {
     //public Slider slider;
-    public int maximum;
-    public int current;
+    public float maximum;
+    public float current;
     [SerializeField] private Image img_progressbar;
     [SerializeField] private TMP_Text tmp_progressValue;
     [SerializeField] private GameObject Panel_Voting;
@@ -26,6 +26,7 @@ public class UI_Taskbar : MonoBehaviour
         img_progressbar.fillAmount = fillamount;   
         if(current == 100) // XOF timer einbauen
         {
+            current = 0;
             _network.resetPlayerPosition();
             _network.setPlayerMovement(false);
             Panel_Voting.SetActive(true);
@@ -53,7 +54,7 @@ public class UI_Taskbar : MonoBehaviour
     {
         //slider.maxValue = max;
     }
-    public void setTaskprogress(int increment)
+    public void setTaskprogress(float increment)
     {
         current += increment * 10; //XOF hier wird der wert manipuliert
     }

@@ -12,6 +12,8 @@ public class Multiplayer_Reference : MonoBehaviour
     private int currentStage;
     private int crewPoints;
     private int saboteurPoints;
+    private int playerIncrementPower;
+    private int ghostIncrementPower;
     private IDictionary<int, string> allplayers = new Dictionary<int, string>();
     private Vector3[] spawnPositions = new[] {
         new Vector3(1f, 4f, 0f), new Vector3(-2.1f, 4f, 0f), //Nordposition
@@ -28,11 +30,13 @@ public class Multiplayer_Reference : MonoBehaviour
     {
         return allplayers;
     }
-    public void addPlayer(int id, string charname)
+    public void addPlayer(int id, string charname, int maxPlayers)
     {
         if(!allplayers.Keys.Contains(id))
-        allplayers.Add(id, charname);
+            allplayers.Add(id, charname);
         numberOfPlayer += 1;
+        if (numberOfPlayer == maxPlayers)
+            setupMultiplayerGame();
     }
     public void deleteplayer(int photonId)
     {
@@ -73,15 +77,19 @@ public class Multiplayer_Reference : MonoBehaviour
         }
         return new Vector3(0,0,0);
     }
-    public void setupMultiplayerGame()
+    public void setupMultiplayerGame() //wird nur einmal ausgeführt
     {
         if(numberOfPlayer == 5 || numberOfPlayer == 6)
         {
             maxGameRounds = 3;
+            playerIncrementPower = 10;
+            ghostIncrementPower = playerIncrementPower / 4;
         }
         else
         {
             maxGameRounds = 5;
+            playerIncrementPower = 10;
+            ghostIncrementPower = playerIncrementPower / 4;
         }
     }
     public void setRandomColorList(List<string> RandomColorList) // Farben werden randomized um zufällige positionen für spieler zu erstellen
@@ -96,6 +104,8 @@ public class Multiplayer_Reference : MonoBehaviour
         crewPoints = 0;
         numberOfPlayer = 0;
         maxGameRounds = 3; //XOF muss dynamisch werden
+        playerIncrementPower = 10;
+        ghostIncrementPower = playerIncrementPower / 4;
     }
 
     #region getundset
@@ -110,6 +120,12 @@ public class Multiplayer_Reference : MonoBehaviour
 
     public int getSaboteurPoints() { return saboteurPoints; }
     public void setSaboteurPoints(int saboteurPoints) { this.saboteurPoints = saboteurPoints; }
+    
+    public int getPlayerIncrementPower() { return playerIncrementPower; }
+    public void setPlayerIncrementPower(int playerIncrementPower) { this.playerIncrementPower = playerIncrementPower; }
+
+    public int getGhostIncrementPower() { return ghostIncrementPower; }
+    public void setGhostIncrementPower(int playerIncrementPower) { this.ghostIncrementPower = ghostIncrementPower; }
 
     public int getMaxRounds() { return maxGameRounds; }
     #endregion

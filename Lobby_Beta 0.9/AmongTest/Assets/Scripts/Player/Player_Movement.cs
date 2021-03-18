@@ -17,10 +17,12 @@ public class Player_Movement : Photon.Pun.MonoBehaviourPun
     }
     public void enableMovementSpeed()
     {
+        print("Movevement true");
         moveSpeed = 8f;
     }    
     public void disableMovementSpeed()
     {
+        print("Movevement false");
         moveSpeed = 0f;
     }
     private void FixedUpdate()

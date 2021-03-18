@@ -80,32 +80,51 @@ public class Network : MonoBehaviourPunCallbacks
         CharacterControl cc = spawn.GetComponent<CharacterControl>();
         cc.interactIcon = useindicator;
         cc.setMCSScript(msc_object);
+        cc.setMultiplayerReference(m_reference);
         //cc.resetPosition();
+        cc.setActorID(PhotonNetwork.LocalPlayer.ActorNumber);
         spawn.GetComponent<CharacterControl>().interactIcon = useindicator;
 
         playerCamera.target = spawn.transform;
         spawnedPlayerObject = spawn;
-        //Invoke("startme", 5);
         //useindicator.transform.position = new Vector2(999, -999);
     }
-    public void startme()
+    public void setPlayerToGhost(int actorId)
     {
-        photonView.RPC("RPC_setPlayerToGhost", RpcTarget.All, getActorId());
+        photonView.RPC("RPC_setPlayerToGhost", RpcTarget.All, actorId);
     }
     [PunRPC]
     public void RPC_setPlayerToGhost(int kickedActorID)
     {
+        print("Photon Ghost call");
         if(kickedActorID == PhotonNetwork.LocalPlayer.ActorNumber)
         {
+            print(PhotonNetwork.LocalPlayer.ActorNumber + " Found " + myPlayerColorPrefab +   " and kicked: " + kickedActorID);
             spawnedPlayerObject.layer = 11; //set player to invisibleLayer
             int oldMask = cam.cullingMask;
-            //cam.cullingMask |= ~(1 << 11);
+            cam.cullingMask |= ~(1 << 11);
+        }
+        else
+        {
+            print(PhotonNetwork.LocalPlayer.ActorNumber + " Not kicked " + myPlayerColorPrefab);
+            GameObject[] playerObject = GameObject.FindGameObjectsWithTag("Player");
+
+            foreach (GameObject item in playerObject)
+            {
+                if( kickedActorID == item.GetComponent<CharacterControl>().getActorID())
+                {
+                    print(PhotonNetwork.LocalPlayer.ActorNumber + " Found the kicked on");
+                    item.layer = 11;
+                }
+            }
         }
     }
 
     public void setPlayerMovement(bool canWalk)
     {
+        print(canWalk);
         Player_Movement pm_object = spawnedPlayerObject.GetComponent<Player_Movement>();
+        print("PlayerMovement ActorID: " + spawnedPlayerObject.GetComponent<CharacterControl>().getActorID());
         if (canWalk)
             pm_object.enableMovementSpeed();
         else
@@ -156,13 +175,13 @@ public class Network : MonoBehaviourPunCallbacks
         //canJoin = true;
     }
 
-    public void incrementTaskprogress(int increment)
+    public void incrementTaskprogress()
     {
         print("DEBUG: IncrementProgress was called");
-        photonView.RPC("incrementTaskprogressNetwork", RpcTarget.All,increment);
+        photonView.RPC("incrementTaskprogressNetwork", RpcTarget.All,spawnedPlayerObject.GetComponent<CharacterControl>().getIncrementPower());
     }
     [PunRPC]
-    void incrementTaskprogressNetwork(int increment)
+    public void incrementTaskprogressNetwork(float increment)
     {
         prog_reference.setTaskprogress(increment);
     }
@@ -285,7 +304,7 @@ public class Network : MonoBehaviourPunCallbacks
         }
         //PhotonNetwork.NickName;
         
-        m_reference.addPlayer(int.Parse(parts[0]),parts[1].Remove(0,6));
+        m_reference.addPlayer(int.Parse(parts[0]), parts[1].Remove(0, 6), maxPlayersOfRoom);
         print("DICT ID: "+ int.Parse(parts[0]) + " Color" + parts[1].Remove(0, 6));
     }
     [PunRPC]

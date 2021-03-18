@@ -39,7 +39,7 @@ public class Lightswitch_Logic : MonoBehaviour
         {
             winText.SetActive(true);
             Invoke("taskFinished", 1);
-            _network.incrementTaskprogress(10);
+            _network.incrementTaskprogress();
         }
         else
         {

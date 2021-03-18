@@ -121,6 +121,8 @@ public class Result_Voting_Panel : MonoBehaviour
                 img_votedPlayer.sprite = sp;
                 Setup();
                 tmp_resultTexts[2].SetActive(true);
+                _network.setPlayerToGhost(mostVoted.Key);
+                _network.setPlayerMovement(true);
             }
         }
         else if (m_reference.getCurrentStage() == 1)

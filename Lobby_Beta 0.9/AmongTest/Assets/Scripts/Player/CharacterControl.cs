@@ -8,6 +8,7 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
 {
     // Start is called before the first frame update
     public GameObject interactIcon;
+    [SerializeField] SpriteRenderer Halo;
     [SerializeField] private Camera cam;
     private Animator anim;
     private float moveSpeed = 8;
@@ -16,12 +17,23 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
     //Untere Werte 0.1f, 1f
     private Vector2 boxSize = new Vector2(1f, 1f);
     public Map_Control_Script mcs_object;
+    [SerializeField] Multiplayer_Reference m_reference;
+    [SerializeField] float incrementTaskPower;
+    [SerializeField] int actorID;
 
     public void setMCSScript(Map_Control_Script mcs_object)
     {
         this.mcs_object = mcs_object;
     }
-
+    public void setMultiplayerReference(Multiplayer_Reference m_reference)
+    {
+        this.m_reference = m_reference;
+    }
+    public void setStatusToGhost()
+    {
+        Halo.enabled = true;
+        incrementTaskPower = m_reference.getGhostIncrementPower();
+    }
     public void setPosition()
     {
         RectTransform rt = (RectTransform)interactIcon.transform;
@@ -38,6 +50,19 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
         //Vector3 icon_position = new Vector3(cam.WorldToViewportPoint())
         interactIcon.transform.position = new Vector2(xValue,yValue);
     }
+    public float getIncrementPower()
+    {
+        return incrementTaskPower;
+    }
+    public int getActorID()
+    {
+        return actorID;
+    }    
+    public void setActorID(int actorID)
+    {
+        this.actorID = actorID;
+    }
+
     void Start()
     {
         if (cam == null)
@@ -46,8 +71,9 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
         //GameObject temp = gameObject.AddComponent<Image>();
         //temp.enabled = true;
 
-        if (photonView.IsMine) {
-
+        if (photonView.IsMine) 
+        {
+            incrementTaskPower = m_reference.getPlayerIncrementPower();
             anim = GetComponent<Animator>();
         }
     }

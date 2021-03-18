@@ -24,7 +24,7 @@ public class Main_Fillgauge_Task : MonoBehaviour
         current = current + 1;
         if(current == maxTasks)
         {
-            _network.incrementTaskprogress(10);
+            _network.incrementTaskprogress();
             win_panel.SetActive(true);
             taskfin_sound.Play();
             Invoke("taskfinished",3);
