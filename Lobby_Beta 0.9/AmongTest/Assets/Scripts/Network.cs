@@ -166,34 +166,7 @@ public class Network : MonoBehaviourPunCallbacks
         spawnedPlayerObject.transform.position = spawnPositions;
     }
 
-    public void setupMultiplayerGame() //wird nur einmal vom letzten playerausgeführt
-    {
-        int rand = UnityEngine.Random.Range(0, 10);
-        int i = 0;
-        foreach (KeyValuePair<int, string> kvp in allplayers)
-        {
-            if (rand == i)
-                imposterActorID = kvp.Key;
-        }
 
-        UnityEngine.Random rand = new UnityEngine.Random();
-        //int size = actorIDs.Count;
-        //values[rand.Next(size)];
-
-
-        if (numberOfPlayer == 5 || numberOfPlayer == 6)
-        {
-            maxGameRounds = 3;
-            playerIncrementPower = 10;
-            ghostIncrementPower = playerIncrementPower / 4;
-        }
-        else
-        {
-            maxGameRounds = 5;
-            playerIncrementPower = 10;
-            ghostIncrementPower = playerIncrementPower / 4;
-        }
-    }
 
     private void RandomColor()
     {
@@ -360,8 +333,39 @@ public class Network : MonoBehaviourPunCallbacks
         //PhotonNetwork.NickName;
         
         bool isMaxPlayer = m_reference.addPlayer(int.Parse(parts[0]), parts[1].Remove(0, 6), maxPlayersOfRoom);
+        if(isMaxPlayer == true)
+            setupMultiplayerGame();
         print("DICT ID: "+ int.Parse(parts[0]) + " Color" + parts[1].Remove(0, 6));
     }
+    public void setupMultiplayerGame() //wird nur einmal vom letzten playerausgeführt
+    {
+        IDictionary<int, string> allplayers allplayers m_reference.getPlayers();
+        int rand = UnityEngine.Random.Range(0, 10);
+        int i = 0;
+        foreach (KeyValuePair<int, string> kvp in allplayers)
+        {
+            if (rand == i)
+                m_reference.setImposterActorID = kvp.Key;
+        }
+
+        UnityEngine.Random rand = new UnityEngine.Random();
+        //int size = actorIDs.Count;
+        //values[rand.Next(size)];
+
+        if (numberOfPlayer == 5 || numberOfPlayer == 6)
+        {
+            maxGameRounds = 3;
+            playerIncrementPower = 10;
+            ghostIncrementPower = playerIncrementPower / 4;
+        }
+        else
+        {
+            maxGameRounds = 5;
+            playerIncrementPower = 10;
+            ghostIncrementPower = playerIncrementPower / 4;
+        }
+    }
+
     [PunRPC]
     public void startGame()
     {

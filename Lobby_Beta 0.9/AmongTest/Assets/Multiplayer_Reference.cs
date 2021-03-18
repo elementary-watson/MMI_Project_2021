@@ -39,7 +39,7 @@ public class Multiplayer_Reference : MonoBehaviour
             allplayers.Add(id, charname);
         numberOfPlayer += 1;
         if (numberOfPlayer == maxPlayers) // Wird nur vom letzten "maxplayer" ausgeführt
-            return true
+            return true;
         return false;
     }    
 
@@ -132,6 +132,9 @@ public class Multiplayer_Reference : MonoBehaviour
 
     public int getGhostIncrementPower() { return ghostIncrementPower; }
     public void setGhostIncrementPower(int playerIncrementPower) { this.ghostIncrementPower = ghostIncrementPower; }
+    
+    public int getImposterActorID() { return imposterActorID; }
+    public void setImposterActorID(int imposterActorID) { this.imposterActorID = imposterActorID; }
 
     public int getMaxRounds() { return maxGameRounds; }
     #endregion
