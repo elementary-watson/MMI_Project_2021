@@ -87,33 +87,96 @@ public class Network : MonoBehaviourPunCallbacks
 
         playerCamera.target = spawn.transform;
         spawnedPlayerObject = spawn;
+        setPhotonViewID();
+        
         //useindicator.transform.position = new Vector2(999, -999);
     }
-    public void setPlayerToGhost(int actorId)
+    public void setPhotonViewID()
     {
-        photonView.RPC("RPC_setPlayerToGhost", RpcTarget.All, actorId);
+        photonView.RPC("RPC_setPhotonViewID", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber, spawnedPlayerObject.GetComponent<PhotonView>().ViewID);
     }
     [PunRPC]
-    public void RPC_setPlayerToGhost(int kickedActorID)
+    public void RPC_setPhotonViewID(int actorID, int photonViewID)
+    {
+        //GameObject[] player = 
+        print("Got ViewID of: "+ actorID + " with viewID: " + photonViewID);
+        m_reference.addPhotonplayer(actorID, photonViewID);
+        var player = PhotonView.Find(photonViewID);
+        //.GetComponentInChildren<SpriteRenderer>().enabled = true;
+        //GameObject player = PhotonView.Find(photonViewID).GetComponentInParent<GameObject>();
+        //print(player.name +" " + player.tag);
+        if (tmp == 0) tmp = photonViewID;
+        else tmp2 = photonViewID;
+        Invoke("testHalo", 4);
+    }
+    private int tmp;
+    private int tmp2;
+    public void testHalo()
+    {
+        GameObject[] playerObject = GameObject.FindGameObjectsWithTag("Player"); //PhotonView.Find()//
+        int i = 0;
+        foreach (GameObject item in playerObject)
+        {
+            if(i == 0)
+            {
+                print("Index: " + i);
+                if (tmp == item.GetComponent<PhotonView>().ViewID)
+                {
+                    item.GetComponentInChildren<SpriteRenderer>(true).enabled = true;
+                    print("Correct: " + i);
+                }
+            }
+            else
+            {
+                print("Index: " + i);
+                if (tmp2 == item.GetComponent<PhotonView>().ViewID)
+                {
+                    item.GetComponentInChildren<SpriteRenderer>(true).enabled = true;
+                    print("Correct: " + i);
+                }
+            }
+            i++;
+        }
+    }
+    public void setPlayerToGhost(int photonViewId) // wird von resultpanel zum schluss von phase 3 gerufen
+    {
+        photonView.RPC("RPC_setPlayerToGhost", RpcTarget.All, photonViewId);
+    }
+    [PunRPC]
+    public void RPC_setPlayerToGhost(int kickedPhotonViewId) 
     {
         print("Photon Ghost call");
-        if(kickedActorID == PhotonNetwork.LocalPlayer.ActorNumber)
+        if(kickedPhotonViewId == spawnedPlayerObject.GetComponent<PhotonView>().ViewID)
         {
-            print(PhotonNetwork.LocalPlayer.ActorNumber + " Found " + myPlayerColorPrefab +   " and kicked: " + kickedActorID);
+            print(PhotonNetwork.LocalPlayer.ActorNumber + " Found " + myPlayerColorPrefab +   " with viewID: " + spawnedPlayerObject.GetComponent<PhotonView>().ViewID);
             spawnedPlayerObject.layer = 11; //set player to invisibleLayer
             int oldMask = cam.cullingMask;
-            cam.cullingMask |= ~(1 << 11);
+            cam.cullingMask = -1; // |= ~(1 << 11);
+            var allObjects = spawnedPlayerObject.GetComponentsInChildren<SpriteRenderer>(false);
+            foreach(SpriteRenderer item in allObjects)
+            {
+                print("Renderer False Found: " + item.name);
+                item.enabled = true;
+            }
+            var allTrueObjects = spawnedPlayerObject.GetComponentsInChildren<SpriteRenderer>(true);
+            foreach(SpriteRenderer item in allTrueObjects)
+            {
+                print("Renderer true Found: " + item.name);
+                item.enabled = true;
+            }
+            spawnedPlayerObject.GetComponentInChildren<SpriteRenderer>(true).enabled = true;
         }
         else
-        {
-            print(PhotonNetwork.LocalPlayer.ActorNumber + " Not kicked " + myPlayerColorPrefab);
-            GameObject[] playerObject = GameObject.FindGameObjectsWithTag("Player");
-
+        {            
+            print(PhotonNetwork.LocalPlayer.ActorNumber + " wurde nicht gekicked " + myPlayerColorPrefab);
+            GameObject[] playerObject = GameObject.FindGameObjectsWithTag("Player"); //PhotonView.Find()//
+            int i = 0;
             foreach (GameObject item in playerObject)
             {
-                if( kickedActorID == item.GetComponent<CharacterControl>().getActorID())
+                print("Index: " + i);
+                if(kickedPhotonViewId == item.GetComponent<PhotonView>().ViewID)
                 {
-                    print(PhotonNetwork.LocalPlayer.ActorNumber + " Found the kicked on");
+                    print("ID: "+  PhotonNetwork.LocalPlayer.ActorNumber + " hat den gevoteten Spieler gefunden!");
                     item.layer = 11;
                 }
             }

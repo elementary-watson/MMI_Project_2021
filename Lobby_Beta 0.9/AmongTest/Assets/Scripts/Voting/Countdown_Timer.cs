@@ -31,10 +31,10 @@ public class Countdown_Timer : MonoBehaviour
                 startTime = 9f;
                 break;
             case "15s_Timer_Panel":
-                startTime = 15f; voting_countdown_sound.PlayDelayed(9);
+                startTime = 5f; voting_countdown_sound.PlayDelayed(9);
                 break;
             case "30s_Timer_Panel":
-                startTime = 30f; voting_countdown_sound.PlayDelayed(15);
+                startTime = 8f; voting_countdown_sound.PlayDelayed(15);
                 break;
             case "60s_Timer_Panel":
                 startTime = 5f;

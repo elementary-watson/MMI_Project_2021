@@ -15,6 +15,7 @@ public class Multiplayer_Reference : MonoBehaviour
     private int playerIncrementPower;
     private int ghostIncrementPower;
     private IDictionary<int, string> allplayers = new Dictionary<int, string>();
+    private IDictionary<int, int> allPhotonplayers = new Dictionary<int, int>();
     private Vector3[] spawnPositions = new[] {
         new Vector3(1f, 4f, 0f), new Vector3(-2.1f, 4f, 0f), //Nordposition
         new Vector3(5.45f, 1.99f, 0f), new Vector3(5.45f, 0f, 0f), new Vector3(5.45f, -1.89f, 0f), //Ostposition
@@ -30,6 +31,7 @@ public class Multiplayer_Reference : MonoBehaviour
     {
         return allplayers;
     }
+
     public void addPlayer(int id, string charname, int maxPlayers)
     {
         if(!allplayers.Keys.Contains(id))
@@ -37,7 +39,8 @@ public class Multiplayer_Reference : MonoBehaviour
         numberOfPlayer += 1;
         if (numberOfPlayer == maxPlayers)
             setupMultiplayerGame();
-    }
+    }    
+
     public void deleteplayer(int photonId)
     {
         if (allplayers.ContainsKey(photonId))
@@ -53,6 +56,21 @@ public class Multiplayer_Reference : MonoBehaviour
             print("Key: " + kvp.Key + "Value" + kvp.Value);
         }
     }
+    public void addPhotonplayer(int actorID, int photonViewID)
+    {//allPhotonplayers
+        if (!allPhotonplayers.Keys.Contains(actorID))
+            allPhotonplayers.Add(actorID, photonViewID);
+    }
+    public int getPhotonIDbyActorID(int actorID) // gibt photon id zurück weil nur damit andere player angesprochen werden können
+    {
+        foreach (KeyValuePair<int, int> kvp in allPhotonplayers)
+        {
+            if(kvp.Key == actorID)
+                return kvp.Value;
+        }
+        return -1;
+    }
+    //Diese Methode ist zur Platzierung der Spieler um die Hauptkonsole da
     public Vector3 setupPositions(int actorId) // Logik arbeitet mit INDEX Werten vom Vektor3 Array und Farben Array.   
     { //Farben werden vorher gemischt-Jeder Spieler hat eigene Farbe- Die position der Farbe bestimmt die anschließende Vector3 position
         foreach (string item in RandomColorList)
