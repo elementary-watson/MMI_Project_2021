@@ -88,56 +88,19 @@ public class Network : MonoBehaviourPunCallbacks
         playerCamera.target = spawn.transform;
         spawnedPlayerObject = spawn;
         setPhotonViewID();
-        
-        //useindicator.transform.position = new Vector2(999, -999);
     }
     public void setPhotonViewID()
     {
         photonView.RPC("RPC_setPhotonViewID", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber, spawnedPlayerObject.GetComponent<PhotonView>().ViewID);
     }
     [PunRPC]
-    public void RPC_setPhotonViewID(int actorID, int photonViewID)
+    public void RPC_setPhotonViewID(int actorID, int photonViewID) //Photon View bei allen sichern
     {
-        //GameObject[] player = 
         print("Got ViewID of: "+ actorID + " with viewID: " + photonViewID);
         m_reference.addPhotonplayer(actorID, photonViewID);
         var player = PhotonView.Find(photonViewID);
-        //.GetComponentInChildren<SpriteRenderer>().enabled = true;
-        //GameObject player = PhotonView.Find(photonViewID).GetComponentInParent<GameObject>();
-        //print(player.name +" " + player.tag);
-        if (tmp == 0) tmp = photonViewID;
-        else tmp2 = photonViewID;
-        Invoke("testHalo", 4);
     }
-    private int tmp;
-    private int tmp2;
-    public void testHalo()
-    {
-        GameObject[] playerObject = GameObject.FindGameObjectsWithTag("Player"); //PhotonView.Find()//
-        int i = 0;
-        foreach (GameObject item in playerObject)
-        {
-            if(i == 0)
-            {
-                print("Index: " + i);
-                if (tmp == item.GetComponent<PhotonView>().ViewID)
-                {
-                    item.GetComponentInChildren<SpriteRenderer>(true).enabled = true;
-                    print("Correct: " + i);
-                }
-            }
-            else
-            {
-                print("Index: " + i);
-                if (tmp2 == item.GetComponent<PhotonView>().ViewID)
-                {
-                    item.GetComponentInChildren<SpriteRenderer>(true).enabled = true;
-                    print("Correct: " + i);
-                }
-            }
-            i++;
-        }
-    }
+
     public void setPlayerToGhost(int photonViewId) // wird von resultpanel zum schluss von phase 3 gerufen
     {
         photonView.RPC("RPC_setPlayerToGhost", RpcTarget.All, photonViewId);
@@ -201,6 +164,35 @@ public class Network : MonoBehaviourPunCallbacks
     public void RPC_resetPlayerPosition()
     {
         spawnedPlayerObject.transform.position = spawnPositions;
+    }
+
+    public void setupMultiplayerGame() //wird nur einmal vom letzten playerausgeführt
+    {
+        int rand = UnityEngine.Random.Range(0, 10);
+        int i = 0;
+        foreach (KeyValuePair<int, string> kvp in allplayers)
+        {
+            if (rand == i)
+                imposterActorID = kvp.Key;
+        }
+
+        UnityEngine.Random rand = new UnityEngine.Random();
+        //int size = actorIDs.Count;
+        //values[rand.Next(size)];
+
+
+        if (numberOfPlayer == 5 || numberOfPlayer == 6)
+        {
+            maxGameRounds = 3;
+            playerIncrementPower = 10;
+            ghostIncrementPower = playerIncrementPower / 4;
+        }
+        else
+        {
+            maxGameRounds = 5;
+            playerIncrementPower = 10;
+            ghostIncrementPower = playerIncrementPower / 4;
+        }
     }
 
     private void RandomColor()
@@ -367,7 +359,7 @@ public class Network : MonoBehaviourPunCallbacks
         }
         //PhotonNetwork.NickName;
         
-        m_reference.addPlayer(int.Parse(parts[0]), parts[1].Remove(0, 6), maxPlayersOfRoom);
+        bool isMaxPlayer = m_reference.addPlayer(int.Parse(parts[0]), parts[1].Remove(0, 6), maxPlayersOfRoom);
         print("DICT ID: "+ int.Parse(parts[0]) + " Color" + parts[1].Remove(0, 6));
     }
     [PunRPC]

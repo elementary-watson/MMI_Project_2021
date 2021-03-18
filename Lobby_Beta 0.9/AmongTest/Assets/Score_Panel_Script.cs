@@ -9,8 +9,7 @@ public class Score_Panel_Script : MonoBehaviour
     [SerializeField] TextMeshProUGUI tmp_crewPoints;
     [SerializeField] TextMeshProUGUI tmp_sabPoints;
 
-    // Start is called before the first frame update
-    
+    // Start is called before the first frame update    
     void Start()
     {
         m_reference.getMaxRounds();

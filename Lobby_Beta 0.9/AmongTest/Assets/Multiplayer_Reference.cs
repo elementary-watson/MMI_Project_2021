@@ -14,6 +14,7 @@ public class Multiplayer_Reference : MonoBehaviour
     private int saboteurPoints;
     private int playerIncrementPower;
     private int ghostIncrementPower;
+    private int imposterActorID;
     private IDictionary<int, string> allplayers = new Dictionary<int, string>();
     private IDictionary<int, int> allPhotonplayers = new Dictionary<int, int>();
     private Vector3[] spawnPositions = new[] {
@@ -32,13 +33,14 @@ public class Multiplayer_Reference : MonoBehaviour
         return allplayers;
     }
 
-    public void addPlayer(int id, string charname, int maxPlayers)
+    public bool addPlayer(int id, string charname, int maxPlayers)
     {
         if(!allplayers.Keys.Contains(id))
             allplayers.Add(id, charname);
         numberOfPlayer += 1;
-        if (numberOfPlayer == maxPlayers)
-            setupMultiplayerGame();
+        if (numberOfPlayer == maxPlayers) // Wird nur vom letzten "maxplayer" ausgeführt
+            return true
+        return false;
     }    
 
     public void deleteplayer(int photonId)
@@ -95,21 +97,7 @@ public class Multiplayer_Reference : MonoBehaviour
         }
         return new Vector3(0,0,0);
     }
-    public void setupMultiplayerGame() //wird nur einmal ausgeführt
-    {
-        if(numberOfPlayer == 5 || numberOfPlayer == 6)
-        {
-            maxGameRounds = 3;
-            playerIncrementPower = 10;
-            ghostIncrementPower = playerIncrementPower / 4;
-        }
-        else
-        {
-            maxGameRounds = 5;
-            playerIncrementPower = 10;
-            ghostIncrementPower = playerIncrementPower / 4;
-        }
-    }
+
     public void setRandomColorList(List<string> RandomColorList) // Farben werden randomized um zufällige positionen für spieler zu erstellen
     {
         this.RandomColorList = RandomColorList;
