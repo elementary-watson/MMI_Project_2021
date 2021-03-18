@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Single_StagePanel_Script : MonoBehaviour
 {
     [SerializeField] Image img_fillNextStage;
+    [SerializeField] Stage_Panel_Script sps_object;
     float current;
     float maximum;
     bool canStart;
@@ -35,6 +36,7 @@ public class Single_StagePanel_Script : MonoBehaviour
             {
                 canStart = false;
                 maximum = 1f;
+                sps_object.switchSprite();
             }
             float normalizedValue = Mathf.Clamp(current/ maximum, 0.0f, 1.0f);
             img_fillNextStage.fillAmount = normalizedValue;

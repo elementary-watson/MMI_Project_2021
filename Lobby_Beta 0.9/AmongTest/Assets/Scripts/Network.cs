@@ -150,6 +150,18 @@ public class Network : MonoBehaviourPunCallbacks
             }
         }
     }
+    public void setScoreOfRound(bool source) // Punkte geben wird von Time_Game_Script oder Progressbar_Script gerufen
+    {
+        // Source -> true crewmates und vice versa
+        if (source)
+        {
+            m_reference.setCrewPoints(m_reference.getCrewPoints() + 1);
+        }
+        else
+        {
+            m_reference.setSaboteurPoints(m_reference.getSaboteurPoints() + 1);
+        }
+    }
 
     public void setPlayerMovement(bool canWalk)
     {
@@ -205,8 +217,8 @@ public class Network : MonoBehaviourPunCallbacks
             playerReadyTexts[i].text = "";
         }
         RandomColor();
-        myRoomOptions = new RoomOptions() { MaxPlayers = 1, IsVisible = true, IsOpen = true, /*PlayerTtl = 10000, EmptyRoomTtl=60000*/ };
-        maxPlayersOfRoom = 1;
+        myRoomOptions = new RoomOptions() { MaxPlayers = 2, IsVisible = true, IsOpen = true, /*PlayerTtl = 10000, EmptyRoomTtl=60000*/ };
+        maxPlayersOfRoom = 2;
         //canJoin = true;
     }
 
@@ -345,6 +357,7 @@ public class Network : MonoBehaviourPunCallbacks
     }
     public void setupMultiplayerGame() //wird nur einmal vom letzten playerausgeführt
     {
+        // XOF hier wird der Saboteur erstellt
         IDictionary<int, string> allplayers = m_reference.getPlayers();
         int rand = UnityEngine.Random.Range(0, allplayers.Count);
         int i = 0;
@@ -373,14 +386,15 @@ public class Network : MonoBehaviourPunCallbacks
     }
     [PunRPC] 
     public void RPC_setupMultiplayerGame(int saboteurID) // Spielbalance und saboteur einstellen
-    {
-        if(getActorId() == saboteurID)
+    {        
+        //diese methode absichern falls method durch playerleave gerufen wurde. Falls einer geht muss nach jeder Runde rebalanced werden.
+
+        if (getActorId() == saboteurID)
         {
             isSaboteur = true;
         }
         m_reference.setSaboteurActorID(saboteurID);
         m_reference.setupGamestyle();
-        //absichern falls method durch playerleave gerufen wurde
     }
 
     [PunRPC]
@@ -472,6 +486,7 @@ public class Network : MonoBehaviourPunCallbacks
     {
         this.SendQuitEvent();
     }
+
     void OnApplicationQuit()
     {
         print("DEBUG: Player left Application");
@@ -481,6 +496,11 @@ public class Network : MonoBehaviourPunCallbacks
     void SendQuitEvent()
     {
         try {
+            //XOF wenn saboteur leaved dann passiert noch nix
+            if(m_reference.getSaboteurActorID() == getActorId())
+            {
+                print("QUIT: Saboteur left the game, reset?");
+            }
             photonView.RPC("RoomPlayerLeave", RpcTarget.All, PhotonNetwork.NickName.ToString());
             photonView.RPC("RefreshPlayerNumberOnLeave", RpcTarget.All);
             // send event, add your code here

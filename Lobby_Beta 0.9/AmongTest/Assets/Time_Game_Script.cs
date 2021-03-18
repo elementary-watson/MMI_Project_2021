@@ -7,11 +7,12 @@ using TMPro;
 
 public class Time_Game_Script : MonoBehaviour
 {
+    //[SerializeField] GameObject Progressbar_Panel;
     [SerializeField] TextMeshProUGUI tmp_timer;
     [SerializeField] private TimeSpan timePlaying;
     [SerializeField] private float elapsedTime;
-    [SerializeField] GameObject Progressbar_Panel;
 
+    [SerializeField] Network _network;
     [SerializeField] Progressbar_Script pb_object;
 
     [SerializeField] bool timerGoing;
@@ -47,10 +48,12 @@ public class Time_Game_Script : MonoBehaviour
             }
             else
             {
-                pb_object.stopProgressbar();
-                Debug.Log("Time has run out!");
-                elapsedTime = 0;
                 timerGoing = false;
+                pb_object.stopProgressbar();
+                pb_object.startMeeting(false);
+                print("Time has run out!");
+                elapsedTime = 0;
+                
 
             }
         }
@@ -86,6 +89,4 @@ public class Time_Game_Script : MonoBehaviour
         }
     }*/
     // Update is called once per frame
-
-
 }

@@ -6,11 +6,11 @@ public class Panel_Manager_Script : MonoBehaviour
 {
     [SerializeField] private Multiplayer_Reference m_reference;
     [SerializeField] private Network _network;
-
+    [SerializeField] private ChatController cc;
+    
     [SerializeField] private Confirm_Panel_Logic confirm_pl;
     [SerializeField] private GameObject result_VotingPanel;    
-    [SerializeField] private GameObject chat_panel;
-    [SerializeField] private ChatController cc;
+    [SerializeField] private GameObject chat_panel;    
     [SerializeField] private GameObject voting_panel;
     [SerializeField] private GameObject s30postVotingTimer;
     [SerializeField] private GameObject s15postVotingTimer;
@@ -51,8 +51,8 @@ public class Panel_Manager_Script : MonoBehaviour
             s9_votetimerPanel.SetActive(false);
             if (m_reference.getCurrentStage() == 1)
             {
-                sss_object.switchOnNextstage(); //start the stage panel
                 m_reference.setCurrentStage(2);
+                sss_object.switchOnNextstage(); //start the stage panel
                 chat_panel.SetActive(true); //reihenfolge beachten!!
                 voting_panel.SetActive(false);
                 result_VotingPanel.SetActive(false);
@@ -77,8 +77,8 @@ public class Panel_Manager_Script : MonoBehaviour
         }
         else if (referenced == "ChatManager") // wenn chat vorbei ist dann...
         {
-            sss_object.switchOnNextstage();
             m_reference.setCurrentStage(3);
+            sss_object.switchOnNextstage();
             cc.startNextPhase();
             voting_panel.SetActive(true);
             

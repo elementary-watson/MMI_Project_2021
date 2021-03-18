@@ -5,14 +5,14 @@ using UnityEngine.UI;
 using TMPro;
 public class Progressbar_Script : MonoBehaviour
 {
-    [SerializeField] private GameObject Panel_Voting;
+    /*[SerializeField] private GameObject Panel_Voting;
     [SerializeField] private GameObject result_VotingPanel;
     [SerializeField] private GameObject preVoteTimer;
     [SerializeField] private GameObject Score_Panel;
     [SerializeField] private GameObject Player_Panel;
     [SerializeField] private GameObject Progressbar_Panel;
-    [SerializeField] private GameObject Stage_Panel;
-
+    [SerializeField] private GameObject Stage_Panel;*/
+    [SerializeField] private GameObject Callmeeting_Panel;
     [SerializeField] Time_Game_Script tgs_object;
 
     [SerializeField] private Image img_progressbar;
@@ -31,15 +31,15 @@ public class Progressbar_Script : MonoBehaviour
         {
             tgs_object.stopTimer();
             current = 0;
-            _network.resetPlayerPosition();
-            _network.setPlayerMovement(false);
-            Panel_Voting.SetActive(true);
-            Stage_Panel.SetActive(true);
-            preVoteTimer.SetActive(true);            
-            Score_Panel.SetActive(false);
-            Player_Panel.SetActive(false);
-            Progressbar_Panel.SetActive(false);
+            startMeeting(true);
         }
+    }
+    public void startMeeting(bool isCrewmate)
+    {
+        _network.resetPlayerPosition();
+        _network.setPlayerMovement(false);
+        _network.setScoreOfRound(isCrewmate);
+        Callmeeting_Panel.SetActive(true);
     }
     public void stopProgressbar()
     {
@@ -50,12 +50,7 @@ public class Progressbar_Script : MonoBehaviour
     {
         isUseable = true;
         current = 0;
-        if(m_reference.getGameRound() > 1)
-        {
-            result_VotingPanel.gameObject.SetActive(false);
-            Panel_Voting.SetActive(false);
-            Stage_Panel.SetActive(false);
-        }
+
     }
     private void Update()
     {
