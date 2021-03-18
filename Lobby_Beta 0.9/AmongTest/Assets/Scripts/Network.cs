@@ -34,7 +34,7 @@ public class Network : MonoBehaviourPunCallbacks
     [SerializeField] GameObject FadeObject;
     [SerializeField] GameObject CounterObject;
     public GameObject useindicator;
-    public UI_Taskbar prog_reference;
+    public Progressbar_Script prog_reference;
 
     //Photon
     [Header("Photon Chat")]
@@ -61,7 +61,7 @@ public class Network : MonoBehaviourPunCallbacks
     [SerializeField] Camera cam;
     [SerializeField] private bool isSaboteur; //Wichtige Variable
     [SerializeField] private bool isGhost; //Wichtige Variable
-
+    [SerializeField] Time_Game_Script tgs_object;
     public void addSuspectToList(int stage, int gameround, string playerColor)
     {
         string value = gameround + " " + playerColor;
@@ -101,6 +101,7 @@ public class Network : MonoBehaviourPunCallbacks
         print("Got ViewID of: "+ actorID + " with viewID: " + photonViewID);
         m_reference.addPhotonplayer(actorID, photonViewID);
         var player = PhotonView.Find(photonViewID);
+        //tgs_object.beginTimer();
     }
 
     public void setPlayerToGhost(int photonViewId) // wird von resultpanel zum schluss von phase 3 gerufen
@@ -204,8 +205,8 @@ public class Network : MonoBehaviourPunCallbacks
             playerReadyTexts[i].text = "";
         }
         RandomColor();
-        myRoomOptions = new RoomOptions() { MaxPlayers = 2, IsVisible = true, IsOpen = true, /*PlayerTtl = 10000, EmptyRoomTtl=60000*/ };
-        maxPlayersOfRoom = 2;
+        myRoomOptions = new RoomOptions() { MaxPlayers = 1, IsVisible = true, IsOpen = true, /*PlayerTtl = 10000, EmptyRoomTtl=60000*/ };
+        maxPlayersOfRoom = 1;
         //canJoin = true;
     }
 
@@ -492,6 +493,7 @@ public class Network : MonoBehaviourPunCallbacks
     void RPCStartgame()
     {
         photonView.RPC("startGame", RpcTarget.All);
+        
     }
 
     void RPCStartFading()
