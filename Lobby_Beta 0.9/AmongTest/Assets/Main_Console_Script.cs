@@ -30,12 +30,14 @@ public class Main_Console_Script : Interactable
         {
             if(item.getMyTag() == currentTask)
             {
+                print("The Task was found in Multiplayer");
                 item.setIsInteractable(true);
             }
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        print("Player Trigger");
         if (isInteractable)
         {
             if (collision.CompareTag("Player"))

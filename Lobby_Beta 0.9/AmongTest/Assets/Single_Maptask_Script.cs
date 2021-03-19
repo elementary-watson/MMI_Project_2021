@@ -23,6 +23,7 @@ public class Single_Maptask_Script : Interactable
     {
         if (isInteractable)
         {
+            print("PLayer found in task");
             if (collision.CompareTag("Player"))
                 collision.GetComponent<CharacterControl>().OpenInteractableIcon();
         }
@@ -45,6 +46,7 @@ public class Single_Maptask_Script : Interactable
     void Start()
     {
         mytag = GetComponent<BoxCollider2D>().tag;
+        the_active_state.enabled = false;
     }
     public string getMyTag() {return mytag;}
     // Update is called once per frame
