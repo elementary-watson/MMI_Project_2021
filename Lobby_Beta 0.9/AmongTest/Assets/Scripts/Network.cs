@@ -421,6 +421,7 @@ public class Network : MonoBehaviourPunCallbacks
         {
             isSaboteur = true;
         }
+        spawnedPlayerObject.GetComponent<CharacterControl>().setStatusToSaboteur();
         m_reference.setSaboteurActorID(saboteurID);
         m_reference.setupGamestyle();
     }

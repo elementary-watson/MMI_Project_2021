@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class MainTablet : MonoBehaviour
 {
+    [SerializeField] Network _network;
     string tenNumbers;
     List<int> randomNumberList;
     List<int> randomNumberforTaskList;
@@ -104,7 +105,7 @@ public class MainTablet : MonoBehaviour
             taskfin_sound.Play();
             win_message.SetActive(true);
             Invoke("taskfinished", 3);
-            //_network.incrementTaskprogress(10);
+            _network.incrementTaskprogress();
         }
     }
 

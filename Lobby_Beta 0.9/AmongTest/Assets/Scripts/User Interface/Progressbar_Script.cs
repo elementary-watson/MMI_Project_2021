@@ -64,7 +64,7 @@ public class Progressbar_Script : MonoBehaviour
     public void setTaskprogress(float increment)
     {
         if(isUseable)
-        current += increment * 10; //XOF hier wird der wert manipuliert
+        current += increment; //XOF hier wird der wert manipuliert
     }
 
 }

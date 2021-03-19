@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class MainClickLabor : MonoBehaviour
 {
+    [SerializeField] Network _network;
     List<string> randomTestTubeList;
     List<string> randomTestTubeforTaskList;
     List<string> TestTubeList = new List<string> { "Blau", "Grün", "Gelb", "Lila", "Braun", "Weiß", "Blau", "Grün", "Gelb", "Lila", "Braun", "Weiß", "Blau", "Grün", "Gelb", "Lila", "Braun", "Weiß", "Blau", "Grün", "Gelb", "Lila", "Braun", "Weiß" };
@@ -98,7 +99,7 @@ public class MainClickLabor : MonoBehaviour
             taskfin_sound.Play();
             win_message.SetActive(true);
             Invoke("taskfinished", 3);
-            //_network.incrementTaskprogress(10);
+            _network.incrementTaskprogress();
         }
 
         if (count == 4)

@@ -5,7 +5,7 @@ using UnityEngine;
 public class MainSingleTubeScript : MonoBehaviour
 {
     [SerializeField] GameObject SingleTube_panel;
-
+    [SerializeField] Network _network;
     public AudioSource taskfin_sound;
     public GameObject win_message;
 
@@ -13,7 +13,7 @@ public class MainSingleTubeScript : MonoBehaviour
     {
         taskfin_sound.Play();
         win_message.SetActive(true);
-        //_network.incrementTaskprogress(10);
+        _network.incrementTaskprogress();
         Invoke("taskfinished", 3);
     }
 

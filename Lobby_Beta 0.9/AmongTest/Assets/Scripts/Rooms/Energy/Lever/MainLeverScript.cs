@@ -6,7 +6,7 @@ public class MainLeverScript : MonoBehaviour
 {
     int fincounter = 5;
     int counter;
-
+    [SerializeField] Network _network;
     public AudioSource taskfin_sound;
     public GameObject win_message;
 
@@ -23,7 +23,7 @@ public class MainLeverScript : MonoBehaviour
         counter = counter + 1;
         if (counter == fincounter)
         {
-            //_network.incrementTaskprogress(10);
+            _network.incrementTaskprogress();
             taskfin_sound.Play();
             win_message.SetActive(true);
             Invoke("taskfinished", 3);

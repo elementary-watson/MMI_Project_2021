@@ -11,6 +11,7 @@ public class MainWaterDispenser : MonoBehaviour
     public TextMeshProUGUI infoBoxText;
     public TextMeshProUGUI fill_Text;
     public TextMeshProUGUI empty_Text;
+    [SerializeField] Network _network;
 
     private int fixedcounter = 2;
     private int count = 0;
@@ -31,7 +32,7 @@ public class MainWaterDispenser : MonoBehaviour
         {
             taskfin_sound.Play();
             win_message.SetActive(true);
-            //_network.incrementTaskprogress(10);
+            _network.incrementTaskprogress();
             Invoke("taskfinished", 3);
         }
          

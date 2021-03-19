@@ -22,7 +22,7 @@ public class MainClickCabinet : MonoBehaviour
             taskfin_sound.Play();
             win_message.SetActive(true);
             Invoke("taskfinished", 3);
-            //_network.incrementTaskprogress(10);
+            _network.incrementTaskprogress();
         }
     }
     

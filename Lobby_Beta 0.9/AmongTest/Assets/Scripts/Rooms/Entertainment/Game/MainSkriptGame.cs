@@ -35,6 +35,7 @@ public class MainSkriptGame : MonoBehaviour
     public AudioSource switchfin_sound;
     public AudioSource shoot_sound;
     int targetPosition;
+    [SerializeField] Network _network;
     // Start is called before the first frame update
     void Start()
     {

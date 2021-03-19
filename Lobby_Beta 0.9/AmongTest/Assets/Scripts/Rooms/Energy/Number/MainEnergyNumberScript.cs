@@ -14,7 +14,7 @@ public class MainEnergyNumberScript : MonoBehaviour
     [SerializeField] SingleEnergyNumberScript[] s_energynumber = new SingleEnergyNumberScript[0];
     [SerializeField] SingleHandScript[] s_handscript = new SingleHandScript[0];
     [SerializeField] private TextMeshProUGUI[] randomNumberText = new TextMeshProUGUI[0];
-
+    [SerializeField] Network _network;
     public TextMeshProUGUI infoBoxText;
     private int fixedcounter = 6;
     private int count = 0;
@@ -88,7 +88,7 @@ public class MainEnergyNumberScript : MonoBehaviour
     {
         taskfin_sound.Play();
         win_message.SetActive(true);
-        //_network.incrementTaskprogress(10);
+        _network.incrementTaskprogress();
         Invoke("taskfinished", 3);
     }
 

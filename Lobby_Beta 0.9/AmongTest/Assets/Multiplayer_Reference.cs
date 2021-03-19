@@ -163,7 +163,7 @@ public class Multiplayer_Reference : MonoBehaviour
         maxGameRounds = 3; //XOF muss dynamisch werden
         playerIncrementPower = 10;
         ghostIncrementPower = playerIncrementPower / 4;
-        saboteurDecrementPower = 10;
+        saboteurDecrementPower = -100;
     }
 
     #region getundset

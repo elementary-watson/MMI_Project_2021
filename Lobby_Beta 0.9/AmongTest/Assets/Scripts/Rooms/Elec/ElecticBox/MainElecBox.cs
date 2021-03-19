@@ -8,6 +8,7 @@ public class MainElecBox : MonoBehaviour
 {
     private int fixedcounter = 9;
     private int count = 0;
+    [SerializeField] Network _network;
 
     [SerializeField] GameObject ElecBoxPanel;
     public TextMeshProUGUI infoBoxText;
@@ -31,7 +32,7 @@ public class MainElecBox : MonoBehaviour
             win_message.SetActive(true);
             img_Light.enabled = true;
             Invoke("taskfinished", 3);
-            //_network.incrementTaskprogress(10);
+            _network.incrementTaskprogress();
         }
     }
 

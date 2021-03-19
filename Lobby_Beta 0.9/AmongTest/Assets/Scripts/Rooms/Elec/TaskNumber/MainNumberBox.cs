@@ -15,7 +15,7 @@ public class MainNumberBox : MonoBehaviour
     int irn2 = 0;
     int irn3 = 0;
 
-    //public Network _network;
+    [SerializeField] Network _network;
     [SerializeField] GameObject BoxPanel;
     [SerializeField] private TextMeshProUGUI[] randomnubertext = new TextMeshProUGUI[0];
     [SerializeField] private TextMeshProUGUI[] currentvalue = new TextMeshProUGUI[0];
@@ -167,7 +167,7 @@ public class MainNumberBox : MonoBehaviour
             win_message.SetActive(true);
 
             Invoke("taskfinished", 3);
-            //_network.incrementTaskprogress(10);
+            _network.incrementTaskprogress();
         }
     }
 
