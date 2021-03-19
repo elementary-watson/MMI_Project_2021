@@ -62,6 +62,10 @@ public class Network : MonoBehaviourPunCallbacks
     [SerializeField] private bool isSaboteur; //Wichtige Variable
     [SerializeField] private bool isGhost; //Wichtige Variable
     [SerializeField] Time_Game_Script tgs_object;
+
+    [SerializeField] int playerScorepoints; //XOF Punktzahl der spieler
+    [SerializeField] string myCurrentTask; //XOF meine Task
+    [SerializeField] Main_Console_Script mcs_object;
     public void addSuspectToList(int stage, int gameround, string playerColor)
     {
         string value = gameround + " " + playerColor;
@@ -75,6 +79,27 @@ public class Network : MonoBehaviourPunCallbacks
         listOfVotekicks.Add(gameround, value);
     }
 
+    public void getNextTask()
+    {
+        photonView.RPC("RPC_getNextTask", RpcTarget.All, getActorId());
+    }
+
+    [PunRPC]
+    public void RPC_getNextTask(int actorId)
+    {
+        string nextTask = m_reference.getNextTask();
+
+        if (actorId == getActorId()) 
+        {
+            myCurrentTask = nextTask;
+            sendNextTask();
+        }
+        
+    }
+    public void sendNextTask()
+    {
+        mcs_object.setCurrentTask(myCurrentTask);
+    }
     private void SpawnPlayer()
     {
         
@@ -104,6 +129,7 @@ public class Network : MonoBehaviourPunCallbacks
         //tgs_object.beginTimer();
     }
 
+    // XOF Ghost
     public void setPlayerToGhost(int photonViewId) // wird von resultpanel zum schluss von phase 3 gerufen
     {
         photonView.RPC("RPC_setPlayerToGhost", RpcTarget.All, photonViewId);

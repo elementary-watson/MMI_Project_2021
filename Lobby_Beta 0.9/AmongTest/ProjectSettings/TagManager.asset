@@ -40,6 +40,23 @@ TagManager:
   - Collidor_NR_sw
   - Collidor_Medizinraum
   - Collidor_NR_no
+  - Tag_Tablet
+  - Tag_Lights
+  - Tag_NumberRadio
+  - Tag_ClickLabor
+  - Tag_ElectricBox
+  - Tag_WaterDispenser
+  - Tag_NumberBox
+  - Tag_LeverEnergy
+  - Tag_LaborSingleTube
+  - Tag_EnergyNumber
+  - Tag_ClickCabinet
+  - Tag_Fillgauge
+  - Tag_ComputerLabor
+  - Tag_Game
+  - Tag_Sink
+  - Tag_ClickMediKit
+  - Tag_MainConsole
   layers:
   - Default
   - TransparentFX

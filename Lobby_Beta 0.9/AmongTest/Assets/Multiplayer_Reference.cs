@@ -26,6 +26,19 @@ public class Multiplayer_Reference : MonoBehaviour
         new Vector3(-5.45f, 1.99f, 0f), new Vector3(-5.45f, 0f, 0f), new Vector3(-5.45f, -1.89f, 0f)}; //Westposition
     List<string> RandomColorList;
 
+    List<string> AllTasksList = new List<string> { "Tag_NumberBox", "Tag_ElectricBox", "Tag_ClickCabinet" };
+    int nextTaskIndex;
+
+    public string getNextTask()
+    {
+        if(AllTasksList.Count == (nextTaskIndex + 1))
+        {
+            nextTaskIndex = 0;
+        }
+        nextTaskIndex += 1;
+        return AllTasksList[nextTaskIndex-1];
+    }
+
     public void setupGamestyle()
     {
         if (numberOfPlayer == 5 || numberOfPlayer == 6)
@@ -121,6 +134,7 @@ public class Multiplayer_Reference : MonoBehaviour
     }
     void Start()
     {
+        nextTaskIndex = 0;
         saboteurActorID = -1;
         gameRound = 1;
         currentStage = 1;
