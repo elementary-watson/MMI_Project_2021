@@ -245,8 +245,8 @@ public class Network : MonoBehaviourPunCallbacks
             playerReadyTexts[i].text = "";
         }
         RandomColor();
-        myRoomOptions = new RoomOptions() { MaxPlayers = 10, IsVisible = true, IsOpen = true, /*PlayerTtl = 10000, EmptyRoomTtl=60000*/ };
-        maxPlayersOfRoom = 10;
+        myRoomOptions = new RoomOptions() { MaxPlayers = 1, IsVisible = true, IsOpen = true, /*PlayerTtl = 10000, EmptyRoomTtl=60000*/ };
+        maxPlayersOfRoom = 1;
         //canJoin = true;
     }
 
@@ -398,19 +398,7 @@ public class Network : MonoBehaviourPunCallbacks
             }
         }
         photonView.RPC("RPC_setupMultiplayerGame", RpcTarget.All, saboteurID); 
-        //XOFXOF
-        /*if (numberOfPlayer == 5 || numberOfPlayer == 6)
-        {
-            maxGameRounds = 3;
-            playerIncrementPower = 10;
-            ghostIncrementPower = playerIncrementPower / 4;
-        }
-        else
-        {
-            maxGameRounds = 5;
-            playerIncrementPower = 10;
-            ghostIncrementPower = playerIncrementPower / 4;
-        }*/
+
     }
     [PunRPC] 
     public void RPC_setupMultiplayerGame(int saboteurID) // Spielbalance und saboteur einstellen
@@ -420,8 +408,9 @@ public class Network : MonoBehaviourPunCallbacks
         if (getActorId() == saboteurID)
         {
             isSaboteur = true;
-        }
-        spawnedPlayerObject.GetComponent<CharacterControl>().setStatusToSaboteur();
+            //CharacterControl cc = spawnedPlayerObject.GetComponent<CharacterControl>();
+            //cc.setStatusToSaboteur();
+        }        
         m_reference.setSaboteurActorID(saboteurID);
         m_reference.setupGamestyle();
     }

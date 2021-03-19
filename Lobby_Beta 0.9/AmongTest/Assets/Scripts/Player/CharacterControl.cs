@@ -66,6 +66,10 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
     }
     public float getIncrementPower()
     {
+        if (actorID == m_reference.getSaboteurActorID())
+        {
+            return m_reference.getSaboteurDecrementPower();
+        }
         return incrementTaskPower;
     }
     public int getActorID()
