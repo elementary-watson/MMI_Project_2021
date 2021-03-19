@@ -10,6 +10,7 @@ public class Lightswitch_Logic : MonoBehaviour
     [SerializeField] GameObject LightsPanel;
     public Network _network;
     public Single_Switch[] switches = new Single_Switch[6];
+    public AudioSource taskfin_sound;
     private void Start()
     {
         collectSwitches();
@@ -38,6 +39,7 @@ public class Lightswitch_Logic : MonoBehaviour
         if (onCount == switchCount)
         {
             winText.SetActive(true);
+            disableButtons();
             Invoke("taskFinished", 1);
             _network.incrementTaskprogress();
         }
@@ -46,7 +48,13 @@ public class Lightswitch_Logic : MonoBehaviour
             winText.SetActive(false);
         }
     }
-
+    void disableButtons()
+    {
+        for(int i = 0; i < 6; i++)
+        {
+            switches[i].enabled = false;
+        }
+    }
     private void taskFinished()
     {
         for(int i = 0; i<5; i++)

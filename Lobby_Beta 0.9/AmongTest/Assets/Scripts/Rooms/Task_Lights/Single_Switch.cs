@@ -14,7 +14,7 @@ public class Single_Switch : MonoBehaviour
     public Image img_lights;
     [SerializeField] Button btn;
     [SerializeField] private Lightswitch_Logic ll_object;
-    
+    public AudioSource switchfin_sound;
 
     private void Start()
     {
@@ -22,7 +22,8 @@ public class Single_Switch : MonoBehaviour
     }
     public void btn_turnSwitch()
     {
-        if(isActive == false)
+        switchfin_sound.Play();
+        if (isActive == false)
         {
             img_button.sprite = on_Switch;
             img_lights.sprite = light_on;
