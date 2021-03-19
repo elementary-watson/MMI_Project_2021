@@ -115,6 +115,8 @@ public class Result_Voting_Panel : MonoBehaviour
             }
             else if (mostVoted.Value > 0)
             {
+                m_reference.addKickedplayers(mostVoted.Key, player[mostVoted.Key]);// wird zur gekickten Liste geaddet
+
                 print("Most voted player: " + player[mostVoted.Key]);
                 string filename = "Player Color/" + player[mostVoted.Key] + "_Char";
                 Sprite sp = Resources.Load<Sprite>(filename);

@@ -17,6 +17,7 @@ public class Multiplayer_Reference : MonoBehaviour
     private int ghostIncrementPower;
     private int saboteurActorID;
     private IDictionary<int, string> allplayers = new Dictionary<int, string>();
+    private IDictionary<int, string> kickedplayers = new Dictionary<int, string>();
     private IDictionary<int, int> allPhotonplayers = new Dictionary<int, int>();
 
     private Vector3[] spawnPositions = new[] {
@@ -24,10 +25,27 @@ public class Multiplayer_Reference : MonoBehaviour
         new Vector3(5.45f, 1.99f, 0f), new Vector3(5.45f, 0f, 0f), new Vector3(5.45f, -1.89f, 0f), //Ostposition
         new Vector3(1f, -4f, 0f), new Vector3(-2.1f, -4f, 0f), //Südposition
         new Vector3(-5.45f, 1.99f, 0f), new Vector3(-5.45f, 0f, 0f), new Vector3(-5.45f, -1.89f, 0f)}; //Westposition
+
     List<string> RandomColorList;
 
-    List<string> AllTasksList = new List<string> { "Tag_NumberBox", "Tag_ElectricBox", "Tag_ClickCabinet" };
+    List<string> AllTasksList = new List<string> { 
+        "Tag_WaterDispenser", "Tag_Game", "Tag_NumberRadio", 
+        "Tag_NumberBox", "Tag_ElectricBox", "Tag_ClickCabinet",
+        "Tag_Fillgauge", "Tag_EnergyNumber", "Tag_LeverEnergy", 
+        "Tag_ClickMediKit", "Tag_Sink", "Tag_Tablet", 
+        "Tag_ComputerLabor", "Tag_LaborSingleTube", "Tag_ClickLabor"
+    };
     int nextTaskIndex;
+
+    public IDictionary<int, string> getKickedplayers()
+    {
+        return kickedplayers;
+    }
+    public void addKickedplayers(int id, string charname)
+    {
+        if (!kickedplayers.Keys.Contains(id))
+            kickedplayers.Add(id, charname);
+    }
 
     public string getNextTask()
     {
@@ -61,7 +79,8 @@ public class Multiplayer_Reference : MonoBehaviour
     public IDictionary<int, string> getPlayers()
     {
         return allplayers;
-    }
+    }    
+
 
     public bool addPlayer(int id, string charname, int maxPlayers)
     {

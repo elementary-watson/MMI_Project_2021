@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Main_Console_Script : Interactable
+public class Main_Console_Script : MonoBehaviour
 {
     [SerializeField] string currentTask;
     [SerializeField] Single_Maptask_Script[] sms_objects = new Single_Maptask_Script[0];
@@ -11,7 +12,21 @@ public class Main_Console_Script : Interactable
     [SerializeField] bool isInteractable;
     [SerializeField] BoxCollider2D mainCollider;
 
-    public override void Interact()
+
+    void Start()
+    {
+        mainCollider.isTrigger = true;
+        setIsInteractable(true);
+        currentTask = "null";
+    }
+
+    public void Reset()
+    {
+        mainCollider.isTrigger = true;
+        setIsInteractable(true);
+        currentTask = "null";
+    }
+    public string Interact() // Wird von CharakterControl gerufen
     {
         if (isInteractable)
         {
@@ -21,10 +36,14 @@ public class Main_Console_Script : Interactable
             }
             _network.getNextTask();
             isInteractable = false;
+            return currentTask;
         }
+        return "null";
     }
-    public void setCurrentTask(string currentTask)
+
+    public void setCurrentTask(string currentTask) // Von Network aufgerufen nach interact()
     {
+        //XOF Hier wird die Karte aktualisiert
         this.currentTask = currentTask;
         foreach (Single_Maptask_Script item in sms_objects)
         {
@@ -35,23 +54,15 @@ public class Main_Console_Script : Interactable
             }
         }
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+
+    internal void playerMovement(bool isDoingTask)
     {
-        print("Player Trigger");
-        if (isInteractable)
-        {
-            if (collision.CompareTag("Player"))
-                collision.GetComponent<CharacterControl>().OpenInteractableIcon();
-        }
+        if (isDoingTask)
+            _network.setPlayerMovement(false);
+        else
+            _network.setPlayerMovement(true);
     }
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (isInteractable)
-        {
-            if (collision.CompareTag("Player"))
-                collision.GetComponent<CharacterControl>().CloseInteractableIcon();
-        }
-    }
+
     public void setIsInteractable(bool isInteractable)
     {
         this.isInteractable = isInteractable;
@@ -64,16 +75,27 @@ public class Main_Console_Script : Interactable
             }
         }
     }
-    // Start is called before the first frame update
-    void Start()
+    public bool getIsInteractable()
     {
-        mainCollider.isTrigger = true;
-        setIsInteractable(true);
+        return isInteractable;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        
+        print("Player Trigger");
+        if (isInteractable)
+        {
+            if (collision.CompareTag("Player"))
+                collision.GetComponent<CharacterControl>().OpenInteractableIcon();
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        print("Player Trigger");
+        if (isInteractable)
+        {
+            if (collision.CompareTag("Player"))
+                collision.GetComponent<CharacterControl>().CloseInteractableIcon();
+        }
     }
 }

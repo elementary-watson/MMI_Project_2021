@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MainWaterDispenser : MonoBehaviour
 {
@@ -17,6 +18,11 @@ public class MainWaterDispenser : MonoBehaviour
     public AudioSource taskfin_sound;
     public AudioSource switchfin_sound;
     public GameObject win_message;
+
+    public Image img_empty;
+    public Image img_empty_black;
+    public Image img_fill;
+    public Image img_fill_black;
 
     public void checkCounter(int cp)
     {
@@ -36,9 +42,17 @@ public class MainWaterDispenser : MonoBehaviour
             fill_Text.text = "Füllen";
             empty_Text.text = "";
             s_filldespenser.setInteractable(true);
+            img_fill.enabled = true;
+            img_fill_black.enabled = true;
+            img_empty.enabled = false;
+            img_empty_black.enabled = false;
         }
     }
-
+    private void Start()
+    {
+        img_fill.enabled = false;
+        img_fill_black.enabled = false;
+    }
     public void taskfinished()
     {
         WaterDispenser_Panel.SetActive(false);

@@ -65,7 +65,7 @@ public class Network : MonoBehaviourPunCallbacks
 
     [SerializeField] int playerScorepoints; //XOF Punktzahl der spieler
     [SerializeField] string myCurrentTask; //XOF meine Task
-    [SerializeField] Main_Console_Script mcs_object;
+    [SerializeField] Main_Console_Script mainConsole_object;
     public void addSuspectToList(int stage, int gameround, string playerColor)
     {
         string value = gameround + " " + playerColor;
@@ -98,7 +98,7 @@ public class Network : MonoBehaviourPunCallbacks
     }
     public void sendNextTask()
     {
-        mcs_object.setCurrentTask(myCurrentTask);
+        mainConsole_object.setCurrentTask(myCurrentTask);
     }
     private void SpawnPlayer()
     {
@@ -110,6 +110,7 @@ public class Network : MonoBehaviourPunCallbacks
         cc.setMultiplayerReference(m_reference);
         //cc.resetPosition();
         cc.setActorID(PhotonNetwork.LocalPlayer.ActorNumber);
+        cc.setMainConsoleScript(mainConsole_object);
         spawn.GetComponent<CharacterControl>().interactIcon = useindicator;
 
         playerCamera.target = spawn.transform;
@@ -193,7 +194,7 @@ public class Network : MonoBehaviourPunCallbacks
     {
         print(canWalk);
         Player_Movement pm_object = spawnedPlayerObject.GetComponent<Player_Movement>();
-        print("PlayerMovement ActorID: " + spawnedPlayerObject.GetComponent<CharacterControl>().getActorID());
+        //print("PlayerMovement ActorID: " + spawnedPlayerObject.GetComponent<CharacterControl>().getActorID());
         if (canWalk)
             pm_object.enableMovementSpeed();
         else
@@ -207,6 +208,7 @@ public class Network : MonoBehaviourPunCallbacks
     public void RPC_resetPlayerPosition()
     {
         spawnedPlayerObject.transform.position = spawnPositions;
+        spawnedPlayerObject.GetComponent<CharacterControl>().resetTask();
     }
 
 
@@ -243,8 +245,8 @@ public class Network : MonoBehaviourPunCallbacks
             playerReadyTexts[i].text = "";
         }
         RandomColor();
-        myRoomOptions = new RoomOptions() { MaxPlayers = 2, IsVisible = true, IsOpen = true, /*PlayerTtl = 10000, EmptyRoomTtl=60000*/ };
-        maxPlayersOfRoom = 2;
+        myRoomOptions = new RoomOptions() { MaxPlayers = 3, IsVisible = true, IsOpen = true, /*PlayerTtl = 10000, EmptyRoomTtl=60000*/ };
+        maxPlayersOfRoom = 3;
         //canJoin = true;
     }
 

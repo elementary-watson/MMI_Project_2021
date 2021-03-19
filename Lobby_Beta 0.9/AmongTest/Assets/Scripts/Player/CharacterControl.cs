@@ -20,7 +20,13 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
     [SerializeField] Multiplayer_Reference m_reference;
     [SerializeField] float incrementTaskPower;
     [SerializeField] int actorID;
+    [SerializeField] Main_Console_Script mainConsole_object;
+    [SerializeField] string currentTask;
 
+    public void resetTask()
+    {
+        currentTask = "null";
+    }
     public void setMCSScript(Map_Control_Script mcs_object)
     {
         this.mcs_object = mcs_object;
@@ -34,7 +40,11 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
         Halo.enabled = true;
         incrementTaskPower = m_reference.getGhostIncrementPower();
     }
-    public void setPosition()
+    public void setMainConsoleScript(Main_Console_Script mainConsole_object)
+    {
+        this.mainConsole_object = mainConsole_object;
+    }
+    public void setPosition() 
     {
         RectTransform rt = (RectTransform)interactIcon.transform;
         float xValue = (float)(Screen.width * 0.75 - rt.rect.width * 0.5);
@@ -67,9 +77,6 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
     {
         if (cam == null)
             cam = Camera.main;
-        //Invoke("resetPosition",1);
-        //GameObject temp = gameObject.AddComponent<Image>();
-        //temp.enabled = true;
 
         if (photonView.IsMine) 
         {
@@ -88,6 +95,29 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
     {
         if (photonView.IsMine)
         {
+            
+            if (collision.gameObject.tag == "Tag_MainConsole")
+            {
+                if (mainConsole_object.getIsInteractable())
+                {
+                    print("Hello Worlds");
+                    OpenInteractableIcon();
+                    
+                }
+            }
+            else if (collision.gameObject.tag == currentTask) 
+            {
+                if (!mainConsole_object.getIsInteractable()) { 
+                    OpenInteractableIcon();
+                    //CheckInteraction();
+                }
+            }
+            else if (collision) { }
+        }
+
+        if (photonView.IsMine)
+        {
+
             if (collision.gameObject.CompareTag("Collidor_Hauptraum"))
             {
                 mcs_object.SetRoomName("Hauptraum", 0);
@@ -134,6 +164,23 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
             }
         }
     }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (photonView.IsMine)
+        {
+            if (collision.gameObject.tag == "Tag_MainConsole")
+            {
+                CloseInteractableIcon();
+            }
+            else if (collision.gameObject.tag == currentTask)
+            {
+                CloseInteractableIcon();
+            }
+            else if (collision) { }
+        }
+    }
+    
     // Update is called once per frame
     void Update()
     {
@@ -181,6 +228,10 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
                     {
                         rc.transform.GetComponent<Interactable>().Interact();
                         return;
+                    }
+                    else if (rc.transform.GetComponent<BoxCollider2D>().CompareTag("Tag_MainConsole"))
+                    {
+                        currentTask = mainConsole_object.Interact();
                     }
                 }
             }
