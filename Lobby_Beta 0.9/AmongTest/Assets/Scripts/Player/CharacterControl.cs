@@ -128,47 +128,47 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
 
             if (collision.gameObject.CompareTag("Collidor_Hauptraum"))
             {
-                mcs_object.SetRoomName("Hauptraum", 0);
+                mcs_object.SetRoomName("Hauptraum", 0, currentTask);
             }
             else if (collision.gameObject.CompareTag("Collidor_Freizeitraum"))
             {
-                mcs_object.SetRoomName("Freizeitraum", 1);
+                mcs_object.SetRoomName("Freizeitraum", 1, currentTask);
             }
             else if (collision.gameObject.CompareTag("Collidor_NR_no"))
             {
-                mcs_object.SetRoomName("", 2);
+                mcs_object.SetRoomName("", 2, currentTask);
             }
             else if (collision.gameObject.CompareTag("Collidor_Elektrik"))
             {
-                mcs_object.SetRoomName("Elektrikraum", 3);
+                mcs_object.SetRoomName("Elektrikraum", 3, currentTask);
             }
             else if (collision.gameObject.CompareTag("Collidor_NR_so"))
             {
-                mcs_object.SetRoomName("", 4);
+                mcs_object.SetRoomName("", 4, currentTask);
             }
             else if (collision.gameObject.CompareTag("Collidor_Energie"))
             {
-                mcs_object.SetRoomName("Energieraum", 5);
+                mcs_object.SetRoomName("Energieraum", 5, currentTask);
             }
             else if (collision.gameObject.CompareTag("Collidor_Medizinraum"))
             {
-                mcs_object.SetRoomName("Medizinraum", 6);
+                mcs_object.SetRoomName("Medizinraum", 6, currentTask);
             }
             else if (collision.gameObject.CompareTag("Collidor_NR_sw"))
             {
-                mcs_object.SetRoomName("", 7);
+                mcs_object.SetRoomName("", 7, currentTask);
             }
             else if (collision.gameObject.CompareTag("Collidor_Labor"))
             {
-                mcs_object.SetRoomName("Labor", 8);
+                mcs_object.SetRoomName("Labor", 8, currentTask);
             }
             else if (collision.gameObject.CompareTag("Collidor_NR_nw"))
             {
-                mcs_object.SetRoomName("", 9);
+                mcs_object.SetRoomName("", 9, currentTask);
             }
             else if (collision.gameObject.CompareTag("Collidor_Flur"))
             {
-                mcs_object.SetRoomName("", 10);
+                mcs_object.SetRoomName("", 10, currentTask);
             }
         }
     }
@@ -205,7 +205,7 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
         if (photonView.IsMine)
         {
             interactIcon.GetComponentInChildren<Image>().rectTransform.sizeDelta = new Vector2(100,100);
-            interactIcon.GetComponentInChildren<Text>().text = "Use";
+            //interactIcon.GetComponentInChildren<Text>().text = "Use";
             //interactIcon.SetActive(true);
             setPosition();
             //interactIcon.transform.position = new Vector2(1650, 10);
@@ -235,11 +235,16 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
                     if (rc.transform.GetComponent<Interactable>())
                     {
                         rc.transform.GetComponent<Interactable>().Interact();
+                        mcs_object.resetTargetImages();
+                        currentTask = mainConsole_object.getCurrentTask();
+                        mcs_object.setTargetRoom(currentTask);
                         return;
                     }
                     else if (rc.transform.GetComponent<BoxCollider2D>().CompareTag("Tag_MainConsole"))
                     {
                         currentTask = mainConsole_object.Interact();
+                        mcs_object.resetTargetImages();
+                        mcs_object.setTargetRoom(currentTask);
                     }
                 }
             }

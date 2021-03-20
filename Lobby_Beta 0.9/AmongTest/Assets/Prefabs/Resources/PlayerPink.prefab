@@ -228,6 +228,8 @@ MonoBehaviour:
   m_reference: {fileID: 0}
   incrementTaskPower: 0
   actorID: 0
+  mainConsole_object: {fileID: 0}
+  currentTask: 
 --- !u!95 &6362391285179497199
 Animator:
   serializedVersion: 3

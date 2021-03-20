@@ -66,7 +66,7 @@ public class Main_Console_Script : MonoBehaviour
     public void setIsInteractable(bool isInteractable)
     {
         this.isInteractable = isInteractable;
-        
+        currentTask = "null";
         if (isInteractable)
         {
             for (int i = 0; i < 4; i++)
@@ -97,5 +97,10 @@ public class Main_Console_Script : MonoBehaviour
             if (collision.CompareTag("Player"))
                 collision.GetComponent<CharacterControl>().CloseInteractableIcon();
         }
+    }
+
+    public string getCurrentTask()
+    {
+        return currentTask;
     }
 }

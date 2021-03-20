@@ -38,7 +38,7 @@ public class Network : MonoBehaviourPunCallbacks
 
     //Photon
     [Header("Photon Chat")]
-    [SerializeField] private GameObject chatWindow;
+    //[SerializeField] private GameObject chatWindow;
 
     [Header("Photon")]
     private TypedLobby customLobby = new TypedLobby("customLobby", LobbyType.Default);
@@ -57,7 +57,7 @@ public class Network : MonoBehaviourPunCallbacks
     IDictionary<int, string> listOfSuspects = new Dictionary<int, string>();
     IDictionary<int, string> listOfVotekicks = new Dictionary<int, string>();
     private Vector3 spawnPositions;
-    GameObject spawnedPlayerObject;
+    GameObject spawnedPlayerObject; // der Spieler Prefab
     [SerializeField] Camera cam;
     [SerializeField] private bool isSaboteur; //Wichtige Variable
     [SerializeField] private bool isGhost; //Wichtige Variable
@@ -66,6 +66,8 @@ public class Network : MonoBehaviourPunCallbacks
     [SerializeField] int playerScorepoints; //XOF Punktzahl der spieler
     [SerializeField] string myCurrentTask; //XOF meine Task
     [SerializeField] Main_Console_Script mainConsole_object;
+    [SerializeField] TextMeshProUGUI myPlayerRole;
+
     public void addSuspectToList(int stage, int gameround, string playerColor)
     {
         string value = gameround + " " + playerColor;
@@ -88,21 +90,18 @@ public class Network : MonoBehaviourPunCallbacks
     public void RPC_getNextTask(int actorId)
     {
         string nextTask = m_reference.getNextTask();
-
         if (actorId == getActorId()) 
         {
             myCurrentTask = nextTask;
             sendNextTask();
-        }
-        
+        }        
     }
     public void sendNextTask()
     {
         mainConsole_object.setCurrentTask(myCurrentTask);
     }
     private void SpawnPlayer()
-    {
-        
+    {        
         GameObject spawn = PhotonNetwork.Instantiate(myPlayerColorPrefab, spawnPositions, Quaternion.identity);
         CharacterControl cc = spawn.GetComponent<CharacterControl>();
         cc.interactIcon = useindicator;
@@ -116,6 +115,10 @@ public class Network : MonoBehaviourPunCallbacks
         playerCamera.target = spawn.transform;
         spawnedPlayerObject = spawn;
         setPhotonViewID();
+        if (isSaboteur)
+            myPlayerRole.text = "Rolle >> Saboteur";
+        //CharacterControl cc = spawnedPlayerObject.GetComponent<CharacterControl>();
+        //cc.setStatusToSaboteur();
     }
     public void setPhotonViewID()
     {
@@ -145,6 +148,7 @@ public class Network : MonoBehaviourPunCallbacks
             spawnedPlayerObject.layer = 11; //set player to invisibleLayer
             spawnedPlayerObject.GetComponent<CharacterControl>().setStatusToGhost();
             isGhost = true;
+            myPlayerRole.text = "Rolle >> Geist";
             int oldMask = cam.cullingMask;
             cam.cullingMask = -1; // |= ~(1 << 11);
             var allObjects = spawnedPlayerObject.GetComponentsInChildren<SpriteRenderer>(false);
@@ -161,6 +165,11 @@ public class Network : MonoBehaviourPunCallbacks
             }
             spawnedPlayerObject.GetComponentInChildren<SpriteRenderer>(true).enabled = true;
         }
+        else if (kickedPhotonViewId == -1)
+        {
+            print("Player not ound");
+        }
+
         else
         {            
             print(PhotonNetwork.LocalPlayer.ActorNumber + " wurde nicht gekicked " + myPlayerColorPrefab);
@@ -230,7 +239,11 @@ public class Network : MonoBehaviourPunCallbacks
         this.randomColorList = RandomColorList;
     }
 
-    
+    private void Start()
+    {
+        //MessageBox.Show(Callback, "Hello World!", "Hello");
+    }
+
     public void Awake()
     {
         // XOF PhotonNetwork.FetchServerTimestamp();
@@ -276,7 +289,7 @@ public class Network : MonoBehaviourPunCallbacks
 
     #region Chatfunctions
 
-    public void callChatWindowRPC()
+    public void callChatWindowRPC() // XOF kann gelöscht werden
     {
         try {
             print("i was called");
@@ -408,8 +421,7 @@ public class Network : MonoBehaviourPunCallbacks
         if (getActorId() == saboteurID)
         {
             isSaboteur = true;
-            //CharacterControl cc = spawnedPlayerObject.GetComponent<CharacterControl>();
-            //cc.setStatusToSaboteur();
+
         }        
         m_reference.setSaboteurActorID(saboteurID);
         m_reference.setupGamestyle();
@@ -435,17 +447,14 @@ public class Network : MonoBehaviourPunCallbacks
 
     }
     [PunRPC]
-    public void openChatWindow()
+    public void openChatWindow() // xof löschen
     {
-        chatWindow.SetActive(true);
+        //chatWindow.SetActive(true);
     }
 
     #endregion
 
-    private void Start()
-    {
-        //MessageBox.Show(Callback, "Hello World!", "Hello");
-    }
+
     public void JoinLobby()
     {
         print("1. Join Lobby was called");

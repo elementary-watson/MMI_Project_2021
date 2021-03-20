@@ -60,7 +60,7 @@ public class Panel_Manager_Script : MonoBehaviour
             else if (m_reference.getCurrentStage() == 3)
             {
                 //Panel_Voting_Logic pvl = voting_panel.GetComponent<Panel_Voting_Logic>();
-                pvl.enableButtons(); // Button-Votes erlauben
+                //pvl.enableButtons(); // Button-Votes erlauben
                 print("enter third stage");
                 
                 if (m_reference.getMaxRounds() == 5)//BestofFive

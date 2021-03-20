@@ -21,9 +21,9 @@ public class Panel_Voting_Logic : MonoBehaviour
         foreach (KeyValuePair<int, string> item in player)
         {
             if (kickedPlayer.ContainsKey(item.Key))
-                buttonVotings[i].interactable = true;
-            else
                 buttonVotings[i].interactable = false;
+            else
+                buttonVotings[i].interactable = true;
             string filename = "Player Color/" + item.Value +"_Char";
             Sprite sp = Resources.Load<Sprite>(filename);
             buttonVotings[i].image.sprite = sp;
