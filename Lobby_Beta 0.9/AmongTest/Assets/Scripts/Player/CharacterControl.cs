@@ -254,7 +254,7 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
                         currentTask = mainConsole_object.Interact();
                         mcs_object.resetTargetImages();
                         mcs_object.setTargetRoom(currentTask);
-                        gInfoScript_object.shortNotification("backCenter");
+                        gInfoScript_object.shortNotification("goTask");
                     }
                 }
             }
