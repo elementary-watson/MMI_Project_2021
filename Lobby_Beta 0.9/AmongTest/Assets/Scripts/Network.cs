@@ -123,11 +123,6 @@ public class Network : MonoBehaviourPunCallbacks
     #endregion
 
 
-
-
-
-
-
     #region Chatfunctions
 
     public void callChatWindowRPC() // XOF kann gelöscht werden
@@ -227,7 +222,7 @@ public class Network : MonoBehaviourPunCallbacks
     }
     #endregion
 
-    #region Inside_Room
+    #region Inside_Room/Configuration
     public override void OnJoinedRoom()
     {
         print("DEBUG: I joined room");
@@ -272,6 +267,21 @@ public class Network : MonoBehaviourPunCallbacks
         }
         else { print("ERROR: Joining Room failed"); }
     }
+    private void RandomColor()
+    {
+        List<string> RandomColorList = new List<string> { "PlayerBlack", "PlayerBlue", "PlayerBrown", "PlayerPink", "PlayerGreen", "PlayerOrange", "PlayerPurple", "PlayerRed", "PlayerWhite", "PlayerYellow" };
+        /*List<string> RandomColorList = new List<string> { "PlayerBlack", "PlayerBlack", "PlayerBlack", "PlayerBlack", "PlayerBlack", "PlayerBlack", "PlayerBlack", "PlayerBlack", "PlayerBlack", "PlayerBlack" };*/
+        var count = RandomColorList.Count;
+        var last = count - 1;
+        for (var i = 0; i < last; ++i)
+        {
+            var r = UnityEngine.Random.Range(i, count);
+            var tmp = RandomColorList[i];
+            RandomColorList[i] = RandomColorList[r];
+            RandomColorList[r] = tmp;
+        }
+        this.randomColorList = RandomColorList;
+    }
     [PunRPC]
     public void RPC_setupPlayer(String idAndColor)
     {
@@ -294,7 +304,6 @@ public class Network : MonoBehaviourPunCallbacks
             }
             i++;
         }
-
         bool isMaxPlayer = m_reference.addPlayer(int.Parse(parts[0]), parts[1].Remove(0, 6), maxPlayersOfRoom);
         if (isMaxPlayer == true)
             setupMultiplayerGame();
@@ -315,22 +324,6 @@ public class Network : MonoBehaviourPunCallbacks
             }
         }
         photonView.RPC("RPC_setupMultiplayerGame", RpcTarget.All, saboteurID);
-    }
-    private void RandomColor()
-    {
-        List<string> RandomColorList = new List<string> { "PlayerBlack", "PlayerBlue", "PlayerBrown", "PlayerPink", "PlayerGreen", "PlayerOrange", "PlayerPurple", "PlayerRed", "PlayerWhite", "PlayerYellow" };
-        /*List<string> RandomColorList = new List<string> { "PlayerBlack", "PlayerBlack", "PlayerBlack", "PlayerBlack", "PlayerBlack", "PlayerBlack", "PlayerBlack", "PlayerBlack", "PlayerBlack", "PlayerBlack" };*/
-
-        var count = RandomColorList.Count;
-        var last = count - 1;
-        for (var i = 0; i < last; ++i)
-        {
-            var r = UnityEngine.Random.Range(i, count);
-            var tmp = RandomColorList[i];
-            RandomColorList[i] = RandomColorList[r];
-            RandomColorList[r] = tmp;
-        }
-        this.randomColorList = RandomColorList;
     }
 
     [PunRPC]
@@ -403,11 +396,7 @@ public class Network : MonoBehaviourPunCallbacks
         {
             Introduction_Panel_Crewmate.SetActive(true);
         }
-
         //Invoke("setIntroductionOff", 8);
-
-        //CharacterControl cc = spawnedPlayerObject.GetComponent<CharacterControl>();
-        //cc.setStatusToSaboteur();
     }
     public void setPhotonViewID() // photon id weil nur damit andere player angesprochen werden können
     {
