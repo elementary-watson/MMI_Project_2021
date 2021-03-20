@@ -12,8 +12,24 @@ public class MainClickCabinet : MonoBehaviour
     public AudioSource taskfin_sound;
 
     [SerializeField] GameObject CabinetPanel;
-    SingleSwitchTool[] tools = new SingleSwitchTool[6];
-    
+    [SerializeField] SingleSwitchTool[] tools = new SingleSwitchTool[0];
+
+    private void Start()
+    {
+        setup();
+    }
+
+    public void setup()
+    {
+       fixedcounter = 6;
+       count = 0;
+       win_message.SetActive(false);
+
+       for (int i = 0; i < 6; i++)
+       {
+            tools[i].setup();
+       }
+    }
     public void switchtool(int cp)
     {
         count = count + cp;
@@ -29,6 +45,7 @@ public class MainClickCabinet : MonoBehaviour
 
     private void taskfinished()
     {
+        setup();
         CabinetPanel.SetActive(false);
     }
 }

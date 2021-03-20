@@ -60,7 +60,7 @@ public class Loader_FadeOverlay : MonoBehaviour
         if (progressBar.fillAmount == 1f)
         {
             procentnumber.text = "100%";
-            Introduction_Panel.SetActive(true);
+            
 
         }
         else
@@ -91,5 +91,6 @@ public class Loader_FadeOverlay : MonoBehaviour
     {
         loadingPanel.SetActive(false);
         PanelMap.SetActive(true);
+
     }
 }

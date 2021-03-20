@@ -103,7 +103,7 @@ public class Panel_Manager_Script : MonoBehaviour
     void thirdPhase(int maxrounds)
     {
         print("ThirdPhasecalled");
-        if (_network.getIsGameOver())
+        if (_network.getIsGameOver()) // check wenn saboteur gekickt wurde!!
         {
             result_VotingPanel.SetActive(false);
             voting_panel.SetActive(false);

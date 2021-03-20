@@ -16,9 +16,12 @@ public class Introduction_Panel : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Invoke("fadeScreen",3);
+    }
+    public void fadeScreen()
+    {
         StartCoroutine(ChangeColor(img_info, Color.white, Color.black, 1f));
     }
-
     private IEnumerator ChangeColor(Image image, Color from, Color to, float duration)
     {
         float timeElapsed = 0.0f;
@@ -26,15 +29,16 @@ public class Introduction_Panel : MonoBehaviour
         float t = 0.0f;
         while (t < 1.0f)
         {
-            timeElapsed += Time.deltaTime;
+            timeElapsed += Time.deltaTime/2;
 
             t = timeElapsed / duration;
 
             image.color = Color.Lerp(from, to, t);
-
+            if (t > 0.99f) 
+                setIntroductionOff();
             yield return null;
         }
-        setIntroductionOff();
+        
     }
     public void setIntroductionOff()
     {

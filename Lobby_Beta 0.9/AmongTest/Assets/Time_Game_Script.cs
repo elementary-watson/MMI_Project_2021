@@ -14,8 +14,11 @@ public class Time_Game_Script : MonoBehaviour
 
     [SerializeField] Network _network;
     [SerializeField] Progressbar_Script pb_object;
-
+    public AudioSource countdown_sound;
     [SerializeField] bool timerGoing;
+    [SerializeField] GameObject Main_Introduction_Panel;
+    [SerializeField] GameObject Introduction_Panel_Saboteur;
+    [SerializeField] GameObject Introduction_Panel_Crewmate;
     // Start is called before the first frame update
 
     float start = 180f;
@@ -28,16 +31,26 @@ public class Time_Game_Script : MonoBehaviour
     {
         tmp_timer.text = "0:00";
         timerGoing = false;
+        Invoke("setup", 9);
+    }
+    public void setup()
+    {
+        Introduction_Panel_Saboteur.SetActive(false);
+        Introduction_Panel_Crewmate.SetActive(false);
+        Main_Introduction_Panel.SetActive(false);
+        
         beginTimer();
     }
     public void beginTimer()
     {
+        countdown_sound.Stop();
         timerGoing = true;
         elapsedTime = start;
     }
     public void stopTimer()
     {
         timerGoing = false;
+
     }
     void Update()
     {
@@ -47,6 +60,8 @@ public class Time_Game_Script : MonoBehaviour
             {
                 elapsedTime -= Time.deltaTime;
                 DisplayTime(elapsedTime);
+                if (elapsedTime <= 15f)
+                    countdown_sound.Play();
             }
             else
             {

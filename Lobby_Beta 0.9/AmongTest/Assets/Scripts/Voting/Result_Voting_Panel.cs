@@ -108,7 +108,7 @@ public class Result_Voting_Panel : MonoBehaviour
                 tmp_resultTexts[4].SetActive(true);
                 p_manager.sendText("Kein Spieler ist ausgeschieden.");
                 _network.setPlayerMovement(true);
-                timeGame_object.beginTimer();
+                //timeGame_object.beginTimer();
             }
             else if (mostVoted.Value == equal.Value) { 
                 print("We have a tie between: " + player[mostVoted.Key] + " and " + player[equal.Key]);
@@ -118,7 +118,7 @@ public class Result_Voting_Panel : MonoBehaviour
                 Setup();
                 tmp_resultTexts[3].SetActive(true);
                 _network.setPlayerMovement(true);
-                timeGame_object.beginTimer();
+                //timeGame_object.beginTimer();
             }
             else if (mostVoted.Value > 0)
             {
@@ -132,7 +132,7 @@ public class Result_Voting_Panel : MonoBehaviour
                 tmp_resultTexts[2].SetActive(true);
                 _network.setPlayerToGhost(m_reference.getPhotonIDbyActorID(mostVoted.Key));
                 _network.setPlayerMovement(true);
-                timeGame_object.beginTimer();
+                //timeGame_object.beginTimer();
 
             }
             
