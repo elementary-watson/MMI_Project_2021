@@ -95,8 +95,8 @@ public class Network : MonoBehaviourPunCallbacks
             playerReadyTexts[i].text = "";
         }
         RandomColor();
-        myRoomOptions = new RoomOptions() { MaxPlayers = 3, IsVisible = true, IsOpen = true, /*PlayerTtl = 10000, EmptyRoomTtl=60000*/ };
-        maxPlayersOfRoom = 3;
+        myRoomOptions = new RoomOptions() { MaxPlayers = 1, IsVisible = true, IsOpen = true, /*PlayerTtl = 10000, EmptyRoomTtl=60000*/ };
+        maxPlayersOfRoom = 1;
         //canJoin = true;
     }
 
@@ -257,13 +257,10 @@ public class Network : MonoBehaviourPunCallbacks
                     photonView.RPC("RPC_setupPlayer", RpcTarget.All, player.NickName + "-" + randomColorList[i]);
                     //photonView.RPC("setupPlayer", RpcTarget.OthersBuffered, player.NickName + "-" + randomColorList[i]);
                     i++;
-                }
-                setPlayerSpawnPosition();
+                }                
                 photonView.RPC("RPCStartCounter", RpcTarget.All);
-                Invoke("RPCStartFading", 8);
-                Invoke("RPCStartgame", 10);
+                setPlayerSpawnPosition();
             }
-
         }
         else { print("ERROR: Joining Room failed"); }
     }
@@ -342,8 +339,10 @@ public class Network : MonoBehaviourPunCallbacks
     public void RPCStartCounter()
     {
         CounterObject.SetActive(true);
+        //Invoke("RPCStartFading", 8);
+        //Invoke("RPCStartgame", 10);
     }
-    void RPCStartFading()
+    public void RPCStartFading()
     {
         photonView.RPC("startFading", RpcTarget.All);
     }
@@ -352,14 +351,16 @@ public class Network : MonoBehaviourPunCallbacks
     public void startFading()
     {
         FadeObject.SetActive(true);
+        Invoke("RPCstartgame", 5);
+        //RPCstartgame();
     }
     #endregion
     
     #region startgame
-    void RPCStartgame(){photonView.RPC("RPC_startGame", RpcTarget.All);}
+    public void RPCstartgame(){photonView.RPC("startGame", RpcTarget.All);}
 
     [PunRPC]
-    public void RPC_startGame(PhotonMessageInfo info)
+    public void startGame(PhotonMessageInfo info)
     {
         print("TimeStamp: " + info.timestamp);
         print("TimeStamp: " + info.SentServerTime);

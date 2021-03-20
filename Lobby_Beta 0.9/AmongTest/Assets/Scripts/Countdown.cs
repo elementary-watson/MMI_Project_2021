@@ -9,31 +9,41 @@ public class Countdown : MonoBehaviour
     float startingTime = 8f;
 
     [SerializeField] Text txt_countdownText;
-
+    [SerializeField] Network _network;
+    int isFin;
     void Start()
     {
+        isFin = 0;
         currentTime = startingTime;    
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (currentTime <= 0)
+        if (isFin == 0)
         {
-            currentTime = 0;
-        }
-        else
-        {
-            currentTime -= 1 * Time.deltaTime;
-            txt_countdownText.text = "Starting in " + currentTime.ToString("0");
+            if (currentTime <= 0)
+            {
+                currentTime = 0;
+                isFin = 1;
+            }
+            else
+            {
+                currentTime -= 1 * Time.deltaTime;
+                txt_countdownText.text = "Starting in " + currentTime.ToString("0");
+            }
+
+            if (currentTime <= 1)
+            {
+                txt_countdownText.text = "Game starts now...";
+            }
         }
 
-        if (currentTime <= 1)
+        if (isFin == 1)
         {
-            txt_countdownText.text = "Game starts now...";
-        }
-        
-        
+            isFin = 2;
+            _network.RPCStartFading();
+        }       
         
     }
 }
