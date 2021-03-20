@@ -22,6 +22,7 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
     [SerializeField] int actorID;
     [SerializeField] Main_Console_Script mainConsole_object;
     [SerializeField] string currentTask;
+    [SerializeField] Game_Info_Script gInfoScript_object;
 
     public void resetTask()
     {
@@ -47,6 +48,10 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
     public void setMainConsoleScript(Main_Console_Script mainConsole_object)
     {
         this.mainConsole_object = mainConsole_object;
+    }
+    public void setGameInfoScript(Game_Info_Script gInfoScript_object)
+    {
+        this.gInfoScript_object = gInfoScript_object;
     }
     public void setPosition() 
     {
@@ -173,6 +178,8 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
         }
     }
 
+
+
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (photonView.IsMine)
@@ -237,7 +244,9 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
                         rc.transform.GetComponent<Interactable>().Interact();
                         mcs_object.resetTargetImages();
                         currentTask = mainConsole_object.getCurrentTask();
+                        CloseInteractableIcon();
                         mcs_object.setTargetRoom(currentTask);
+                        gInfoScript_object.shortNotification("goCenter");
                         return;
                     }
                     else if (rc.transform.GetComponent<BoxCollider2D>().CompareTag("Tag_MainConsole"))
@@ -245,6 +254,7 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
                         currentTask = mainConsole_object.Interact();
                         mcs_object.resetTargetImages();
                         mcs_object.setTargetRoom(currentTask);
+                        gInfoScript_object.shortNotification("backCenter");
                     }
                 }
             }

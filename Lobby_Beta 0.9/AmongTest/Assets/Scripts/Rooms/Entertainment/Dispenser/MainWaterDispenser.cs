@@ -43,6 +43,7 @@ public class MainWaterDispenser : MonoBehaviour
             fill_Text.text = "Füllen";
             empty_Text.text = "";
             s_filldespenser.setInteractable(true);
+            s_filldespenser.setup();
             img_fill.enabled = true;
             img_fill_black.enabled = true;
             img_empty.enabled = false;
@@ -51,11 +52,24 @@ public class MainWaterDispenser : MonoBehaviour
     }
     private void Start()
     {
+        setup();
+    }
+    public void setup()
+    {
+        s_filldespenser.setInteractable(false);
+        infoBoxText.text = "Leere den Behälter";
+        fill_Text.text = "";
+        empty_Text.text = "Leeren";
+        fixedcounter = 2;
+        count = 0;
         img_fill.enabled = false;
         img_fill_black.enabled = false;
+        img_empty.enabled = true;
+        img_empty_black.enabled = true;
     }
     public void taskfinished()
-    {
+    {        
+        setup();        
         WaterDispenser_Panel.SetActive(false);
     }
 }

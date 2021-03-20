@@ -20,13 +20,16 @@ public class SingleFillDispenser : MonoBehaviour, IPointerDownHandler, IPointerU
 
     void Start()
     {
+        setup();
+    }
+    public void setup()
+    {
         pointerDown = false;
         isInteractable = false;
         //img_fillGauge.fillAmount = start;
         current = start;
         maximum = end;
     }
-
     public void OnPointerDown(PointerEventData eventData)
     {
         pointerDown = true;

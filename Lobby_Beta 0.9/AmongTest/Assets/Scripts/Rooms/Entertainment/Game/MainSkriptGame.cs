@@ -39,20 +39,38 @@ public class MainSkriptGame : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        minigameContainer.SetActive(false);
-        RandomLetter();
+
         setup();
-        for (int i = 0; i < 3; i++)
-        { midButtons[i].disableButtons(); }
-        currentPosition = 0;
+
     }
 
     private void setup()
     {
+        fourLetters = "";
+        infoBoxText.text = "";
+        for (int i = 0; i < 12; i++) 
+        { 
+            s_skriptgame[i].setBack();
+        }
+
+        winText.SetActive(false);
+        minigameContainer.SetActive(false);
+        RandomLetter();
         for (int i = 0; i < 12; i++)
         {
             string letter = randomLetterList[i];
             s_skriptgame[i].setup(letter);
+        }
+        for (int i = 0; i < 3; i++)
+        { midButtons[i].Reset(); }
+        currentPosition = 0;
+        minigameContainer.SetActive(false);
+        
+        for (int i = 0; i < 10; i++)
+        {
+            img_explosion[i].SetActive(false);
+            img_laserbeam[i].SetActive(false);
+            img_spaceship[i].SetActive(false);
         }
     }    
     private void setupPartTwo()
@@ -212,12 +230,15 @@ public class MainSkriptGame : MonoBehaviour
             fourLetters = fourLetters + " " + randomLetterforTaskList[i];
             fourLetterList[i] = randomLetterforTaskList[i];
         }
-        infoBoxText.text = "Drücke" + fourLetters ;
+        infoBoxText.text = "Druecke" + fourLetters ;
     }
 
     private void taskfinished()
     {
+        winText.SetActive(true);
+        _network.incrementTaskprogress();
         taskfin_sound.Play();
+        setup();
         GamePanel.SetActive(false);
     }
     #endregion

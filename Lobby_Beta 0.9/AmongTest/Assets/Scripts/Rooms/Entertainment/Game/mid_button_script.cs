@@ -17,6 +17,12 @@ public class mid_button_script : MonoBehaviour
     bool isState;
     public AudioSource switchfin_sound;
     // Start is called before the first frame update
+
+    public void Reset()
+    {
+        img_midBtn.sprite = neutral;
+        btn_mid.interactable = false;
+    }
     public void setup(int order)
     {
         if (order > 0)
@@ -65,8 +71,5 @@ public class mid_button_script : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
 }

@@ -36,14 +36,16 @@ public class SingleSkriptGame : MonoBehaviour
     public void setBack()
     {
         img_thumb.SetActive(false);
-
         thisObject.GetComponent<Button>().interactable = true;
     }
     public void setup(string letter)
     {
         this.letter = letter;
     }
-
+    public void reset()
+    {
+        img_thumb.SetActive(false);
+    }
 
     // Start is called before the first frame update
     void Start()

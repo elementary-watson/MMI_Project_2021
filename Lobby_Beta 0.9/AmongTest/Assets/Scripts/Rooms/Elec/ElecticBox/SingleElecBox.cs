@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class SingleElecBox : MonoBehaviour
 {
     public Sprite on_Tool;
+    public Sprite off_Tool;
     public Image img_Button;
 
     private bool isActive;
@@ -13,7 +14,12 @@ public class SingleElecBox : MonoBehaviour
     [SerializeField] private MainElecBox mainlogic;
     public AudioSource switchfin_sound;
 
-
+    public void setup()
+    {
+        isActive = false;
+        btn.interactable = true;
+        img_Button.sprite = off_Tool;
+    }
     public void btnturntool()
     {
         if (isActive == false)

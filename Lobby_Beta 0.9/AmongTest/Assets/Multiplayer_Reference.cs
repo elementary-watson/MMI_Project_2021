@@ -28,8 +28,8 @@ public class Multiplayer_Reference : MonoBehaviour
 
     List<string> RandomColorList;
 
-    List<string> AllTasksList = new List<string> { 
-        "Tag_WaterDispenser", "Tag_Game", "Tag_NumberRadio", 
+    List<string> AllTasksList = new List<string> {
+        "Tag_Game","Tag_Game","Tag_WaterDispenser", "Tag_Game", "Tag_NumberRadio", 
         "Tag_NumberBox", "Tag_ElectricBox", "Tag_ClickCabinet",
         "Tag_Fillgauge", "Tag_EnergyNumber", "Tag_LeverEnergy", 
         "Tag_ClickMediKit", "Tag_Sink", "Tag_Tablet", 

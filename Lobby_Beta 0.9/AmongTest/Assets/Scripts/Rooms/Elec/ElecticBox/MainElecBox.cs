@@ -11,6 +11,7 @@ public class MainElecBox : MonoBehaviour
     [SerializeField] Network _network;
 
     [SerializeField] GameObject ElecBoxPanel;
+    [SerializeField] SingleElecBox[] seb_object = new SingleElecBox[0];
     public TextMeshProUGUI infoBoxText;
     public GameObject win_message;
     public Image img_Light;
@@ -19,8 +20,10 @@ public class MainElecBox : MonoBehaviour
 
     void Start()
     {
+        setup();
         img_Light.enabled = false;
         infoBoxText.text = "Bringe den Strom zum fließen";
+
     }
     
     public void switchtool(int cp)
@@ -36,9 +39,23 @@ public class MainElecBox : MonoBehaviour
         }
     }
 
+    public void setup()
+    {
+        infoBoxText.text = "Bringe den Strom zum fließen";
+        fixedcounter = 9;
+        count = 0;
+        win_message.SetActive(false);
+        img_Light.enabled = false;
+        for (int i = 0; i < 9; i++)
+        {
+            seb_object[i].setup();
 
+        }
+
+    }
     private void taskfinished()
     {
+        setup();
         ElecBoxPanel.SetActive(false);
     }
 }

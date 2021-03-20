@@ -67,6 +67,7 @@ public class Network : MonoBehaviourPunCallbacks
     [SerializeField] string myCurrentTask; //XOF meine Task
     [SerializeField] Main_Console_Script mainConsole_object;
     [SerializeField] TextMeshProUGUI myPlayerRole;
+    [SerializeField] Game_Info_Script gInfoScript_object;
 
     public void addSuspectToList(int stage, int gameround, string playerColor)
     {
@@ -110,6 +111,7 @@ public class Network : MonoBehaviourPunCallbacks
         //cc.resetPosition();
         cc.setActorID(PhotonNetwork.LocalPlayer.ActorNumber);
         cc.setMainConsoleScript(mainConsole_object);
+        cc.setGameInfoScript(gInfoScript_object);
         spawn.GetComponent<CharacterControl>().interactIcon = useindicator;
 
         playerCamera.target = spawn.transform;

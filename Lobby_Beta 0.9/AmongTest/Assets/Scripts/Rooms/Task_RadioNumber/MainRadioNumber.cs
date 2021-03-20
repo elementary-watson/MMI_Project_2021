@@ -32,12 +32,9 @@ public class MainRadioNumber : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Thump[0].enabled = false;
-        Thump[1].enabled = false;
-        Thump[2].enabled = false;
-        generatenumber(); 
+        setup();
     }
-                                                                              
+                                                                        
     private void generatenumber()
     {
         rn1 = UnityEngine.Random.Range(1, 10)*10;
@@ -172,14 +169,38 @@ public class MainRadioNumber : MonoBehaviour
         {
             taskfin_sound.Play();
             win_message.SetActive(true);
-            Invoke("taskfinished", 2);
-            //_network.incrementTaskprogress(10);
+            Invoke("taskfinished", 3);
+            _network.incrementTaskprogress();
         }
     }
 
+    public void setup()
+    {
+        print("there");
+        win_message.SetActive(false);
+        Thump[0].enabled = false;
+        Thump[1].enabled = false;
+        Thump[2].enabled = false;
+        fixcount = 3;
+        count = 0;
+        rn1 = 0;
+        rn2 = 0;
+        rn3 = 0;
+        irn1 = 0;
+        irn2 = 0;
+        irn3 = 0;
+        generatenumber();
 
+        for (int i = 0; i < 6; i++)
+        {
+            button[i].interactable = true;
+        }
+}
     private void taskfinished()
     {
+        print("here");
+        win_message.SetActive(false);
+        setup();
         RadioPanel.SetActive(false);
     }
 }
