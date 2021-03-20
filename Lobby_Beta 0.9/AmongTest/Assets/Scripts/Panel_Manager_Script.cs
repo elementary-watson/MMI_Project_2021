@@ -102,9 +102,15 @@ public class Panel_Manager_Script : MonoBehaviour
     }
     void thirdPhase(int maxrounds)
     {
+        // INFO: Die Spielrunden werden nur hier erhöht!
+        // Sobald Result_Vote_Script fertig ist geht dieses script die endphase durch
+
         print("ThirdPhasecalled");
         if (_network.getIsGameOver()) // check wenn saboteur gekickt wurde!!
         {
+            print("FINAL: Saboteur was kicked");
+            int currentGameRound = m_reference.getGameRound();
+            m_reference.setGameRound(currentGameRound + 1);
             result_VotingPanel.SetActive(false);
             voting_panel.SetActive(false);
             stagePanel_object.setup();
@@ -115,9 +121,9 @@ public class Panel_Manager_Script : MonoBehaviour
         }
         else if (m_reference.getSaboteurPoints() == maxrounds || m_reference.getCrewPoints() == maxrounds) // Spiel vorbei und letztes Voting
         {
-            print("final round reached");
+            print("FINAL: Final round reached");
             int currentGameRound = m_reference.getGameRound();
-            m_reference.setGameRound(currentGameRound + 1);
+            m_reference.setGameRound(currentGameRound + 1); 
             result_VotingPanel.SetActive(false);
             voting_panel.SetActive(false);
             stagePanel_object.setup();

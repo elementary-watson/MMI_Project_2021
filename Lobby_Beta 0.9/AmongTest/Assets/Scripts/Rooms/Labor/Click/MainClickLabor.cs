@@ -8,7 +8,7 @@ public class MainClickLabor : MonoBehaviour
     [SerializeField] Network _network;
     List<string> randomTestTubeList;
     List<string> randomTestTubeforTaskList;
-    List<string> TestTubeList = new List<string> { "Blau", "Grün", "Gelb", "Lila", "Braun", "Weiß", "Blau", "Grün", "Gelb", "Lila", "Braun", "Weiß", "Blau", "Grün", "Gelb", "Lila", "Braun", "Weiß", "Blau", "Grün", "Gelb", "Lila", "Braun", "Weiß" };
+    List<string> TestTubeList; 
     public TextMeshProUGUI infotext;
     private int fixedcounter = 12;
     private int count = 0;
@@ -24,13 +24,28 @@ public class MainClickLabor : MonoBehaviour
 
     void Start()
     {
-        RandomTestTube();
         setup();
-        currentPosition = 0;
+        
     }
 
     private void setup()
     {
+        currentPosition = 0;
+        fixedcounter = 12;
+        count = 0;
+        win_message.SetActive(false);
+        for (int i = 0; i < 24; i++)
+        {
+            s_clicklabor[i].setup2();
+        }
+
+        TestTubeList = new List<string> { "Blau", "Grün", "Gelb", "Lila", "Braun", "Weiß", "Blau", "Grün", "Gelb", "Lila", "Braun", "Weiß", "Blau", "Grün", "Gelb", "Lila", "Braun", "Weiß", "Blau", "Grün", "Gelb", "Lila", "Braun", "Weiß" };
+        setup2();
+    }
+
+    private void setup2()
+    {
+        RandomTestTube();
         for (int i = 0; i < 24; i++)
         {
             string color = TestTubeList[i];
@@ -120,6 +135,7 @@ public class MainClickLabor : MonoBehaviour
 
     private void taskfinished()
     {
+        setup();
         LaborTubePanel.SetActive(false);
     }
 }

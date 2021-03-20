@@ -18,21 +18,24 @@ public class Single_Sink_Task : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        reset();
     }
-
+    public void reset()
+    {
+        btn_valve.interactable = true;
+    }
     public void btn_turnValve()
     {
         if(currentCardinal>= 0.5f)
         {
             img_btn.sprite = cardinalCorrect;
             btn_valve.interactable = false;
-            SpriteState sst = new SpriteState();
+            /*SpriteState sst = new SpriteState();
             sst = btn_valve.spriteState;
             sst.disabledSprite = cardinalCorrect;
             sst.highlightedSprite = cardinalCorrect;
-            btn_valve.spriteState = sst;
-            btn_valve.enabled = false;
+            btn_valve.spriteState = sst;*/
+            //btn_valve.enabled = false;
             switchfin_sound.Play();
             mst.ValveSwitch(1);
         }
@@ -53,10 +56,12 @@ public class Single_Sink_Task : MonoBehaviour
     }
     public void setup(float cardinalPoint)
     {
+        reset();
         currentCardinal = cardinalPoint;
         if(cardinalPoint >= 0.75f)
         {
             img_btn.sprite = cardinalCorrect;
+            //btn_valve.enabled = false;
             btn_valve.interactable = false;                        
         }
         else if (currentCardinal >= 0.5f)

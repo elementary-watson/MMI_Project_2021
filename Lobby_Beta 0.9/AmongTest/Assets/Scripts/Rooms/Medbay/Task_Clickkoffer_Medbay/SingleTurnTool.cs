@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class SingleTurnTool : MonoBehaviour
 {
     public Sprite on_Tool;
+    public Sprite off_Tool;
     public Image img_Button;
 
     private bool isActive;
@@ -24,5 +25,12 @@ public class SingleTurnTool : MonoBehaviour
             mainlogic.switchtool(1);
             isActive = true;
         }
+    }
+
+    public void setup()
+    {
+        isActive = false;
+        btn.interactable = true;
+        img_Button.sprite = off_Tool;
     }
 }

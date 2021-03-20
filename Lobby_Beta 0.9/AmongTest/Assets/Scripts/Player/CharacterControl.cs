@@ -240,7 +240,7 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
             {
                 foreach (RaycastHit2D rc in hits)
                 {
-                    if (rc.transform.GetComponent<Interactable>())
+                    if (rc.transform.GetComponent<Interactable>()) // Checkt nach Task Collidern
                     {
                         rc.transform.GetComponent<Interactable>().Interact();
                         mcs_object.resetTargetImages();
@@ -250,7 +250,7 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
                         gInfoScript_object.shortNotification("goCenter");
                         return;
                     }
-                    else if (rc.transform.GetComponent<BoxCollider2D>().CompareTag("Tag_MainConsole"))
+                    else if (rc.transform.GetComponent<BoxCollider2D>().CompareTag("Tag_MainConsole")) // Main-Console
                     {
                         currentTask = mainConsole_object.Interact();
                         mcs_object.resetTargetImages();

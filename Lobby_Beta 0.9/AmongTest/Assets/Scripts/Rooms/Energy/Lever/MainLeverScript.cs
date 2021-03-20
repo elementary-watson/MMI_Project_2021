@@ -11,11 +11,23 @@ public class MainLeverScript : MonoBehaviour
     public GameObject win_message;
 
     [SerializeField] GameObject Lever_panel;
+    [SerializeField] SingleLeverScript[] s_leverobject = new SingleLeverScript[0];
 
     // Start is called before the first frame update
     void Start()
     {
-        counter = 0; 
+        setup();    
+    }
+
+    private void setup()
+    {
+        counter = 0;
+        fincounter = 5;
+        for (int i = 0; i < 5; i++)
+        {
+            s_leverobject[i].setup();
+        }
+        win_message.SetActive(false);
     }
 
     public void checkCounter()
@@ -31,6 +43,7 @@ public class MainLeverScript : MonoBehaviour
     }
     public void taskfinished()
     {
+        setup();
         Lever_panel.SetActive(false);
     }
 }

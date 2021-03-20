@@ -35,6 +35,21 @@ public class SingleHandScript : MonoBehaviour, IPointerDownHandler, IPointerUpHa
         current2 = start2;
     }
 
+    public void setup()
+    {
+        isInteractable = false;
+        pointerDown = false;
+        start1 = 0.07f;
+        end1 = 1f;
+        start2 = 0f;
+        end2 = 0.93f;
+        img_fillGauge1.fillAmount = start1;
+        current1 = start1;
+        maximum1 = end1;
+        img_fillGauge2.fillAmount = start2;
+        current2 = start2;
+    }
+
     public void OnPointerDown(PointerEventData eventData)
     {
         pointerDown = true;

@@ -15,6 +15,7 @@ public class MainNumberBox : MonoBehaviour
     int irn2 = 0;
     int irn3 = 0;
 
+
     [SerializeField] Network _network;
     [SerializeField] GameObject BoxPanel;
     [SerializeField] private TextMeshProUGUI[] randomnubertext = new TextMeshProUGUI[0];
@@ -31,9 +32,27 @@ public class MainNumberBox : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        setup();
+    }
+
+    public void setup()
+    {
         Thump[0].enabled = false;
         Thump[1].enabled = false;
         Thump[2].enabled = false;
+        srn1 = 0;
+        srn2 = 0;
+        srn3 = 0;
+        irn1 = 0;
+        irn2 = 0;
+        irn3 = 0;
+        count = 0;
+        fixcount = 3;
+        win_message.SetActive(false);
+        for (int i = 0; i < 6; i++)
+        {
+            button[i].interactable = true;
+        }
         generatenumber();
     }
 
@@ -77,6 +96,9 @@ public class MainNumberBox : MonoBehaviour
     {
         if (collum == 0)
         {
+            print(aim + "/" + collum);
+            print("irn1: " + irn1 + " srn1: " + srn1);
+            
             if (aim == -100 && irn1 == 0) { }
             else if (aim == 100 && irn1 == 1000) { }
             else
@@ -97,7 +119,7 @@ public class MainNumberBox : MonoBehaviour
 
         if (collum == 1)
         {
-           
+            print("irn2: " + irn2 + " srn2: " + srn2);
             if (aim < 0 && irn2 == 0) { }
             else if (aim == 10 && irn2 == 100) { }
             else
@@ -118,6 +140,7 @@ public class MainNumberBox : MonoBehaviour
 
         if (collum == 2)
         {
+            print("irn3: " + irn3 + " srn3: " + srn3);
             if (aim < 0 && irn3 == 0) { }
             else if (aim == 1 && irn3 == 10) { }
             else
@@ -174,6 +197,7 @@ public class MainNumberBox : MonoBehaviour
 
     private void taskfinished()
     {
+        setup();
         BoxPanel.SetActive(false);
     }
 }

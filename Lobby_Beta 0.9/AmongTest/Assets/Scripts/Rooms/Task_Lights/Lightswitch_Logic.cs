@@ -13,7 +13,18 @@ public class Lightswitch_Logic : MonoBehaviour
     public AudioSource taskfin_sound;
     private void Start()
     {
+        setup();
+    }
+    public void setup()
+    {
+        /*for (int i = 0; i < 6; i++)
+        {
+            switches[i].enabled = false;
+        }*/
+        winText.SetActive(false);
+        onCount = 0;
         collectSwitches();
+
     }
     public void collectSwitches()
     {
@@ -40,7 +51,7 @@ public class Lightswitch_Logic : MonoBehaviour
         {
             winText.SetActive(true);
             disableButtons();
-            Invoke("taskFinished", 1);
+            Invoke("taskFinished", 3);
             _network.incrementTaskprogress();
         }
         else

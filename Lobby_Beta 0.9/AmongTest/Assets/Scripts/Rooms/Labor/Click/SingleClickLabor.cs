@@ -8,6 +8,7 @@ public class SingleClickLabor : MonoBehaviour
     string color;
 
     public Sprite on_TestTube;
+    public Sprite off_TestTube;
     public Image img_button;
     public AudioSource switchfin_sound;
 
@@ -32,5 +33,11 @@ public class SingleClickLabor : MonoBehaviour
     public void setup(string color)
     {
         this.color = color;
+    }
+
+    public void setup2()
+    {
+        btn.interactable = true;
+        img_button.sprite = off_TestTube;
     }
 }

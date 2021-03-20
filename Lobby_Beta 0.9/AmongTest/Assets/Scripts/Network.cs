@@ -71,8 +71,9 @@ public class Network : MonoBehaviourPunCallbacks
     [SerializeField] GameObject Introduction_Panel_Crewmate;
     [SerializeField] GameObject Introduction_Panel_Saboteur;
     [SerializeField] GameObject Introduction_Panel;
+    [SerializeField] private bool isGameOver;
+    private string RPC_timestamp;
 
-    private bool isGameOver;
     public void setIsGameOver(bool isGameOver) {this.isGameOver = isGameOver;}    
     public bool getIsGameOver(){return isGameOver;}
     public void addSuspectToList(int stage, int gameround, string playerColor)
@@ -128,6 +129,7 @@ public class Network : MonoBehaviourPunCallbacks
         setPlayerMovement(false);
         if (isSaboteur) { 
             myPlayerRole.text = "Rolle >> Saboteur";
+            //myPlayerRole.text = timestamp;
             Introduction_Panel_Saboteur.SetActive(true);
         }
         else 
@@ -136,10 +138,11 @@ public class Network : MonoBehaviourPunCallbacks
         }
 
         //Invoke("setIntroductionOff", 8);
-        
+
         //CharacterControl cc = spawnedPlayerObject.GetComponent<CharacterControl>();
         //cc.setStatusToSaboteur();
     }
+
     public void setPhotonViewID()
     {
         photonView.RPC("RPC_setPhotonViewID", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber, spawnedPlayerObject.GetComponent<PhotonView>().ViewID);
@@ -213,6 +216,7 @@ public class Network : MonoBehaviourPunCallbacks
     }
     public void setScoreOfRound(bool source) // Punkte geben wird von Time_Game_Script oder Progressbar_Script gerufen
     {
+        //XOF RPC EINBAUEN
         // Source -> true crewmates und vice versa
         if (source)
         {
@@ -244,8 +248,6 @@ public class Network : MonoBehaviourPunCallbacks
         spawnedPlayerObject.transform.position = spawnPositions;
         spawnedPlayerObject.GetComponent<CharacterControl>().resetTask();
     }
-
-
 
     private void RandomColor()
     {
@@ -284,8 +286,8 @@ public class Network : MonoBehaviourPunCallbacks
             playerReadyTexts[i].text = "";
         }
         RandomColor();
-        myRoomOptions = new RoomOptions() { MaxPlayers = 1, IsVisible = true, IsOpen = true, /*PlayerTtl = 10000, EmptyRoomTtl=60000*/ };
-        maxPlayersOfRoom = 1;
+        myRoomOptions = new RoomOptions() { MaxPlayers = 3, IsVisible = true, IsOpen = true, /*PlayerTtl = 10000, EmptyRoomTtl=60000*/ };
+        maxPlayersOfRoom = 3;
         //canJoin = true;
     }
 
@@ -453,11 +455,21 @@ public class Network : MonoBehaviourPunCallbacks
         m_reference.setupGamestyle();
     }
 
-    [PunRPC]
-    public void RPC_startGame()
+    void RPCStartgame()
     {
+        photonView.RPC("RPC_startGame", RpcTarget.All);
+
+    }
+
+    [PunRPC]
+    public void RPC_startGame(PhotonMessageInfo info)
+    {
+        print("TimeStamp: "+ info.timestamp);
+        print("TimeStamp: "+ info.SentServerTime);
+        RPC_timestamp = ""+ info.SentServerTime;
         //GameMapPanel.SetActive(true);
         LobbyRoomPanel.SetActive(false);
+        
         SpawnPlayer();
     }
 
@@ -563,11 +575,7 @@ public class Network : MonoBehaviourPunCallbacks
 
     }
 
-    void RPCStartgame()
-    {
-        photonView.RPC("RPC_startGame", RpcTarget.All);
-        
-    }
+
 
     void RPCStartFading()
     {

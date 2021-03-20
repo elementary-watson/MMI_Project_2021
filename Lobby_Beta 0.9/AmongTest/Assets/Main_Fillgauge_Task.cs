@@ -16,9 +16,17 @@ public class Main_Fillgauge_Task : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        current = 0;
+        setup();
     }
-
+    public void setup()
+    {
+        win_panel.SetActive(false);
+        current = 0;
+        for(int i = 0; i < 4; i++)
+        {
+            sft_object[i].setup();
+        }
+    }
     public void setCurrent()
     {
         current = current + 1;
@@ -33,6 +41,7 @@ public class Main_Fillgauge_Task : MonoBehaviour
 
     public void taskfinished()
     {
+        setup();
         Fillgauge_panel.SetActive(false);
     }
     // Update is called once per frame

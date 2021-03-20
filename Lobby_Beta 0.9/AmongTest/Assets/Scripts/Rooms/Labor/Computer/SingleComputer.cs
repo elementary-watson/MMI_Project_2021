@@ -42,4 +42,9 @@ public class SingleComputer : MonoBehaviour
         this.number = number;
         img_button.sprite = white;
     }
+
+    public void setup2()
+    {
+        thisObject.GetComponent<Button>().interactable = true;
+    }
 }

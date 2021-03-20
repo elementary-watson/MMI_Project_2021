@@ -15,10 +15,14 @@ public class Main_Sink_Task:MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        setup();
+    }
+
+    public void setup()
+    {
         currentPoints = 0;
         SetupValves();
     }
-
     public void ValveSwitch(int points)
     {
         currentPoints += points;
@@ -27,7 +31,7 @@ public class Main_Sink_Task:MonoBehaviour
             taskfin_sound.Play();
             win_message.SetActive(true);
             Invoke("taskfinished", 3);
-            //_network.incrementTaskprogress(10);
+            _network.incrementTaskprogress();
         }
     }
 
@@ -44,6 +48,8 @@ public class Main_Sink_Task:MonoBehaviour
     }
     private void taskfinished()
     {
+        setup();
+        win_message.SetActive(false);
         SinkPanel.SetActive(false);
     }
 }

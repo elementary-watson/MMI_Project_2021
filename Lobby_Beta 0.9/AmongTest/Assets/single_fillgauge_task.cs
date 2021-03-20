@@ -55,8 +55,14 @@ public class Single_Fillgauge_Task : MonoBehaviour, IPointerDownHandler, IPointe
             img_fillGauge.fillAmount = current / maximum;
         }
     }
-    void Start()
+    public void setup()
     {
+
+        pointerDown = false;
+        img_randomVisuals[0].enabled = false;
+        img_randomVisuals[1].enabled = false;
+        img_randomVisuals[2].enabled = false;
+
         randomValue = Random.Range(0,3);
         print("Random " + randomValue);
         if (randomValue == 0) img_randomVisuals[0].enabled = true;
@@ -67,6 +73,10 @@ public class Single_Fillgauge_Task : MonoBehaviour, IPointerDownHandler, IPointe
         img_fillGauge.fillAmount = start;
         current = start;
         maximum = end;
+    }
+    void Start()
+    {
+        setup();
     }
     void Update()
     {

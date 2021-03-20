@@ -45,4 +45,10 @@ public class SingleEnergyNumberScript : MonoBehaviour
         this.number = number;
         img_button.sprite = white;
     }
+
+    public void setup2()
+    {
+        number_button.interactable = true;
+        //img_button.sprite = white;
+    }
 }

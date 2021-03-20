@@ -19,9 +19,10 @@ public class Time_Game_Script : MonoBehaviour
     [SerializeField] GameObject Main_Introduction_Panel;
     [SerializeField] GameObject Introduction_Panel_Saboteur;
     [SerializeField] GameObject Introduction_Panel_Crewmate;
+    int canPlay;
     // Start is called before the first frame update
 
-    float start = 180f;
+    float start = 120f;
 
     private void Awake()
     {
@@ -43,6 +44,7 @@ public class Time_Game_Script : MonoBehaviour
     }
     public void beginTimer()
     {
+        canPlay = 0;
         countdown_sound.Stop();
         timerGoing = true;
         elapsedTime = start;
@@ -61,10 +63,19 @@ public class Time_Game_Script : MonoBehaviour
                 elapsedTime -= Time.deltaTime;
                 DisplayTime(elapsedTime);
                 if (elapsedTime <= 15f)
+                {
+                    if (canPlay == 0)
+                        canPlay = 1;
+                }
+                if (canPlay == 1)
+                {
                     countdown_sound.Play();
+                    canPlay++;
+                }
             }
             else
             {
+                countdown_sound.Stop();
                 timerGoing = false;
                 pb_object.stopProgressbar();
                 pb_object.startMeeting(false);

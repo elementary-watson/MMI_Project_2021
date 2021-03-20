@@ -10,7 +10,7 @@ public class MainEnergyNumberScript : MonoBehaviour
 
     int currentPosition;
     List<int> randomNumberList;
-    List<int> randomNumberforTaskList = new List<int> {1, 2, 3, 4, 5, 6};
+    List<int> randomNumberforTaskList;
     [SerializeField] SingleEnergyNumberScript[] s_energynumber = new SingleEnergyNumberScript[0];
     [SerializeField] SingleHandScript[] s_handscript = new SingleHandScript[0];
     [SerializeField] private TextMeshProUGUI[] randomNumberText = new TextMeshProUGUI[0];
@@ -24,13 +24,29 @@ public class MainEnergyNumberScript : MonoBehaviour
 
     void Start()
     {
-        RandomNumber();
         setup();
-        currentPosition = 0;
     }
 
     private void setup()
     {
+        fixedcounter = 6;
+        count = 0;
+        currentPosition = 0;
+        win_message.SetActive(false);
+
+        for (int i = 0; i < 6; i++)
+        {
+            s_energynumber[i].setup2();
+        }
+        s_handscript[0].setup();
+
+        randomNumberforTaskList = new List<int> { 1, 2, 3, 4, 5, 6 };
+        setup2();
+    }
+
+    private void setup2()
+    {
+        RandomNumber();
         for (int i = 0; i < 6; i++)
         {
             int number = randomNumberList[i];
@@ -94,6 +110,7 @@ public class MainEnergyNumberScript : MonoBehaviour
 
     public void taskfinished()
     {
+        setup();
         EnergyNumber_Panel.SetActive(false);
     }
 }

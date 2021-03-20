@@ -10,11 +10,12 @@ public class Summary_Panel_Script : MonoBehaviour
 
     [SerializeField] GameObject Summary_Panel;
     [SerializeField] Network _network;
+    [SerializeField] Multiplayer_Reference m_reference;
     [SerializeField] Time_Game_Script timeGame_object;
     [SerializeField] Game_Info_Script gInfo_script;
     [SerializeField] Image img_CaughtSaboteur;
     [SerializeField] Image img_escapedSaboteur;
-    public AudioSource countdown_sound;
+    public AudioSource fin_sound;
 
     // Start is called before the first frame update
     void Start()
@@ -25,22 +26,23 @@ public class Summary_Panel_Script : MonoBehaviour
     {
         if (caught)
         {
+            fin_sound.Play();
             img_escapedSaboteur.enabled = false;
             img_CaughtSaboteur.enabled = true;
             gameOverPanel_object.setup(caught, final);
-            Invoke("turnmeoff", 8);
             //musik abspielern jingle geschafft!
             //call Final
         }
         else if (!caught && final)
         {
+            fin_sound.Play();
             img_escapedSaboteur.enabled = true;
             img_CaughtSaboteur.enabled = false;
-            //call Final
+            gameOverPanel_object.setup(caught, final);
         }
         else if(!caught && !final)
         {
-            Invoke("turnmeoff", 5);
+            Invoke("turnmeoff", 7);
         }
     }
     public void turnmeoff()

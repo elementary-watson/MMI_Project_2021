@@ -5,9 +5,21 @@ using UnityEngine;
 public class MainSingleTubeScript : MonoBehaviour
 {
     [SerializeField] GameObject SingleTube_panel;
+    [SerializeField] SingleTubeScript s_tubeobject;
     [SerializeField] Network _network;
     public AudioSource taskfin_sound;
     public GameObject win_message;
+
+    private void Start()
+    {
+        setup();
+    }
+
+    private void setup()
+    {
+        s_tubeobject.setup();
+        win_message.SetActive(false);
+    }
 
     public void checkCounter()
     {
@@ -19,6 +31,7 @@ public class MainSingleTubeScript : MonoBehaviour
 
     public void taskfinished()
     {
+        setup();
         SingleTube_panel.SetActive(false);
     }
 }

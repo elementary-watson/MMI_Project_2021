@@ -11,6 +11,24 @@ public class MainClickMediKit : MonoBehaviour
     public AudioSource taskfin_sound;
     public Network _network;
     [SerializeField] GameObject MediKitPanel;
+    [SerializeField] SingleTurnTool[] tools = new SingleTurnTool[0];
+
+    private void Start()
+    {
+        setup();
+    }
+
+    public void setup()
+    {
+        fixedcounter = 7;
+        count = 0;
+        win_message.SetActive(false);
+
+        for (int i = 0; i < 7; i++)
+        {
+            tools[i].setup();
+        }
+    }
 
     public void switchtool(int cp)
     {
@@ -27,6 +45,7 @@ public class MainClickMediKit : MonoBehaviour
 
     private void taskfinished()
     {
+        setup();
         MediKitPanel.SetActive(false);
     }
 }

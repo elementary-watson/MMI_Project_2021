@@ -16,13 +16,29 @@ public class Gameover_Panel_Script : MonoBehaviour
 
     public void setup(bool caught, bool final)
     {
+
+
         if (caught)
         {            
             img_crewmateTotalwin.enabled = true;
         }
         else 
         {
-            m_reference.getSaboteurPoints();
+            int highPoints;
+
+            int maxrounds = m_reference.getMaxRounds();
+            if (maxrounds == 5)
+                highPoints = 3;
+            else
+                highPoints = 2;
+            if (m_reference.getSaboteurPoints() == highPoints)
+            {
+                img_saboteurWin.enabled = true;
+            }
+            else if (m_reference.getCrewPoints() == highPoints)
+            {
+                img_draw.enabled = true;
+            }
         }
     }
 

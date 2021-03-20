@@ -29,12 +29,21 @@ public class Multiplayer_Reference : MonoBehaviour
     List<string> RandomColorList;
 
     List<string> AllTasksList = new List<string> { // XOF AMIR
-        "Tag_Game","Tag_Game","Tag_WaterDispenser", "Tag_Game", "Tag_NumberRadio", 
+        "Tag_LeverEnergy","Tag_LeverEnergy","Tag_WaterDispenser", "Tag_Game", "Tag_NumberRadio", 
         "Tag_NumberBox", "Tag_ElectricBox", "Tag_ClickCabinet",
         "Tag_Fillgauge", "Tag_EnergyNumber", "Tag_LeverEnergy", 
         "Tag_ClickMediKit", "Tag_Sink", "Tag_Tablet", 
         "Tag_ComputerLabor", "Tag_LaborSingleTube", "Tag_ClickLabor"
     };
+
+    List<string> saboteurTasksList = new List<string> { // XOF AMIR
+        "Tag_WaterDispenser", "Tag_Game", "Tag_NumberRadio",
+        "Tag_NumberBox", "Tag_ElectricBox", "Tag_ClickCabinet",
+        "Tag_Fillgauge", "Tag_EnergyNumber", "Tag_LeverEnergy",
+        "Tag_ClickMediKit", "Tag_Sink", "Tag_Tablet",
+        "Tag_ComputerLabor", "Tag_LaborSingleTube", "Tag_ClickLabor"
+    };
+
     int nextTaskIndex;
 
     public IDictionary<int, string> getKickedplayers()
@@ -84,9 +93,11 @@ public class Multiplayer_Reference : MonoBehaviour
 
     public bool addPlayer(int id, string charname, int maxPlayers)
     {
-        if(!allplayers.Keys.Contains(id))
+        if (!allplayers.Keys.Contains(id))
+        {
             allplayers.Add(id, charname);
-        numberOfPlayer += 1;
+            numberOfPlayer += 1;
+        }            
         if (numberOfPlayer == maxPlayers) // Wird nur vom letzten "maxplayer" ausgeführt
             return true;
         return false;

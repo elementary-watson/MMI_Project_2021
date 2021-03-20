@@ -27,15 +27,38 @@ public class SingleLeverScript : MonoBehaviour, IPointerDownHandler, IPointerUpH
 
     void Start()
     {
-        randomValue = Random.Range(0, 2);
+        /*randomValue = Random.Range(0, 2);
         print("Random " + randomValue);
-        if (randomValue == 0) img_randomVisuals[0].enabled = true;
-        if (randomValue == 1) img_randomVisuals[1].enabled = true;
+        //if (randomValue == 0) img_randomVisuals[0].enabled = true;
+        //if (randomValue == 1) img_randomVisuals[1].enabled = true;
 
         isInteractable = true;
         img_fillGauge.fillAmount = start;
         current = start;
         maximum = end;
+
+        if (Random.value > 0.5f) barspeed = 0.75f;
+        else barspeed = 2f;*/
+    }
+
+    public void setup()
+    {
+        img_randomVisuals[0].enabled = false;
+        img_randomVisuals[1].enabled = false;
+
+        isInteractable = true;
+        pointerDown = false;
+        barspeed = 0f;
+        start = 0.15f;
+        end = 0.90f;
+
+        img_fillGauge.fillAmount = start;
+        current = start;
+        maximum = end;
+
+        randomValue = Random.Range(0, 2);
+        if (randomValue == 0) img_randomVisuals[0].enabled = true;
+        if (randomValue == 1) img_randomVisuals[1].enabled = true;
 
         if (Random.value > 0.5f) barspeed = 0.75f;
         else barspeed = 2f;
@@ -61,7 +84,7 @@ public class SingleLeverScript : MonoBehaviour, IPointerDownHandler, IPointerUpH
 
     public void disableBtn()
     {
-        if (!isInteractable)
+        if (isInteractable)
         {
             isInteractable = false;
             print("btncall");

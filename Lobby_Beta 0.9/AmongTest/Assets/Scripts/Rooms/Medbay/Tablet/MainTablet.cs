@@ -26,18 +26,34 @@ public class MainTablet : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        RandomNumber();
         setup();
-        currentPosition = 0;
     }
 
     private void setup()
     {
+        currentPosition = 0;
+        fixedcounter = 10;
+        count = 0;
+        win_message.SetActive(false);
+        for (int i = 0; i < 30; i++)
+        {
+            s_numberlabor[i].setup2();
+        }
+
+        tenNumberList = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+
+        setup2();
+    }
+
+    private void setup2()
+    {
+        RandomNumber();
         for (int i = 0; i < 30; i++)
         {
             int number = randomNumberList[i];
             s_numberlabor[i].setup(number);
         }
+        
     }
 
     private void RandomNumber()
@@ -87,7 +103,7 @@ public class MainTablet : MonoBehaviour
             randomNumberText[i].text = "" + randomNumberList[i];
         }
 
-        tenNumberList = new List<int> {0,0,0,0,0,0,0,0,0,0};
+        
         
         for (int i = 0; i < 10; i++)
         {
@@ -111,6 +127,7 @@ public class MainTablet : MonoBehaviour
 
     private void taskfinished()
     {
+        setup();
         TabletPanel.SetActive(false);
     }
 }

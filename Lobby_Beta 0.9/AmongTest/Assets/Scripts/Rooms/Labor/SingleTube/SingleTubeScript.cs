@@ -26,6 +26,18 @@ public class SingleTubeScript : MonoBehaviour, IPointerDownHandler, IPointerUpHa
         maximum = end;
     }
 
+    public void setup()
+    {
+        isInteractable = true;
+        pointerDown = false;
+        start = 0.04f;
+        end = 0.957f;
+
+        img_fillGauge.fillAmount = start;
+        current = start;
+        maximum = end;
+    }
+
     public void OnPointerDown(PointerEventData eventData)
     {
         pointerDown = true;

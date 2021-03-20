@@ -10,19 +10,20 @@ public class Main_Console_Script : MonoBehaviour
     [SerializeField] Network _network;
     [SerializeField] SpriteRenderer[] the_active_state = new SpriteRenderer[0];
     [SerializeField] bool isInteractable;
-    [SerializeField] BoxCollider2D mainCollider;
+    [SerializeField] BoxCollider2D[] mainCollider = new BoxCollider2D[0];
 
 
     void Start()
     {
-        mainCollider.isTrigger = true;
-        setIsInteractable(true);
-        currentTask = "null";
+        Reset();
     }
 
     public void Reset()
     {
-        mainCollider.isTrigger = true;
+        foreach (BoxCollider2D item in mainCollider)
+        {
+            item.isTrigger = true;
+        }
         setIsInteractable(true);
         currentTask = "null";
     }
@@ -50,7 +51,7 @@ public class Main_Console_Script : MonoBehaviour
             if(item.getMyTag() == currentTask)
             {
                 print("The Task was found in Multiplayer");
-                item.setIsInteractable(true);
+                item.setIsInteractable(true); // Hier wird die Task interagierbar gemacht.
             }
         }
     }
