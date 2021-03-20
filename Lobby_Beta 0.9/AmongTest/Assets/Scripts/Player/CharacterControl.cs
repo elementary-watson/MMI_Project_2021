@@ -40,6 +40,7 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
     {
         Halo.enabled = true;
         incrementTaskPower = m_reference.getGhostIncrementPower();
+        gInfoScript_object.shortNotification("isGhost");
     }    
     public void setStatusToSaboteur()
     {        

@@ -17,12 +17,13 @@ public class Panel_Manager_Script : MonoBehaviour
     [SerializeField] private GameObject s9_votetimerPanel;
     [SerializeField] private GameObject second_9s_Timer_Panel;
 
-    [SerializeField] private Stage_Panel_Script sss_object;
+    [SerializeField] private Stage_Panel_Script stagePanel_object;
     [SerializeField] GameObject Stage_Panel;
     
     [SerializeField] private TextMeshProUGUI resultTxt;
 
     [SerializeField] private GameObject Summary_Panel;
+    [SerializeField] private Summary_Panel_Script SummaryP_object;
     [SerializeField] private GameObject Score_Panel;
     [SerializeField] private GameObject Player_Panel;
     [SerializeField] private GameObject main_Progressbar;
@@ -52,7 +53,7 @@ public class Panel_Manager_Script : MonoBehaviour
             if (m_reference.getCurrentStage() == 1)
             {
                 m_reference.setCurrentStage(2);
-                sss_object.switchOnNextstage(); //start the stage panel
+                stagePanel_object.switchOnNextstage(); //start the stage panel
                 chat_panel.SetActive(true); //reihenfolge beachten!!
                 voting_panel.SetActive(false);
                 result_VotingPanel.SetActive(false);
@@ -78,7 +79,7 @@ public class Panel_Manager_Script : MonoBehaviour
         else if (referenced == "ChatManager") // wenn chat vorbei ist dann...
         {
             m_reference.setCurrentStage(3);
-            sss_object.switchOnNextstage();
+            stagePanel_object.switchOnNextstage();
             cc.startNextPhase();
             voting_panel.SetActive(true);
             
@@ -102,28 +103,44 @@ public class Panel_Manager_Script : MonoBehaviour
     void thirdPhase(int maxrounds)
     {
         print("ThirdPhasecalled");
-        if (m_reference.getSaboteurPoints() == maxrounds || m_reference.getCrewPoints() == maxrounds) // Spiel vorbei und letztes Voting
+        if (_network.getIsGameOver())
         {
-            print("final reached");
+            result_VotingPanel.SetActive(false);
+            voting_panel.SetActive(false);
+            stagePanel_object.setup();
+            Stage_Panel.SetActive(false);
+            Summary_Panel.SetActive(true);
+            SummaryP_object.setNextMode(true, true); //caught - final
+
+        }
+        else if (m_reference.getSaboteurPoints() == maxrounds || m_reference.getCrewPoints() == maxrounds) // Spiel vorbei und letztes Voting
+        {
+            print("final round reached");
             int currentGameRound = m_reference.getGameRound();
             m_reference.setGameRound(currentGameRound + 1);
             result_VotingPanel.SetActive(false);
             voting_panel.SetActive(false);
+            stagePanel_object.setup();
+            Stage_Panel.SetActive(false);
+            Summary_Panel.SetActive(true);
+            SummaryP_object.setNextMode(false, true); //escaped - final
+            // summary rufen und dann game over
             //Last vote
             //Spiel endet gewinner bildschirm und forschungsfrage!
         }
         else // Das Post-Voting einleiten und Spieler kicken
         {
-            print("called this");
             int currentGameRound = m_reference.getGameRound();
             m_reference.setGameRound(currentGameRound + 1);
             m_reference.setCurrentStage(1); // phase zurücksetzten
+            stagePanel_object.setup();
+            Stage_Panel.SetActive(false);
             _network.setPlayerMovement(true);
             main_Progressbar.SetActive(true);
             Score_Panel.SetActive(true);
             Player_Panel.SetActive(true);
-            print("called this again");
-
+            Summary_Panel.SetActive(true);// summary rufen und dann nächste runde
+            SummaryP_object.setNextMode(false, false); //escaped - nextRound
         }
     }
 

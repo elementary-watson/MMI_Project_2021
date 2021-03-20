@@ -13,6 +13,8 @@ public class Stage_Panel_Script : MonoBehaviour
     [SerializeField] Image img_stage_postvote;
     [SerializeField] Single_StagePanel_Script[] sss_object = new Single_StagePanel_Script[0];
     [SerializeField] Multiplayer_Reference m_reference;
+    
+    public AudioSource taskfin_sound;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +26,8 @@ public class Stage_Panel_Script : MonoBehaviour
         img_stage_prevote.sprite = stageOn;
         img_stage_chat.sprite = stageOff;
         img_stage_postvote.sprite = stageOff;
+        sss_object[0].setup();
+        sss_object[1].setup();
     }
 
     public void switchOnNextstage()

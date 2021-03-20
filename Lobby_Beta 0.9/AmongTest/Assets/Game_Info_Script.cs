@@ -6,13 +6,18 @@ using TMPro;
 public class Game_Info_Script : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI tmp_infoText;
-    public AudioSource notify_sound;
+    [SerializeField] AudioSource notify_sound;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        Invoke("startCenterCall", 8);
+       
+    }
+    public void startCenterCall()
+    {
+        shortNotification("startCenter");
     }
     public void shortNotification(string source)
     {

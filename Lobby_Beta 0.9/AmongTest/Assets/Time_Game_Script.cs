@@ -18,6 +18,8 @@ public class Time_Game_Script : MonoBehaviour
     [SerializeField] bool timerGoing;
     // Start is called before the first frame update
 
+    float start = 180f;
+
     private void Awake()
     {
         timerGoing = false;
@@ -25,13 +27,13 @@ public class Time_Game_Script : MonoBehaviour
     void Start()
     {
         tmp_timer.text = "0:00";
-        timerGoing = true;
+        timerGoing = false;
         beginTimer();
     }
     public void beginTimer()
     {
         timerGoing = true;
-        elapsedTime = 180f;
+        elapsedTime = start;
     }
     public void stopTimer()
     {
@@ -52,9 +54,7 @@ public class Time_Game_Script : MonoBehaviour
                 pb_object.stopProgressbar();
                 pb_object.startMeeting(false);
                 print("Time has run out!");
-                elapsedTime = 0;
-                
-
+                elapsedTime = start;                
             }
         }
     }

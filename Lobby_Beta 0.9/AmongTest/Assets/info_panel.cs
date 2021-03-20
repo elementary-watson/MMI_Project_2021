@@ -10,7 +10,7 @@ public class info_panel : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(ChangeColor(img_info, Color.white, Color.black, 2f));
+        StartCoroutine(ChangeColor(img_info, Color.white, Color.black, 1f));
     }
 
     private IEnumerator ChangeColor(Image image, Color from, Color to, float duration)

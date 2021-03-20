@@ -68,13 +68,20 @@ public class Network : MonoBehaviourPunCallbacks
     [SerializeField] Main_Console_Script mainConsole_object;
     [SerializeField] TextMeshProUGUI myPlayerRole;
     [SerializeField] Game_Info_Script gInfoScript_object;
+    [SerializeField] GameObject Introduction_Panel_Crewmate;
+    [SerializeField] GameObject Introduction_Panel_Saboteur;
+    [SerializeField] GameObject Introduction_Panel;
 
+    private bool isGameOver;
+    public void setIsGameOver(bool isGameOver) {this.isGameOver = isGameOver;}    
+    public bool getIsGameOver(){return isGameOver;}
     public void addSuspectToList(int stage, int gameround, string playerColor)
     {
         string value = gameround + " " + playerColor;
         // Runde pre/post Brown/Rot/Blau
         listOfSuspects.Add(gameround, value);
     }
+
     public void addVotekickToList(int gameround, string playerColor)
     {
         string value = gameround + " " + playerColor;
@@ -101,10 +108,11 @@ public class Network : MonoBehaviourPunCallbacks
     {
         mainConsole_object.setCurrentTask(myCurrentTask);
     }
+
     private void SpawnPlayer()
     {        
         GameObject spawn = PhotonNetwork.Instantiate(myPlayerColorPrefab, spawnPositions, Quaternion.identity);
-        CharacterControl cc = spawn.GetComponent<CharacterControl>();
+        CharacterControl cc = spawn.GetComponent<CharacterControl>();        
         cc.interactIcon = useindicator;
         cc.setMCSScript(msc_object);
         cc.setMultiplayerReference(m_reference);
@@ -113,12 +121,22 @@ public class Network : MonoBehaviourPunCallbacks
         cc.setMainConsoleScript(mainConsole_object);
         cc.setGameInfoScript(gInfoScript_object);
         spawn.GetComponent<CharacterControl>().interactIcon = useindicator;
-
+        
         playerCamera.target = spawn.transform;
         spawnedPlayerObject = spawn;
         setPhotonViewID();
-        if (isSaboteur)
+        setPlayerMovement(false);
+        if (isSaboteur) { 
             myPlayerRole.text = "Rolle >> Saboteur";
+            Introduction_Panel_Saboteur.SetActive(true);
+        }
+        else 
+        {
+            Introduction_Panel_Crewmate.SetActive(true);
+        }
+
+        //Invoke("setIntroductionOff", 8);
+        
         //CharacterControl cc = spawnedPlayerObject.GetComponent<CharacterControl>();
         //cc.setStatusToSaboteur();
     }
@@ -139,12 +157,17 @@ public class Network : MonoBehaviourPunCallbacks
     public void setPlayerToGhost(int photonViewId) // wird von resultpanel zum schluss von phase 3 gerufen
     {
         photonView.RPC("RPC_setPlayerToGhost", RpcTarget.All, photonViewId);
-    }
+    }    
+
     [PunRPC]
     public void RPC_setPlayerToGhost(int kickedPhotonViewId) 
     {
         print("Photon Ghost call");
-        if(kickedPhotonViewId == spawnedPlayerObject.GetComponent<PhotonView>().ViewID)
+        if (isSaboteur)
+        {
+            setIsGameOver(true);
+        }
+        else if (kickedPhotonViewId == spawnedPlayerObject.GetComponent<PhotonView>().ViewID)
         {
             print(PhotonNetwork.LocalPlayer.ActorNumber + " Found " + myPlayerColorPrefab +   " with viewID: " + spawnedPlayerObject.GetComponent<PhotonView>().ViewID);
             spawnedPlayerObject.layer = 11; //set player to invisibleLayer
@@ -249,6 +272,7 @@ public class Network : MonoBehaviourPunCallbacks
     public void Awake()
     {
         // XOF PhotonNetwork.FetchServerTimestamp();
+        isGameOver = false;
         lobbySwitch = 0;
         lobby_Room_Name = "LobbyRoom_A";
         isSaboteur = false;
@@ -260,8 +284,8 @@ public class Network : MonoBehaviourPunCallbacks
             playerReadyTexts[i].text = "";
         }
         RandomColor();
-        myRoomOptions = new RoomOptions() { MaxPlayers = 1, IsVisible = true, IsOpen = true, /*PlayerTtl = 10000, EmptyRoomTtl=60000*/ };
-        maxPlayersOfRoom = 1;
+        myRoomOptions = new RoomOptions() { MaxPlayers = 2, IsVisible = true, IsOpen = true, /*PlayerTtl = 10000, EmptyRoomTtl=60000*/ };
+        maxPlayersOfRoom = 2;
         //canJoin = true;
     }
 
@@ -430,7 +454,7 @@ public class Network : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    public void startGame()
+    public void RPC_startGame()
     {
         //GameMapPanel.SetActive(true);
         LobbyRoomPanel.SetActive(false);
@@ -541,7 +565,7 @@ public class Network : MonoBehaviourPunCallbacks
 
     void RPCStartgame()
     {
-        photonView.RPC("startGame", RpcTarget.All);
+        photonView.RPC("RPC_startGame", RpcTarget.All);
         
     }
 

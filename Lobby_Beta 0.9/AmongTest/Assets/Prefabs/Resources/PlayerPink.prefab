@@ -230,6 +230,7 @@ MonoBehaviour:
   actorID: 0
   mainConsole_object: {fileID: 0}
   currentTask: 
+  gInfoScript_object: {fileID: 0}
 --- !u!95 &6362391285179497199
 Animator:
   serializedVersion: 3

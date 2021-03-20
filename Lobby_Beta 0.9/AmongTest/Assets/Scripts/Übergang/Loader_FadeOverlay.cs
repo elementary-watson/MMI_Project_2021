@@ -21,7 +21,7 @@ public class Loader_FadeOverlay : MonoBehaviour
     public float waitAfterLoading = 1f;
     public float fadeDuration = 0.5f;
     public Color unfinishedColor;
-
+    [SerializeField] GameObject Introduction_Panel;
 
     public void Start()                                                          
     {
@@ -60,6 +60,8 @@ public class Loader_FadeOverlay : MonoBehaviour
         if (progressBar.fillAmount == 1f)
         {
             procentnumber.text = "100%";
+            Introduction_Panel.SetActive(true);
+
         }
         else
         {
