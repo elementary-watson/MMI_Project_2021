@@ -32,7 +32,7 @@ public class Time_Game_Script : MonoBehaviour
     {
         tmp_timer.text = "0:00";
         timerGoing = false;
-        Invoke("setup", 9);
+        //Invoke("setup", 9);
     }
     public void setup()
     {

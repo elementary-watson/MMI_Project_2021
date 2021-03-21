@@ -11,7 +11,8 @@ public class Introduction_Panel : MonoBehaviour
     [SerializeField] GameObject Introduction_Panel_Crewmate;
     [SerializeField] GameObject Main_Introduction_Panel;
     [SerializeField] Network _network;
-    [SerializeField] Image img_info;
+    [SerializeField] Image img_cremate;
+    [SerializeField] Image img_saboteur;
     bool isWhite;
     // Start is called before the first frame update
     void Start()
@@ -20,12 +21,15 @@ public class Introduction_Panel : MonoBehaviour
     }
     public void fadeScreen()
     {
-        StartCoroutine(ChangeColor(img_info, Color.white, Color.black, 1f));
+        if (_network.getIsSaboteur())
+            StartCoroutine(ChangeColor(img_saboteur, Color.white, Color.black, 1f));
+        else
+            StartCoroutine(ChangeColor(img_cremate, Color.white, Color.black, 1f));
     }
     private IEnumerator ChangeColor(Image image, Color from, Color to, float duration)
     {
         float timeElapsed = 0.0f;
-
+        int singleCall=0;
         float t = 0.0f;
         while (t < 1.0f)
         {
@@ -34,8 +38,12 @@ public class Introduction_Panel : MonoBehaviour
             t = timeElapsed / duration;
 
             image.color = Color.Lerp(from, to, t);
-            if (t > 0.99f) 
-                setIntroductionOff();
+            if (t > 0.99f)
+            {
+                singleCall += 1;
+                if(singleCall == 1)
+                    _network.finalyIntroductionOff();
+            }
             yield return null;
         }
         
@@ -46,7 +54,7 @@ public class Introduction_Panel : MonoBehaviour
         Introduction_Panel_Crewmate.SetActive(false);
         Main_Introduction_Panel.SetActive(false);
         _network.setPlayerMovement(true);
-        timeGame_object.beginTimer(); // Timer starten
+        timeGame_object.setup(); // Timer starten
     }
 
     // Update is called once per frame

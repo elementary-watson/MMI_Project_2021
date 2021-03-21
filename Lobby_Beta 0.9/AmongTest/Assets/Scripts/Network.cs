@@ -29,7 +29,7 @@ public class Network : MonoBehaviourPunCallbacks
     [SerializeField] GameObject StartPanel;
     [SerializeField] GameObject FadeObject;
     [SerializeField] GameObject CounterObject;
-    
+    [SerializeField] Text ReferenceForDeveloper;
 
     //Photon
     [Header("Photon Chat")]
@@ -57,6 +57,7 @@ public class Network : MonoBehaviourPunCallbacks
     [SerializeField] GameObject Introduction_Panel_Crewmate;
     [SerializeField] GameObject Introduction_Panel_Saboteur;
     [SerializeField] GameObject Introduction_Panel;
+    [SerializeField] Introduction_Panel introPanel_object;
     [SerializeField] private bool isGameOver;
     private string RPC_timestamp; //XOF Zum Loggen der Daten
     public Progressbar_Script prog_reference;
@@ -95,8 +96,8 @@ public class Network : MonoBehaviourPunCallbacks
             playerReadyTexts[i].text = "";
         }
         RandomColor();
-        myRoomOptions = new RoomOptions() { MaxPlayers = 1, IsVisible = true, IsOpen = true, /*PlayerTtl = 10000, EmptyRoomTtl=60000*/ };
-        maxPlayersOfRoom = 1;
+        myRoomOptions = new RoomOptions() { MaxPlayers = 3, IsVisible = true, IsOpen = true, /*PlayerTtl = 10000, EmptyRoomTtl=60000*/ };
+        maxPlayersOfRoom = 3;
         //canJoin = true;
     }
 
@@ -104,6 +105,8 @@ public class Network : MonoBehaviourPunCallbacks
     public int getActorId() { return PhotonNetwork.LocalPlayer.ActorNumber; }
     public int getActorsInRoom() { return PhotonNetwork.CurrentRoom.PlayerCount; }
     public string getPlayerColor() { return myPlayerColorFilename; }
+
+    public bool getIsSaboteur(){ return isSaboteur; }
 
     public void setIsGameOver(bool isGameOver) {this.isGameOver = isGameOver;}    
     public bool getIsGameOver() {return isGameOver;}
@@ -280,7 +283,7 @@ public class Network : MonoBehaviourPunCallbacks
         this.randomColorList = RandomColorList;
     }
     [PunRPC]
-    public void RPC_setupPlayer(String idAndColor)
+    public void RPC_setupPlayer(String idAndColor) //von joinlobby aufgerufen
     {
         //XOF hier werden farben eingestellt und die multiplayer referenz aufgefüllt
         String[] parts = idAndColor.Split('-');
@@ -351,14 +354,15 @@ public class Network : MonoBehaviourPunCallbacks
     public void startFading()
     {
         FadeObject.SetActive(true);
-        Invoke("RPCstartgame", 5);
+        LobbyRoomPanel.SetActive(false);
+        //Invoke("RPCstartgame", 5);
         //RPCstartgame();
     }
     #endregion
     
     #region startgame
     public void RPCstartgame(){photonView.RPC("startGame", RpcTarget.All);}
-
+    int test2 = 0;
     [PunRPC]
     public void startGame(PhotonMessageInfo info)
     {
@@ -366,9 +370,15 @@ public class Network : MonoBehaviourPunCallbacks
         print("TimeStamp: " + info.SentServerTime);
         RPC_timestamp = "" + info.SentServerTime;
         //GameMapPanel.SetActive(true);
-        LobbyRoomPanel.SetActive(false);
-
-        SpawnPlayer();
+        //LobbyRoomPanel.SetActive(false);
+        if(test2 == 0)
+            ReferenceForDeveloper.text = RPC_timestamp;
+        test2 += 1;
+        if (test2 == m_reference.getNumberOfPlayer())
+        {
+            SpawnPlayer();
+        }
+        
     }
     private void SpawnPlayer()
     {
@@ -387,6 +397,7 @@ public class Network : MonoBehaviourPunCallbacks
         spawnedPlayerObject = spawn;
         setPhotonViewID();
         setPlayerMovement(false);
+        Introduction_Panel.SetActive(true);
         if (isSaboteur)
         {
             myPlayerRole.text = "Rolle >> Saboteur";
@@ -395,9 +406,10 @@ public class Network : MonoBehaviourPunCallbacks
         }
         else
         {
-            Introduction_Panel_Crewmate.SetActive(true);
+            Introduction_Panel_Crewmate.SetActive(true);        
         }
-        //Invoke("setIntroductionOff", 8);
+
+        //XOFXOFXOF AB HIER geht es im Introduction Panel weiter und RPC -> setIntroductionOff wird gerufen! Damit wird das Spiel gestartet
     }
     public void setPhotonViewID() // photon id weil nur damit andere player angesprochen werden können
     {
@@ -440,7 +452,25 @@ public class Network : MonoBehaviourPunCallbacks
         if (spawnPos == new Vector3(0, 0, 0))
             print("ERROR: Player was not found position faulty!");
         else
-            spawnPositions = spawnPos;
+            spawnPositions = spawnPos;        
+    }
+    int test = 0;
+    public void setIntroductionOff() // wird von introduction panel als vorletzten schritt aufgerufen!
+    {
+        photonView.RPC("RPC_setIntroductionOff", RpcTarget.All);
+    }
+    [PunRPC]
+    public void RPC_setIntroductionOff()
+    {
+        test += 1;
+        if(m_reference.getNumberOfPlayer() == test)
+        {
+            Invoke("finalyIntroductionOff", 4);
+        }
+    }
+    public void finalyIntroductionOff()
+    {
+        introPanel_object.setIntroductionOff();
     }
     #endregion
 

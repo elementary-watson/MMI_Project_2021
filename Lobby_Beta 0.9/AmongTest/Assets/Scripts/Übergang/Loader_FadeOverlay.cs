@@ -7,8 +7,9 @@ using System;
 public class Loader_FadeOverlay : MonoBehaviour
 {
     [Header("Visual References")]
-    public GameObject loadingPanel;
+    [SerializeField] GameObject loadingPanel;
     public GameObject PanelMap;
+    [SerializeField] Network _network;
 
     public Image progressBar;
     public Image fadeOverlay;
@@ -40,8 +41,7 @@ public class Loader_FadeOverlay : MonoBehaviour
             
         
     }
-
-
+    int singleCall = 0;
     void Update()
     {
         if (progressBar.fillAmount < 1f)
@@ -52,10 +52,15 @@ public class Loader_FadeOverlay : MonoBehaviour
         procent = progressBar.fillAmount*100;
         progressBar.fillAmount += 0.005f;
 
-        if (progressBar.fillAmount >= 0.9f)
+        if(singleCall == 0)
         {
-            Invoke("ShowCompletion", 0.75f);
+            if (progressBar.fillAmount >= 0.9f)
+            {
+                singleCall += 1;
+                Invoke("ShowCompletion", 0.75f);
+            }
         }
+
 
         if (progressBar.fillAmount == 1f)
         {
@@ -90,7 +95,10 @@ public class Loader_FadeOverlay : MonoBehaviour
     void closePanel()
     {
         loadingPanel.SetActive(false);
+        _network.RPCstartgame();
         PanelMap.SetActive(true);
+
+        print("Wurde ausgeführt");
 
     }
 }
