@@ -10,7 +10,7 @@ public class Single_Voting_Logic : MonoBehaviour
     int indexPosition;
     [SerializeField] private Panel_Voting_Logic pvl;
     [SerializeField] private GameObject ConfirmPanel; 
-    [SerializeField] private Confirm_Panel_Logic script_confirm_pl; 
+    [SerializeField] private Confirm_Panel_Logic confirmPanel_object; 
     
     // Start is called before the first frame update
 
@@ -27,7 +27,7 @@ public class Single_Voting_Logic : MonoBehaviour
     public void btn_clickedPlayer()
     {
         pvl.disableButtons(indexPosition);
-        script_confirm_pl.setTemporaryVote(playerColor, photonActorID, indexPosition);//Temporär Auswahl setzen!
+        confirmPanel_object.setTemporaryVote(playerColor, photonActorID, indexPosition);//Temporär Auswahl setzen!
         ConfirmPanel.SetActive(true);
         
     }

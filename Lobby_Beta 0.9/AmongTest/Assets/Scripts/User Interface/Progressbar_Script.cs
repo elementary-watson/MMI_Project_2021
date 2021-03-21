@@ -19,8 +19,8 @@ public class Progressbar_Script : MonoBehaviour
     [SerializeField] private TMP_Text tmp_progressValue;
     [SerializeField] private Network _network;
     [SerializeField] private Multiplayer_Reference m_reference;
-    public float maximum;
-    public float current;
+    [SerializeField] float maximum;
+    [SerializeField] float current;
 
     bool isUseable;
     void getCurrentFill()
@@ -39,7 +39,7 @@ public class Progressbar_Script : MonoBehaviour
         _network.resetPlayerPosition();
         _network.setPlayerMovement(false);
         _network.setScoreOfRound(isCrewmate);
-        Callmeeting_Panel.SetActive(true);
+        _network.callMeeting();
     }
     public void stopProgressbar()
     {
@@ -48,9 +48,14 @@ public class Progressbar_Script : MonoBehaviour
     }
     private void Start()
     {
+        setup();
+        
+    }
+    public void setup()
+    {
         isUseable = true;
         current = 0;
-
+        maximum = 100;
     }
     private void Update()
     {

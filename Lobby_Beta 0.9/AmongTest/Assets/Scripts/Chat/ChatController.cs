@@ -84,9 +84,10 @@ public class ChatController : MonoBehaviour, IChatClientListener
 
     private void createChatListElement(string channelName, string[] senders, object[] messages)
     {
+        GameObject chatElement = Instantiate(chatListing, content, false);
         //Erstelle ein chat element in der Scroll View
-        GameObject chatElement = Instantiate(chatListing);
-        chatElement.transform.SetParent(content);
+        //GameObject chatElement = Instantiate(chatListing);
+        //chatElement.transform.SetParent(content);
         //Update die scroll view damit Scroll view ganz nach unten aktualisiert
         Canvas.ForceUpdateCanvases();
         content.transform.parent.GetParentComponent<ScrollRect>().verticalNormalizedPosition = 0;

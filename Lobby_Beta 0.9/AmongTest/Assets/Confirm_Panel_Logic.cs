@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Confirm_Panel_Logic : MonoBehaviour
 {
@@ -12,9 +13,16 @@ public class Confirm_Panel_Logic : MonoBehaviour
     [SerializeField] private Result_Voting_Panel result_vp;
     [SerializeField] private Network _network;
     //[SerializeField] private GameObject timerPanel;
+    [SerializeField] TextMeshProUGUI confirmTxt;
+    [SerializeField] Multiplayer_Reference m_reference;
+
 
     public void setTemporaryVote(string playerColor, int photonActorID, int indexPosition)
     {
+        if (m_reference.getCurrentStage() == 1)
+            confirmTxt.text = "Spieler als Saboteur verdaechtigen ?";
+        else
+            confirmTxt.text = "Spieler als Saboteur beschuldigen ?";
         this.playerColor = playerColor;
         this.photonActorID = photonActorID;
         this.indexPosition = indexPosition;
