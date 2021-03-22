@@ -102,8 +102,8 @@ public class Network : MonoBehaviourPunCallbacks
             playerReadyTexts[i].text = "";
         }
         RandomColor();
-        myRoomOptions = new RoomOptions() { MaxPlayers = 3, IsVisible = true, IsOpen = true /*,PlayerTtl = 10000, EmptyRoomTtl=60000*/ };
-        maxPlayersOfRoom = 3;
+        myRoomOptions = new RoomOptions() { MaxPlayers = 1, IsVisible = true, IsOpen = true /*,PlayerTtl = 10000, EmptyRoomTtl=60000*/ };
+        maxPlayersOfRoom = 1;
         //canJoin = true;
     }
 
@@ -702,17 +702,17 @@ public class Network : MonoBehaviourPunCallbacks
     bool allScoresDone = false;
     bool allTasksDone = false;
     int statisticsHelper = 0;
-    public void RPC_buildStatistics()
+    public void RPC_buildStatistics( )
     {
-        photonView.RPC("buildStatistics", RpcTarget.All);
+        photonView.RPC("buildStatistics", RpcTarget.All, getActorId(), getScorePoints(), getNumberOfTasks());
     }
     [PunRPC]
-    public void buildStatistics()
+    public void buildStatistics(int actorID , float score, int numOfTasks)
     {
         statisticsHelper += 1;
         print("buildStatistics called");
-        allScoresDone = m_reference.addAllPlayerScores(getActorId(), getScorePoints(), maxPlayersOfRoom);
-        allTasksDone = m_reference.addAllPlayerTasks(getActorId(), getNumberOfTasks(), maxPlayersOfRoom);
+        allScoresDone = m_reference.addAllPlayerScores(actorID, score, maxPlayersOfRoom);
+        allTasksDone = m_reference.addAllPlayerTasks(actorID, numOfTasks, maxPlayersOfRoom);
         if(statisticsHelper == maxPlayersOfRoom)
         {
             gameOver_object.createTable();

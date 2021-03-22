@@ -173,7 +173,7 @@ public class Map_Control_Script : MonoBehaviour
     }
     public void resetTargetImages()
     {
-        for (int i = 0; i < 9; i++)
+        for (int i = 0; i < 10; i++)
         {
             img_bigMapTargetRoom[i].enabled = false;
             img_miniMapTargetRoom[i].enabled = false;

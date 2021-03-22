@@ -22,14 +22,23 @@ public class CallMeeting_Script : MonoBehaviour
     [SerializeField] Image img_saboteur;
     [SerializeField] Image img_crewmate;
     [SerializeField] GameObject[] messages = new GameObject[0];
+    [SerializeField] Single_Maptask_Script[] allSingleMapTask_objects = new Single_Maptask_Script[0];
 
-
+    public AudioSource voting_Background_sound;
+    public AudioSource game_Background_sound;
     // Start is called before the first frame update
     void Start()
     {        
     }
     public void setup(bool isCrewmate)
     {
+        foreach(Single_Maptask_Script item in allSingleMapTask_objects)
+        {
+            item.Reset();
+        }
+
+        game_Background_sound.Stop();
+        voting_Background_sound.Play();
         if (isCrewmate)
             StartCoroutine(ChangeColor(img_crewmate, Color.white, Color.black, 0.5f));
         else

@@ -260,6 +260,7 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
                         if (rc.transform.GetComponent<Interactable>()) // Checkt nach Task Collidern
                         {
                             rc.transform.GetComponent<Interactable>().Interact();
+                            CloseInteractableIcon();
                             mcs_object.resetTargetImages();
                             currentTask = mainConsole_object.getCurrentTask();
                             mcs_object.setTargetRoom(currentTask);

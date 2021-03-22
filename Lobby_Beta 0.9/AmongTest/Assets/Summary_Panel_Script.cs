@@ -19,10 +19,15 @@ public class Summary_Panel_Script : MonoBehaviour
     public AudioSource fin_sound;
     bool caught;
     bool final;
+
+    public AudioSource voting_Background_sound;
+    public AudioSource game_Background_sound;
     // Start is called before the first frame update
 
     public void setNextMode(bool caught, bool final)
     {
+        game_Background_sound.Play();
+        voting_Background_sound.Stop();
         if (caught) // geschnappt und ende des Spiels
         {
             fin_sound.Play();
