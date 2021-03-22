@@ -156,10 +156,17 @@ public class ChatController : MonoBehaviour, IChatClientListener
     public void OnChatStateChange(ChatState state)
     {
     }
+    public static string Replace(string s, char[] separators, string newVal)
+    {
+        string[] temp;
 
+        temp = s.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+        return String.Join(newVal, temp);
+    }
     public void OnGetMessages(string channelName, string[] senders, object[] messages)
     {
         print("CHAT: We revieved a message");
+        
         print(messages[0]);
         string msgs = "";
         for (int i = 0; i < senders.Length; i++)
@@ -169,6 +176,14 @@ public class ChatController : MonoBehaviour, IChatClientListener
         Console.WriteLine("OnGetMessages: {0} ({1}) > {2}", channelName, senders.Length, msgs);
         print("CHAT OnGetMessages: \nChannelname:" + channelName +" Length: "+ senders.Length+ " Message: "+ msgs);
 
+        char[] separators = new char[] { '\\', '/', '´', '`', '*', '\'', '\"', '&', '[', ']', '{', '}', '(', ')', ';', ',', '\r', '\t', '\n' };
+        string s = messages[0].ToString(); //"this;is,\ra\t\n\n\ntest";
+        string myChatMsg = messages[0].ToString();
+
+        s = Replace(s, separators, " ");
+        //string result = myChatMsg.Trim(charsToTrim);
+
+        print("TRIM "+ s);
         createChatListElement(channelName, senders, messages);
     }
 

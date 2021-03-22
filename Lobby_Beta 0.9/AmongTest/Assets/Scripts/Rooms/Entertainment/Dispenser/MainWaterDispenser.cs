@@ -8,6 +8,7 @@ public class MainWaterDispenser : MonoBehaviour
 {
     [SerializeField] GameObject WaterDispenser_Panel;
     [SerializeField] SingleFillDispenser s_filldespenser;
+    [SerializeField] SingleEmptyDispenser s_emptydespenser;
     public TextMeshProUGUI infoBoxText;
     public TextMeshProUGUI fill_Text;
     public TextMeshProUGUI empty_Text;
@@ -56,6 +57,7 @@ public class MainWaterDispenser : MonoBehaviour
     }
     public void setup()
     {
+        s_emptydespenser.setup();
         s_filldespenser.setInteractable(false);
         infoBoxText.text = "Leere den Behälter";
         fill_Text.text = "";
@@ -66,6 +68,7 @@ public class MainWaterDispenser : MonoBehaviour
         img_fill_black.enabled = false;
         img_empty.enabled = true;
         img_empty_black.enabled = true;
+        win_message.SetActive(false);
     }
     public void taskfinished()
     {        

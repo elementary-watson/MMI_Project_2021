@@ -34,11 +34,6 @@ public class Result_Voting_Panel : MonoBehaviour
 
         if (currentStage == 1) 
         {
-            if ((playerColor == "") && (photonActorID == 0))
-                print("Actor " + myActorID + " - " + myplayerColor + " made no Choice");
-            else
-                _network.addSuspectToList(m_reference.getCurrentStage(),m_reference.getGameRound(), playerColor);
-            // XOF Hier muss geloggt werden!
             finalReveal(photonActorID, playerColor);
         }
         if (currentStage == 3) 
@@ -106,9 +101,6 @@ public class Result_Voting_Panel : MonoBehaviour
                 img_votedPlayer.sprite = sp;
                 Setup();
                 tmp_resultTexts[4].SetActive(true);
-                p_manager.sendText("Kein Spieler ist ausgeschieden.");
-                _network.setPlayerMovement(true);
-                //timeGame_object.beginTimer();
             }
             else if (mostVoted.Value == equal.Value) { 
                 print("We have a tie between: " + player[mostVoted.Key] + " and " + player[equal.Key]);
@@ -117,13 +109,11 @@ public class Result_Voting_Panel : MonoBehaviour
                 img_votedPlayer.sprite = sp;
                 Setup();
                 tmp_resultTexts[3].SetActive(true);
-                _network.setPlayerMovement(true);
-                //timeGame_object.beginTimer();
+
             }
             else if (mostVoted.Value > 0)
             {
                 m_reference.addKickedplayers(mostVoted.Key, player[mostVoted.Key]);// wird zur gekickten Liste geaddet
-
                 print("Most voted player: " + player[mostVoted.Key]);
                 string filename = "Player Color/" + player[mostVoted.Key] + "_Char";
                 Sprite sp = Resources.Load<Sprite>(filename);
@@ -131,11 +121,7 @@ public class Result_Voting_Panel : MonoBehaviour
                 Setup();
                 tmp_resultTexts[2].SetActive(true);
                 _network.setPlayerToGhost(m_reference.getPhotonIDbyActorID(mostVoted.Key));
-                _network.setPlayerMovement(true);
-                //timeGame_object.beginTimer();
-
-            }
-            
+            }            
         }
         else if (m_reference.getCurrentStage() == 1)
         {
@@ -163,9 +149,7 @@ public class Result_Voting_Panel : MonoBehaviour
                 img_votedPlayer.sprite = sp;
                 Invoke("setPreChoiceActive", 0.5f); tmp_resultTexts[1].SetActive(true);
             }
-           
         } // else (stage 1)
-        //svl[i].setClassValues(item.Value, item.Key, i);//set (color, id, index) of buttons
     }
     public void setPreChoiceActive()
     {

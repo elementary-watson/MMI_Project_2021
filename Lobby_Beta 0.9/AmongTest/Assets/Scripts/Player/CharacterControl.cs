@@ -23,7 +23,11 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
     [SerializeField] Main_Console_Script mainConsole_object;
     [SerializeField] string currentTask;
     [SerializeField] Game_Info_Script gInfoScript_object;
+    [SerializeField] bool canInteract;
+    [SerializeField] Image img_active;
+    [SerializeField] Image img_inactive;
 
+    #region getta/setta
     public void resetTask()
     {
         currentTask = "null";
@@ -54,21 +58,9 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
     {
         this.gInfoScript_object = gInfoScript_object;
     }
-    public void setPosition() 
+    public void toggleInteractFunction(bool canInteract)
     {
-        RectTransform rt = (RectTransform)interactIcon.transform;
-        float xValue = (float)(Screen.width * 0.75 - rt.rect.width * 0.5);
-        float yValue = (float)(Screen.height * 0.1 + rt.rect.height * 0.5);
-        //Vector3 icon_position = new Vector3(cam.WorldToViewportPoint())
-        interactIcon.transform.position = new Vector2(xValue,yValue);
-    }
-    public void resetPosition()
-    {
-        RectTransform rt = (RectTransform)interactIcon.transform;
-        float xValue = (float)(Screen.width*2);
-        float yValue = (float)(Screen.height*2);
-        //Vector3 icon_position = new Vector3(cam.WorldToViewportPoint())
-        interactIcon.transform.position = new Vector2(xValue,yValue);
+            this.canInteract = canInteract;
     }
     public float getIncrementPower()
     {
@@ -81,23 +73,48 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
     public int getActorID()
     {
         return actorID;
-    }    
+    }
     public void setActorID(int actorID)
     {
         this.actorID = actorID;
     }
+    public void setInteractImages(Image img_active, Image img_inactive) { this.img_active = img_active; this.img_inactive = img_inactive; }
 
     void Start()
     {
+        canInteract = true;
         if (cam == null)
             cam = Camera.main;
 
-        if (photonView.IsMine) 
+        if (photonView.IsMine)
         {
             incrementTaskPower = m_reference.getPlayerIncrementPower();
             anim = GetComponent<Animator>();
         }
     }
+    #endregion
+
+    public void setPosition() 
+    {
+        img_active.enabled = true;
+        img_inactive.enabled = false;
+        /*RectTransform rt = (RectTransform)interactIcon.transform;
+        float xValue = (float)(Screen.width * 0.75 - rt.rect.width * 0.5);
+        float yValue = (float)(Screen.height * 0.1 + rt.rect.height * 0.5);
+        //Vector3 icon_position = new Vector3(cam.WorldToViewportPoint())
+        interactIcon.transform.position = new Vector2(xValue,yValue);*/
+    }
+    public void resetPosition()
+    {
+        img_active.enabled = false;
+        img_inactive.enabled = true;
+        /*RectTransform rt = (RectTransform)interactIcon.transform;
+        float xValue = (float)(Screen.width*2);
+        float yValue = (float)(Screen.height*2);
+        //Vector3 icon_position = new Vector3(cam.WorldToViewportPoint())
+        interactIcon.transform.position = new Vector2(xValue,yValue);*/
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
@@ -179,8 +196,6 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
         }
     }
 
-
-
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (photonView.IsMine)
@@ -240,22 +255,24 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
             {
                 foreach (RaycastHit2D rc in hits)
                 {
-                    if (rc.transform.GetComponent<Interactable>()) // Checkt nach Task Collidern
+                    if (canInteract)
                     {
-                        rc.transform.GetComponent<Interactable>().Interact();
-                        mcs_object.resetTargetImages();
-                        currentTask = mainConsole_object.getCurrentTask();
-                        CloseInteractableIcon();
-                        mcs_object.setTargetRoom(currentTask);
-                        gInfoScript_object.shortNotification("goCenter");
-                        return;
-                    }
-                    else if (rc.transform.GetComponent<BoxCollider2D>().CompareTag("Tag_MainConsole")) // Main-Console
-                    {
-                        currentTask = mainConsole_object.Interact();
-                        mcs_object.resetTargetImages();
-                        mcs_object.setTargetRoom(currentTask);
-                        gInfoScript_object.shortNotification("goTask");
+                        if (rc.transform.GetComponent<Interactable>()) // Checkt nach Task Collidern
+                        {
+                            rc.transform.GetComponent<Interactable>().Interact();
+                            mcs_object.resetTargetImages();
+                            currentTask = mainConsole_object.getCurrentTask();
+                            mcs_object.setTargetRoom(currentTask);
+                            gInfoScript_object.shortNotification("goCenter");
+                            return;
+                        }
+                        else if (rc.transform.GetComponent<BoxCollider2D>().CompareTag("Tag_MainConsole")) // Main-Console
+                        {
+                            currentTask = mainConsole_object.Interact();
+                            mcs_object.resetTargetImages();
+                            mcs_object.setTargetRoom(currentTask);
+                            gInfoScript_object.shortNotification("goTask");
+                        }
                     }
                 }
             }

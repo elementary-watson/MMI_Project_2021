@@ -17,6 +17,8 @@ public class Multiplayer_Reference : MonoBehaviour
     private int ghostIncrementPower;
     private int saboteurActorID;
     private IDictionary<int, string> allplayers = new Dictionary<int, string>();
+    private IDictionary<int, float> allPlayerScores = new Dictionary<int, float>();
+    private IDictionary<int, int> allPlayerTasks = new Dictionary<int, int>();
     private IDictionary<int, string> kickedplayers = new Dictionary<int, string>();
     private IDictionary<int, int> allPhotonplayers = new Dictionary<int, int>();
 
@@ -29,7 +31,7 @@ public class Multiplayer_Reference : MonoBehaviour
     List<string> RandomColorList;
 
     List<string> AllTasksList = new List<string> { // XOF AMIR
-        "Tag_LeverEnergy","Tag_LeverEnergy","Tag_WaterDispenser", "Tag_Game", "Tag_NumberRadio", 
+        "Tag_WaterDispenser", "Tag_Game", "Tag_NumberRadio", 
         "Tag_NumberBox", "Tag_ElectricBox", "Tag_ClickCabinet",
         "Tag_Fillgauge", "Tag_EnergyNumber", "Tag_LeverEnergy", 
         "Tag_ClickMediKit", "Tag_Sink", "Tag_Tablet", 
@@ -44,7 +46,7 @@ public class Multiplayer_Reference : MonoBehaviour
         "Tag_ComputerLabor", "Tag_LaborSingleTube", "Tag_ClickLabor"
     };
 
-    int nextTaskIndex;
+    
 
     public IDictionary<int, string> getKickedplayers()
     {
@@ -55,7 +57,8 @@ public class Multiplayer_Reference : MonoBehaviour
         if (!kickedplayers.Keys.Contains(id))
             kickedplayers.Add(id, charname);
     }
-
+    
+    int nextTaskIndex;
     public string getNextTask()
     {
         if(AllTasksList.Count == (nextTaskIndex + 1))
@@ -80,6 +83,24 @@ public class Multiplayer_Reference : MonoBehaviour
             playerIncrementPower = 10;
             ghostIncrementPower = playerIncrementPower / 4;
         }
+
+        List<string> AllTasksList = new List<string> {  "Tag_WaterDispenser", "Tag_Game", "Tag_NumberRadio",
+        "Tag_NumberBox", "Tag_ElectricBox", "Tag_ClickCabinet",
+        "Tag_Fillgauge", "Tag_EnergyNumber", "Tag_LeverEnergy",
+        "Tag_ClickMediKit", "Tag_Sink", "Tag_Tablet",
+        "Tag_ComputerLabor", "Tag_LaborSingleTube", "Tag_ClickLabor" };
+
+        var count = AllTasksList.Count;
+        var last = count - 1;
+        for (var i = 0; i < last; ++i)
+        {
+            var r = UnityEngine.Random.Range(i, count);
+            var tmp = AllTasksList[i];
+            AllTasksList[i] = AllTasksList [r];
+            AllTasksList [r] = tmp;
+        }
+        this.AllTasksList = AllTasksList;
+
     }
     public void setPlayers(IDictionary<int, string> allplayers)
     {
@@ -90,16 +111,17 @@ public class Multiplayer_Reference : MonoBehaviour
         return allplayers;
     }    
 
-
     public bool addPlayer(int id, string charname, int maxPlayers)
     {
         if (!allplayers.Keys.Contains(id))
         {
             allplayers.Add(id, charname);
             numberOfPlayer += 1;
-        }            
-        if (numberOfPlayer == maxPlayers) // Wird nur vom letzten "maxplayer" ausgeführt
+        }
+        if (numberOfPlayer == maxPlayers) { // Wird nur vom letzten "maxplayer" ausgeführt
+            print("addPLayer was max with id:" + id + "and maxplayer " + maxPlayers);
             return true;
+        }
         return false;
     }    
 
@@ -132,14 +154,45 @@ public class Multiplayer_Reference : MonoBehaviour
         }
         return -1;
     }
+
+    public IDictionary<int, float> getAllPlayerScores()
+    {
+        return allPlayerScores;
+    }
+
+    public bool addAllPlayerScores(int id, float playerScorePoints, int maxPlayers)
+    {
+        if (!allPlayerScores.Keys.Contains(id))
+        {
+            allPlayerScores.Add(id, playerScorePoints);
+            numberOfPlayer += 1;
+        }
+        if (numberOfPlayer == maxPlayers) // Wird nur vom letzten "maxplayer" ausgeführt
+            return true;
+        return false;
+    }
+
+    public IDictionary<int, int> getAllPlayerTasks()
+    {
+        return allPlayerTasks;
+    }
+
+    public bool addAllPlayerTasks(int id, int playerTasks, int maxPlayers)
+    {
+        if (!allPlayerTasks.Keys.Contains(id))
+        {
+            allPlayerTasks.Add(id, playerTasks);
+            numberOfPlayer += 1;
+        }
+        if (numberOfPlayer == maxPlayers) // Wird nur vom letzten "maxplayer" ausgeführt
+            return true;
+        return false;
+    }
+
     //Diese Methode ist zur Platzierung der Spieler um die Hauptkonsole da
     public Vector3 setupPositions(int actorId) // Logik arbeitet mit INDEX Werten vom Vektor3 Array und Farben Array.   
     { //Farben werden vorher gemischt-Jeder Spieler hat eigene Farbe- Die position der Farbe bestimmt die anschließende Vector3 position
-        foreach (string item in RandomColorList)
-        {
-            print("" + item);
-        }
-        print("SetupPos Called");
+
         foreach(KeyValuePair<int, string> kvp in allplayers) // suche nach spielerfarbe
         {
             if(kvp.Key == actorId) // wenn id gefunden kann spielerposition in randomcolorlist gesucht werden um die INDEX 
@@ -148,7 +201,6 @@ public class Multiplayer_Reference : MonoBehaviour
                 {
                     if(kvp.Value == RandomColorList[i])
                     {
-                        print("Found Position for " + kvp.Value + " at pos " + i);
                         return spawnPositions[i]; // an der I-ten Stelle gefunden und gleiche stelle für player reservieren!
                     }
                 }

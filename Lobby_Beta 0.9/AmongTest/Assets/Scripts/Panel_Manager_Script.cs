@@ -50,18 +50,16 @@ public class Panel_Manager_Script : MonoBehaviour
         {
             print("Next stage");
             s9_votetimerPanel.SetActive(false);
-            if (m_reference.getCurrentStage() == 1)
+            if (m_reference.getCurrentStage() == 1) // CALL ChatPanel
             {
                 m_reference.setCurrentStage(2);
                 stagePanel_object.switchOnNextstage(); //start the stage panel
-                chat_panel.SetActive(true); //reihenfolge beachten!!
+                chat_panel.SetActive(true); 
                 voting_panel.SetActive(false);
                 result_VotingPanel.SetActive(false);
             }
             else if (m_reference.getCurrentStage() == 3)
             {
-                //Panel_Voting_Logic pvl = voting_panel.GetComponent<Panel_Voting_Logic>();
-                //pvl.enableButtons(); // Button-Votes erlauben
                 print("enter third stage");
                 
                 if (m_reference.getMaxRounds() == 5)//BestofFive
@@ -72,7 +70,7 @@ public class Panel_Manager_Script : MonoBehaviour
                 {
                     thirdPhase(2);
                 }
-                Invoke("closeVoting", 3);
+                //Invoke("closeVoting", 3);
                 //Summary_Panel.SetActive(true);
             }
         }
@@ -103,8 +101,7 @@ public class Panel_Manager_Script : MonoBehaviour
     void thirdPhase(int maxrounds)
     {
         // INFO: Die Spielrunden werden nur hier erhöht!
-        // Sobald Result_Vote_Script fertig ist geht dieses script die endphase durch
-
+        // Sobald Result_Vote_Script fertig ist gibt dieses script die endphase durch
         print("ThirdPhasecalled");
         if (_network.getIsGameOver()) // check wenn saboteur gekickt wurde!!
         {

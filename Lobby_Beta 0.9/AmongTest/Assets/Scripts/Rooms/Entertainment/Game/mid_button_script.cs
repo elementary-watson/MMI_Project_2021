@@ -22,6 +22,8 @@ public class mid_button_script : MonoBehaviour
     {
         img_midBtn.sprite = neutral;
         btn_mid.interactable = false;
+        ss.disabledSprite = neutral;
+        btn_mid.spriteState = ss;
     }
     public void setup(int order)
     {

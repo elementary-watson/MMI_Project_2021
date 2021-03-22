@@ -15,7 +15,7 @@ public class Countdown_Timer : MonoBehaviour
     [SerializeField] private Panel_Manager_Script p_manager;
     public AudioSource voting_countdown_sound;
     int isFinished=0;
-    private float currentTime;
+    [SerializeField] private float currentTime;
     private bool updateTime;
 
     private void Start()

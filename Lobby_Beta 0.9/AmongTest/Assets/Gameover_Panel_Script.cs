@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
+using TMPro;
+using System;
 
 public class Gameover_Panel_Script : MonoBehaviour
 {
@@ -11,13 +14,32 @@ public class Gameover_Panel_Script : MonoBehaviour
     [SerializeField] Image img_crewmateTotalwin;
     [SerializeField] Image img_saboteurWin;
     [SerializeField] Image img_draw;
+
+    [SerializeField] GameObject rank_element;
+    [SerializeField] Transform trfm_content_rankElements;
     // Start is called before the first frame update
 
+    public IDictionary<int, int> allplayerTasks;
+    public IDictionary<int, float> allPlayerScores;
+    public IDictionary<int, string> allPlayers;
+
+    void Start()
+    {
+        /*
+        GameObject rankElement = Instantiate(rank_element, trfm_content_rankElements, false);
+        Canvas.ForceUpdateCanvases();
+        trfm_content_rankElements.transform.parent.GetParentComponent<ScrollRect>().verticalNormalizedPosition = 0;
+
+        TextMeshProUGUI[] tmp_columns = rankElement.GetComponentsInChildren<TextMeshProUGUI>();
+        tmp_columns[0].text = "a";
+        tmp_columns[1].text = "b";
+        tmp_columns[2].text = "c";
+        tmp_columns[3].text = "d";
+        */
+    }
 
     public void setup(bool caught, bool final)
     {
-
-
         if (caught)
         {            
             img_crewmateTotalwin.enabled = true;
@@ -25,7 +47,6 @@ public class Gameover_Panel_Script : MonoBehaviour
         else 
         {
             int highPoints;
-
             int maxrounds = m_reference.getMaxRounds();
             if (maxrounds == 5)
                 highPoints = 3;
@@ -40,16 +61,81 @@ public class Gameover_Panel_Script : MonoBehaviour
                 img_draw.enabled = true;
             }
         }
+        _network.RPC_buildStatistics();
     }
-
-    void Start()
+    public void createTable()
     {
+        allPlayerScores = m_reference.getAllPlayerScores();
+        allplayerTasks =  m_reference.getAllPlayerTasks();
+        allPlayers = m_reference.getPlayers();
+        string[] playerRankingChains = new string[allplayerTasks.Count];
         
+        float findBiggest = 0;
+        int[] orderOfPlayer = new int[allPlayers.Count];
+        int[] scoreOfPlayer = new int[allPlayers.Count];
+        int temp;
+        int temp2;
+
+        for (int i = 0; i < scoreOfPlayer.Length - 1; i++)
+        { 
+            for (int j = i + 1; j < scoreOfPlayer.Length; j++) { 
+                if (scoreOfPlayer[i] < scoreOfPlayer[j])
+                {
+                    temp = scoreOfPlayer[i];
+                    temp2 = orderOfPlayer[i];
+
+                    scoreOfPlayer[i] = scoreOfPlayer[j];
+                    orderOfPlayer[i] = orderOfPlayer[j];
+
+                    scoreOfPlayer[j] = temp;
+                    orderOfPlayer[i] = temp2;
+                }
+            }
+        }
+        foreach (int value in scoreOfPlayer)
+        {
+            print("Print scores: " + value);
+        }
+        int k = 0;
+        
+        foreach (KeyValuePair<int, string> kvp in allPlayers) // für jeden Player
+        {
+            foreach (KeyValuePair<int, float> innerkvp in allPlayerScores) // jeder player score
+            {
+                if (findBiggest < innerkvp.Value) 
+                { 
+                    findBiggest = innerkvp.Value;
+                    orderOfPlayer[k] = innerkvp.Key;
+                }
+            }
+            k++;                
+        }
+        for (int j = 0; j < allPlayers.Count; j++)
+        {
+            playerRankingChains[j] = orderOfPlayer[j] + "-" + allPlayers[orderOfPlayer[j]] + "-" + allplayerTasks[orderOfPlayer[j]] + "-" + allPlayerScores[orderOfPlayer[j]];
+            createRankElement(playerRankingChains[j]);
+        }
+        
+
+        //var sortedDict = from entry in allPlayerScores orderby entry.Value descending select entry;
+        //var top5 = allPlayerScores.(pair => pair.Value).Take(5);
     }
-
-    // Update is called once per frame
-    void Update()
+    public void createRankElement(string playerRankingChains)
     {
-        
+        String[] parts = playerRankingChains.Split('-');
+
+        GameObject rankElement = Instantiate(rank_element, trfm_content_rankElements, false);
+        Canvas.ForceUpdateCanvases();
+        trfm_content_rankElements.transform.parent.GetParentComponent<ScrollRect>().verticalNormalizedPosition = 0;
+
+        float scorePoints = _network.getScorePoints();
+        int numOfTask = _network.getNumberOfTasks();
+
+        TextMeshProUGUI[] tmp_columns = rankElement.GetComponentsInChildren<TextMeshProUGUI>();
+        //rankElement.GetComponentInChildren
+        tmp_columns[0].text = parts[0];
+        tmp_columns[1].text = parts[1];
+        tmp_columns[2].text = parts[2];
+        tmp_columns[3].text = parts[3];
     }
 }

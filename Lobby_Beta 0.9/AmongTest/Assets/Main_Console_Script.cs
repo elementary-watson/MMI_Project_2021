@@ -11,8 +11,6 @@ public class Main_Console_Script : MonoBehaviour
     [SerializeField] SpriteRenderer[] the_active_state = new SpriteRenderer[0];
     [SerializeField] bool isInteractable;
     [SerializeField] BoxCollider2D[] mainCollider = new BoxCollider2D[0];
-
-
     void Start()
     {
         Reset();

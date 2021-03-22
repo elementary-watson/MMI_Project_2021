@@ -61,23 +61,26 @@ public class Network : MonoBehaviourPunCallbacks
     [SerializeField] GameObject Callmeeting_Panel;
     [SerializeField] CallMeeting_Script callMeeting_object;
     [SerializeField] private bool isGameOver;
-    private string RPC_timestamp; //XOF Zum Loggen der Daten
+    [SerializeField] private string RPC_timestamp; //XOF Zum Loggen der Daten
     public Progressbar_Script prog_reference;
     public Multiplayer_Reference m_reference;
+    [SerializeField] Gameover_Panel_Script gameOver_object;
 
     [Header("Spieler Variablen")]
-    IDictionary<int, string> listOfSuspects = new Dictionary<int, string>();
-    IDictionary<int, string> listOfVotekicks = new Dictionary<int, string>();
-    private Vector3 spawnPositions;
+    [SerializeField] IDictionary<int, string> listOfSuspects = new Dictionary<int, string>();
+    [SerializeField] IDictionary<int, string> listOfVotekicks = new Dictionary<int, string>();
+    [SerializeField] private Vector3 spawnPositions;
     GameObject spawnedPlayerObject; //Spieler Prefab
     List<string> randomColorList;
     private string myPlayerColorPrefab;
     private string myPlayerColorFilename;
     [SerializeField] private bool isSaboteur; //Wichtige Variable
     [SerializeField] private bool isGhost; //Wichtige Variable    
-    [SerializeField] int playerScorepoints; //XOF Punktzahl der spieler
+    [SerializeField] float playerScorepoints; //XOF Punktzahl der spieler
+    [SerializeField] int numberOfTask; //XOF Punktzahl der spieler
     [SerializeField] string myCurrentTask; //XOF meine Task
-
+    [SerializeField] Image img_active;
+    [SerializeField] Image img_inactive;
 
     private void Start()
     {
@@ -112,7 +115,7 @@ public class Network : MonoBehaviourPunCallbacks
 
     public void setIsGameOver(bool isGameOver) {this.isGameOver = isGameOver;}    
     public bool getIsGameOver() {return isGameOver;}
-    public void addSuspectToList(int stage, int gameround, string playerColor)
+    public void addSuspectToList(int gameround, string playerColor)
     {
         string value = gameround + " " + playerColor;
         // Runde pre/post Brown/Rot/Blau
@@ -124,7 +127,8 @@ public class Network : MonoBehaviourPunCallbacks
         // Runde pre/post Brown/Rot/Blau
         listOfVotekicks.Add(gameround, value);
     }
-
+    public float getScorePoints() { return playerScorepoints; }
+    public int getNumberOfTasks() { return numberOfTask; }
     #endregion
 
     #region Chatfunctions
@@ -249,6 +253,7 @@ public class Network : MonoBehaviourPunCallbacks
 
             if (PhotonNetwork.CurrentRoom.PlayerCount == maxPlayersOfRoom)
             {
+                print("MaxPlayer has arrived");
                 PhotonNetwork.CurrentRoom.IsOpen = false;
                 //Randomize colors
                 RandomColor();
@@ -306,36 +311,46 @@ public class Network : MonoBehaviourPunCallbacks
         bool isMaxPlayer = m_reference.addPlayer(int.Parse(parts[0]), parts[1].Remove(0, 6), maxPlayersOfRoom);
         if (isMaxPlayer == true) // wenn alle ankommen soll nur EINER den saboteur bestimmen
         {
+            print("Max was true");
             IDictionary<int, string> allplayers = m_reference.getPlayers();
-            int pickTheWizard;
-            for (int j = 0; j< maxPlayersOfRoom; j++)
+            int pickTheWizard = getActorId();
+
+            foreach (KeyValuePair<int, string> kvp in allplayers)
             {
-                
+                if (pickTheWizard < kvp.Key)
+                {
+                    pickTheWizard = kvp.Key;
+                    print("Bigger wizard: " + kvp.Key);
+                }
             }
-            setupMultiplayerGame();
+            setupMultiplayerGame(pickTheWizard);
         }
             
         print("DICT ID: " + int.Parse(parts[0]) + " Color" + parts[1].Remove(0, 6));
     }
-    public void setupMultiplayerGame() //wird nur einmal vom letzten playerausgeführt
+    public void setupMultiplayerGame(int wizard) //wird nur einmal vom letzten playerausgeführt
     {
-        // XOF hier wird der Saboteur erstellt
-        IDictionary<int, string> allplayers = m_reference.getPlayers();
-        int rand = UnityEngine.Random.Range(0, allplayers.Count);
-        int i = 0;
-        int saboteurID = -1;
-        print("setupMultiPlayer Rand:" + rand + " numOfplayers: " + allplayers.Count);
-        foreach (KeyValuePair<int, string> kvp in allplayers)
+        if(getActorId() == wizard)
         {
-            print("PRINTEN: " + kvp.Key + " mit Farbe " + kvp.Value);
-            if (rand == i)
+            // XOF hier wird der Saboteur erstellt
+            IDictionary<int, string> allplayers = m_reference.getPlayers();
+            int rand = UnityEngine.Random.Range(1, allplayers.Count + 1);
+            //int i = 1;
+            int saboteurID = -1;
+            print("setupMultiPlayer Rand:" + rand + " numOfplayers: " + allplayers.Count);
+            foreach (KeyValuePair<int, string> kvp in allplayers)
             {
-                saboteurID = kvp.Key;
-                print("Key Id was picked for Sab.: " + kvp.Key);
+                print("PRINTEN: " + kvp.Key + " mit Farbe " + kvp.Value);
+                if (rand == kvp.Key)
+                {
+                    saboteurID = kvp.Key;
+                    print("Key Id was picked for Sab.: " + kvp.Key);
+                }
             }
+            setPlayerSpawnPosition();
+            photonView.RPC("RPC_setupMultiplayerGame", RpcTarget.All, saboteurID);
         }
-        setPlayerSpawnPosition();
-        photonView.RPC("RPC_setupMultiplayerGame", RpcTarget.All, saboteurID);
+               
     }
 
     [PunRPC]
@@ -391,8 +406,7 @@ public class Network : MonoBehaviourPunCallbacks
         if (test2 == m_reference.getNumberOfPlayer())
         {
             SpawnPlayer();
-        }
-        
+        }        
     }
     private void SpawnPlayer()
     {
@@ -401,7 +415,7 @@ public class Network : MonoBehaviourPunCallbacks
         cc.interactIcon = useindicator;
         cc.setMCSScript(msc_object);
         cc.setMultiplayerReference(m_reference);
-        //cc.resetPosition();
+        cc.setInteractImages(img_active, img_inactive);
         cc.setActorID(PhotonNetwork.LocalPlayer.ActorNumber);
         cc.setMainConsoleScript(mainConsole_object);
         cc.setGameInfoScript(gInfoScript_object);
@@ -454,10 +468,10 @@ public class Network : MonoBehaviourPunCallbacks
         {
             chain = chain + item + "-";
         }
-        photonView.RPC("senColorPositionForMultiplayer", RpcTarget.All, chain);
+        photonView.RPC("sentColorPositionForMultiplayer", RpcTarget.All, chain);
     }
     [PunRPC]
-    public void senColorPositionForMultiplayer(string chain)
+    public void sentColorPositionForMultiplayer(string chain)
     {
         String[] parts = chain.Split('-');
         List<string> setColorPosition = parts.ToList();
@@ -497,16 +511,22 @@ public class Network : MonoBehaviourPunCallbacks
     public void RPC_resetPlayerPosition()
     {
         spawnedPlayerObject.transform.position = spawnPositions;
-        spawnedPlayerObject.GetComponent<CharacterControl>().resetTask();
+        spawnedPlayerObject.GetComponent<CharacterControl>().resetTask();        
     }
     public void setPlayerMovement(bool canWalk)
     {
         print(canWalk);
         Player_Movement pm_object = spawnedPlayerObject.GetComponent<Player_Movement>();
-        if (canWalk)
+        if (canWalk) 
+        {
             pm_object.enableMovementSpeed();
+            spawnedPlayerObject.GetComponent<CharacterControl>().toggleInteractFunction(true);
+        }
         else
+        {
             pm_object.disableMovementSpeed();
+            spawnedPlayerObject.GetComponent<CharacterControl>().toggleInteractFunction(false);
+        }
     }
     public void getNextTask()
     {
@@ -532,6 +552,13 @@ public class Network : MonoBehaviourPunCallbacks
     {
         print("DEBUG: IncrementProgress was called");
         photonView.RPC("incrementTaskprogressNetwork", RpcTarget.All, spawnedPlayerObject.GetComponent<CharacterControl>().getIncrementPower());
+
+        float addScore = spawnedPlayerObject.GetComponent<CharacterControl>().getIncrementPower();
+
+        if (isSaboteur)
+            addScore = addScore + -1;
+        playerScorepoints += addScore;
+        numberOfTask += 1;
     }
     [PunRPC]
     public void incrementTaskprogressNetwork(float increment)
@@ -556,24 +583,28 @@ public class Network : MonoBehaviourPunCallbacks
             m_reference.setSaboteurPoints(m_reference.getSaboteurPoints() + 1);
         }
     }
-    public void callMeeting()
+    public void callMeeting(bool isCrewmate)
     {
-        photonView.RPC("RPC_callMeeting", RpcTarget.All, getActorId());
+        photonView.RPC("RPC_callMeeting", RpcTarget.All, getActorId(), isCrewmate);
     }
     [PunRPC]
-    public void RPC_callMeeting(int actorID)
+    public void RPC_callMeeting(int actorID, bool isCrewmate)
     {
         print("outer" + actorID);
         if(actorID == getActorId())
         {
             print("Inner: " + getActorId());
             Callmeeting_Panel.SetActive(true);
-            callMeeting_object.setup();
+            callMeeting_object.setup(isCrewmate);
         }
     }
     public void callSubmitVote(bool isSubmitted, string playerColor, int photonActorID, int indexPosition)
     {
-        addVotekickToList(m_reference.getGameRound(), playerColor); // in die votekickliste speichern
+        if (m_reference.getCurrentStage()==1)         
+            addSuspectToList(m_reference.getGameRound(), playerColor);        
+        else if(m_reference.getCurrentStage() == 3)
+            addVotekickToList(m_reference.getGameRound(), playerColor); // in die votekickliste speichern
+
         photonView.RPC("submitAllPlayers", RpcTarget.All, isSubmitted, playerColor, photonActorID, indexPosition);
     }
 
@@ -648,6 +679,27 @@ public class Network : MonoBehaviourPunCallbacks
 
     #endregion
 
+    #region endGame
+    bool allScoresDone = false;
+    bool allTasksDone = false;
+
+    public void RPC_buildStatistics()
+    {
+        photonView.RPC("buildStatistics", RpcTarget.All);
+    }
+    [PunRPC]
+    public void buildStatistics()
+    {
+        print("buildStatistics called");
+        allScoresDone = m_reference.addAllPlayerScores(getActorId(), getScorePoints(), maxPlayersOfRoom);
+        allTasksDone = m_reference.addAllPlayerTasks(getActorId(), getNumberOfTasks(), maxPlayersOfRoom);
+        if(allScoresDone == true && allTasksDone == true)
+        {
+            gameOver_object.createTable();
+        }
+    }
+    #endregion
+
     #region leaveLobby/LobbyJoinFail
     //XOF Funktion der Methode unbekannt. Steht in Relation mit Lobbyraum verlassen
     public void OnPhotonPlayerDisconnected()
@@ -714,6 +766,7 @@ public class Network : MonoBehaviourPunCallbacks
             {
                 print("QUIT: Saboteur left the game, reset?");
             }
+            maxPlayersOfRoom -= 1; 
             photonView.RPC("RoomPlayerLeave", RpcTarget.All, PhotonNetwork.NickName.ToString());
             photonView.RPC("RefreshPlayerNumberOnLeave", RpcTarget.All);
 
@@ -752,8 +805,6 @@ public class Network : MonoBehaviourPunCallbacks
     }
 
     #endregion
-
-
 
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)

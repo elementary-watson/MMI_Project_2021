@@ -38,8 +38,8 @@ public class Progressbar_Script : MonoBehaviour
     {
         _network.resetPlayerPosition();
         _network.setPlayerMovement(false);
-        _network.setScoreOfRound(isCrewmate);
-        _network.callMeeting();
+        _network.setScoreOfRound(isCrewmate); // false - saboteur kriegt punkt
+        _network.callMeeting(isCrewmate);
     }
     public void stopProgressbar()
     {

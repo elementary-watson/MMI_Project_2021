@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class MainSkriptGame : MonoBehaviour
 {
-    string fourLetters;
+    [SerializeField] string fourLetters;
     List<string> randomLetterList;
     List<string> randomLetterforTaskList;
     List<string> fourLetterList;
@@ -34,7 +34,7 @@ public class MainSkriptGame : MonoBehaviour
     public AudioSource taskfin_sound;
     public AudioSource switchfin_sound;
     public AudioSource shoot_sound;
-    int targetPosition;
+    [SerializeField] int targetPosition;
     [SerializeField] Network _network;
     // Start is called before the first frame update
     void Start()
@@ -64,7 +64,7 @@ public class MainSkriptGame : MonoBehaviour
         for (int i = 0; i < 3; i++)
         { midButtons[i].Reset(); }
         currentPosition = 0;
-        minigameContainer.SetActive(false);
+        //minigameContainer.SetActive(false);
         
         for (int i = 0; i < 10; i++)
         {
@@ -236,9 +236,9 @@ public class MainSkriptGame : MonoBehaviour
     private void taskfinished()
     {
         winText.SetActive(true);
-        _network.incrementTaskprogress();
-        taskfin_sound.Play();
         setup();
+        _network.incrementTaskprogress();
+        taskfin_sound.Play();        
         GamePanel.SetActive(false);
     }
     #endregion
