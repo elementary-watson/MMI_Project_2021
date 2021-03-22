@@ -18,7 +18,7 @@ public class Single_Fillgauge_Task : MonoBehaviour, IPointerDownHandler, IPointe
     float start = 0.15f;
     float end = 0.90f;
     int randomValue;
-    public AudioSource switchfin_sound;
+    [SerializeField] AudioSource switchfin_sound;
     public void OnPointerDown(PointerEventData eventData)
     {
         pointerDown = true;
@@ -31,17 +31,26 @@ public class Single_Fillgauge_Task : MonoBehaviour, IPointerDownHandler, IPointe
             print("pointup");
             print(randomValue);
             print("Current: " + current);
-            if (current > 0.30f && current < 0.40f && randomValue == 0)
+            if (current > 0.28f && current < 0.42f && randomValue == 0)
             {
-                isInteractable = false; disableBtn(); switchfin_sound.Play(); mft_object.setCurrent();
+                isInteractable = false; 
+                disableBtn(); 
+                switchfin_sound.Play(); 
+                mft_object.setCurrent();
             }
-            else if (current > 0.55f && current < 0.65f && randomValue == 1)
+            else if (current > 0.50f && current < 0.7f && randomValue == 1)
             {
-                isInteractable = false; disableBtn(); switchfin_sound.Play(); mft_object.setCurrent();
+                isInteractable = false; 
+                disableBtn(); 
+                switchfin_sound.Play(); 
+                mft_object.setCurrent();
             }
-            else if (current > 0.80f && current < 0.90f && randomValue == 2)
+            else if (current > 0.80f && current < 1f && randomValue == 2)
             {
-                isInteractable = false; disableBtn(); switchfin_sound.Play(); mft_object.setCurrent();
+                isInteractable = false; 
+                disableBtn(); 
+                switchfin_sound.Play(); 
+                mft_object.setCurrent();
             }
         }
         Reset();        

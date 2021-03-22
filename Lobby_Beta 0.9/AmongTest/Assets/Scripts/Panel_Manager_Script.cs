@@ -61,15 +61,9 @@ public class Panel_Manager_Script : MonoBehaviour
             else if (m_reference.getCurrentStage() == 3)
             {
                 print("enter third stage");
-                
-                if (m_reference.getMaxRounds() == 5)//BestofFive
-                { 
-                    thirdPhase(3);
-                }
-                else if (m_reference.getMaxRounds() == 2) //BestofThree 
-                {
-                    thirdPhase(2);
-                }
+                _network.RPC_checkForGameOver();
+                //das folgende in eine neue methode
+
                 //Invoke("closeVoting", 3);
                 //Summary_Panel.SetActive(true);
             }
@@ -93,17 +87,25 @@ public class Panel_Manager_Script : MonoBehaviour
             second_9s_Timer_Panel.SetActive(true);
         }
     }
-    public void closeVoting()
+    public void checkVotingResult(bool isGameOver) // wird nach rpc network checkForGameOver() gerufen
     {
+        if (m_reference.getMaxRounds() == 5)//BestofFive
+        {
+            thirdPhase(isGameOver, 3);
+        }
+        else if (m_reference.getMaxRounds() == 2) //BestofThree 
+        {
+            thirdPhase(isGameOver, 2);
+        }
         result_VotingPanel.SetActive(false);
         voting_panel.SetActive(false);
     }
-    void thirdPhase(int maxrounds)
+    void thirdPhase(bool isGameOver, int maxrounds)
     {
         // INFO: Die Spielrunden werden nur hier erhöht!
         // Sobald Result_Vote_Script fertig ist gibt dieses script die endphase durch
         print("ThirdPhasecalled");
-        if (_network.getIsGameOver()) // check wenn saboteur gekickt wurde!!
+        if (isGameOver) // check wenn saboteur gekickt wurde!!
         {
             print("FINAL: Saboteur was kicked");
             int currentGameRound = m_reference.getGameRound();
@@ -114,7 +116,8 @@ public class Panel_Manager_Script : MonoBehaviour
             Stage_Panel.SetActive(false);
             Summary_Panel.SetActive(true);
             SummaryP_object.setNextMode(true, true); //caught - final
-
+            result_VotingPanel.SetActive(false);
+            voting_panel.SetActive(false);
         }
         else if (m_reference.getSaboteurPoints() == maxrounds || m_reference.getCrewPoints() == maxrounds) // Spiel vorbei und letztes Voting
         {
@@ -127,6 +130,8 @@ public class Panel_Manager_Script : MonoBehaviour
             Stage_Panel.SetActive(false);
             Summary_Panel.SetActive(true);
             SummaryP_object.setNextMode(false, true); //escaped - final
+            result_VotingPanel.SetActive(false);
+            voting_panel.SetActive(false);
             // summary rufen und dann game over
             //Last vote
             //Spiel endet gewinner bildschirm und forschungsfrage!
@@ -144,6 +149,8 @@ public class Panel_Manager_Script : MonoBehaviour
             Player_Panel.SetActive(true);
             Summary_Panel.SetActive(true);// summary rufen und dann nächste runde
             SummaryP_object.setNextMode(false, false); //escaped - nextRound
+            result_VotingPanel.SetActive(false);
+            voting_panel.SetActive(false);
         }
     }
 

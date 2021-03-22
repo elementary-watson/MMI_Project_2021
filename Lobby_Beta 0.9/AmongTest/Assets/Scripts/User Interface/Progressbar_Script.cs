@@ -27,7 +27,7 @@ public class Progressbar_Script : MonoBehaviour
     {
         float fillamount = (float)current / (float)maximum;
         img_progressbar.fillAmount = fillamount;   
-        if(current == 100) // XOF timer einbauen
+        if(current >= maximum) // XOF timer einbauen
         {
             tgs_object.stopTimer();
             current = 0;
@@ -55,7 +55,7 @@ public class Progressbar_Script : MonoBehaviour
     {
         isUseable = true;
         current = 0;
-        maximum = 100;
+        maximum = m_reference.getMaximumProgressbar();
     }
     private void Update()
     {
@@ -69,7 +69,7 @@ public class Progressbar_Script : MonoBehaviour
     public void setTaskprogress(float increment)
     {
         if(isUseable)
-        current += increment*500; //XOF hier wird der wert manipuliert
+        current += increment; //XOF hier wird der wert manipuliert
     }
 
 }

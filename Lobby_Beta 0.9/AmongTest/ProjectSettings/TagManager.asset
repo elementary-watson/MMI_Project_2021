@@ -57,6 +57,10 @@ TagManager:
   - Tag_Sink
   - Tag_ClickMediKit
   - Tag_MainConsole
+  - Tag_NR_no
+  - Tag_NR_so
+  - Tag_NR_sw
+  - Tag_NR_nw
   layers:
   - Default
   - TransparentFX

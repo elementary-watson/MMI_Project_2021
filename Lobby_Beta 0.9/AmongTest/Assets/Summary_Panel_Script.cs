@@ -13,16 +13,14 @@ public class Summary_Panel_Script : MonoBehaviour
     [SerializeField] Multiplayer_Reference m_reference;
     [SerializeField] Time_Game_Script timeGame_object;
     [SerializeField] Game_Info_Script gInfo_script;
+    [SerializeField] Progressbar_Script progBar_script;
     [SerializeField] Image img_CaughtSaboteur;
     [SerializeField] Image img_escapedSaboteur;
     public AudioSource fin_sound;
     bool caught;
     bool final;
     // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+
     public void setNextMode(bool caught, bool final)
     {
         if (caught) // geschnappt und ende des Spiels
@@ -63,6 +61,7 @@ public class Summary_Panel_Script : MonoBehaviour
     {
         Summary_Panel.SetActive(false);
         _network.setPlayerMovement(true);
+        progBar_script.setup();
         timeGame_object.beginTimer();
         // gInfo_script.shortNotification("isGhost");
     }

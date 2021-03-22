@@ -65,6 +65,7 @@ public class Network : MonoBehaviourPunCallbacks
     public Progressbar_Script prog_reference;
     public Multiplayer_Reference m_reference;
     [SerializeField] Gameover_Panel_Script gameOver_object;
+    [SerializeField] Panel_Manager_Script pms_object;
 
     [Header("Spieler Variablen")]
     [SerializeField] IDictionary<int, string> listOfSuspects = new Dictionary<int, string>();
@@ -677,12 +678,30 @@ public class Network : MonoBehaviourPunCallbacks
         }
     }
 
+    public void RPC_checkForGameOver()
+    {
+        photonView.RPC("checkForGameOver", RpcTarget.All, isGameOver);
+    }
+    int timeCheckForGameOver = 0;
+    [PunRPC]
+    public void checkForGameOver(bool isGameOver)
+    {
+        timeCheckForGameOver += 1;
+        if (isGameOver)
+        {
+            setIsGameOver(isGameOver);
+        }
+        if (timeCheckForGameOver == maxPlayersOfRoom)
+        {
+            pms_object.checkVotingResult(getIsGameOver());
+        }
+    }
     #endregion
 
     #region endGame
     bool allScoresDone = false;
     bool allTasksDone = false;
-
+    int statisticsHelper = 0;
     public void RPC_buildStatistics()
     {
         photonView.RPC("buildStatistics", RpcTarget.All);
@@ -690,10 +709,11 @@ public class Network : MonoBehaviourPunCallbacks
     [PunRPC]
     public void buildStatistics()
     {
+        statisticsHelper += 1;
         print("buildStatistics called");
         allScoresDone = m_reference.addAllPlayerScores(getActorId(), getScorePoints(), maxPlayersOfRoom);
         allTasksDone = m_reference.addAllPlayerTasks(getActorId(), getNumberOfTasks(), maxPlayersOfRoom);
-        if(allScoresDone == true && allTasksDone == true)
+        if(statisticsHelper == maxPlayersOfRoom)
         {
             gameOver_object.createTable();
         }

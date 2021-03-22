@@ -20,7 +20,7 @@ public class MainComputer : MonoBehaviour
     [SerializeField] GameObject ComputerPanel;
     [SerializeField] SingleComputer[] s_numbercomputer = new SingleComputer[0];
     [SerializeField] private TextMeshProUGUI[] randomNumberText = new TextMeshProUGUI[0];
-
+    [SerializeField] Network _network;
 
     // Start is called before the first frame update
     void Start()
@@ -124,6 +124,7 @@ public class MainComputer : MonoBehaviour
     private void taskfinished()
     {
         setup();
+        _network.incrementTaskprogress();
         ComputerPanel.SetActive(false);
     }
 }

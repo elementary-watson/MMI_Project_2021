@@ -16,6 +16,7 @@ public class Multiplayer_Reference : MonoBehaviour
     private int saboteurDecrementPower;
     private int ghostIncrementPower;
     private int saboteurActorID;
+    private float progressbarMaximum;
     private IDictionary<int, string> allplayers = new Dictionary<int, string>();
     private IDictionary<int, float> allPlayerScores = new Dictionary<int, float>();
     private IDictionary<int, int> allPlayerTasks = new Dictionary<int, int>();
@@ -46,7 +47,7 @@ public class Multiplayer_Reference : MonoBehaviour
         "Tag_ComputerLabor", "Tag_LaborSingleTube", "Tag_ClickLabor"
     };
 
-    
+
 
     public IDictionary<int, string> getKickedplayers()
     {
@@ -84,11 +85,13 @@ public class Multiplayer_Reference : MonoBehaviour
             ghostIncrementPower = playerIncrementPower / 4;
         }
 
-        List<string> AllTasksList = new List<string> {  "Tag_WaterDispenser", "Tag_Game", "Tag_NumberRadio",
-        "Tag_NumberBox", "Tag_ElectricBox", "Tag_ClickCabinet",
-        "Tag_Fillgauge", "Tag_EnergyNumber", "Tag_LeverEnergy",
-        "Tag_ClickMediKit", "Tag_Sink", "Tag_Tablet",
-        "Tag_ComputerLabor", "Tag_LaborSingleTube", "Tag_ClickLabor" };
+        List<string> AllTasksList = new List<string> {  
+            "Tag_WaterDispenser", "Tag_Game", "Tag_NumberRadio",
+            "Tag_NumberBox", "Tag_ElectricBox", "Tag_ClickCabinet",
+            "Tag_Fillgauge", "Tag_EnergyNumber", "Tag_LeverEnergy",
+            "Tag_ClickMediKit", "Tag_Sink", "Tag_Tablet",
+            "Tag_ComputerLabor", "Tag_LaborSingleTube", "Tag_ClickLabor",
+            "Tag_NR_no", "Tag_NR_so", "Tag_NR_nw", "Tag_NR_sw" };
 
         var count = AllTasksList.Count;
         var last = count - 1;
@@ -164,8 +167,7 @@ public class Multiplayer_Reference : MonoBehaviour
     {
         if (!allPlayerScores.Keys.Contains(id))
         {
-            allPlayerScores.Add(id, playerScorePoints);
-            numberOfPlayer += 1;
+            allPlayerScores.Add(id, playerScorePoints);            
         }
         if (numberOfPlayer == maxPlayers) // Wird nur vom letzten "maxplayer" ausgeführt
             return true;
@@ -182,7 +184,6 @@ public class Multiplayer_Reference : MonoBehaviour
         if (!allPlayerTasks.Keys.Contains(id))
         {
             allPlayerTasks.Add(id, playerTasks);
-            numberOfPlayer += 1;
         }
         if (numberOfPlayer == maxPlayers) // Wird nur vom letzten "maxplayer" ausgeführt
             return true;
@@ -227,6 +228,7 @@ public class Multiplayer_Reference : MonoBehaviour
         playerIncrementPower = 10;
         ghostIncrementPower = playerIncrementPower / 4;
         saboteurDecrementPower = -100;
+        progressbarMaximum = 1000;
     }
 
     #region getundset
@@ -258,6 +260,9 @@ public class Multiplayer_Reference : MonoBehaviour
     public void setSaboteurDecrementPower(int saboteurDecrementPower) { this.saboteurDecrementPower = saboteurDecrementPower; }
 
     public int getMaxRounds() { return maxGameRounds; }
+
+    public float getMaximumProgressbar() { return progressbarMaximum; }
+
     #endregion
 
-}
+    }

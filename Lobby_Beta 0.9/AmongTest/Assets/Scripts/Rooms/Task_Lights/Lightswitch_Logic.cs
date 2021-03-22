@@ -51,8 +51,10 @@ public class Lightswitch_Logic : MonoBehaviour
         {
             winText.SetActive(true);
             disableButtons();
+            if (Random.value <= 0.20f)
+                _network.incrementTaskprogress();
             Invoke("taskFinished", 3);
-            _network.incrementTaskprogress();
+           ;
         }
         else
         {

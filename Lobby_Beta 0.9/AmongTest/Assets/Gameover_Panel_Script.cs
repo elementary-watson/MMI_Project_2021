@@ -72,9 +72,26 @@ public class Gameover_Panel_Script : MonoBehaviour
         
         float findBiggest = 0;
         int[] orderOfPlayer = new int[allPlayers.Count];
-        int[] scoreOfPlayer = new int[allPlayers.Count];
-        int temp;
+        float[] scoreOfPlayer = new float[allPlayers.Count];
+        float temp;
         int temp2;
+        int m = 0;
+        foreach (KeyValuePair<int, float> kvp in allPlayerScores)
+        {
+            print("Check " + kvp.Key + " value " + kvp.Value);
+        }
+            //Einlesen der Actor ID in richtiger Reihenfolge
+        foreach (KeyValuePair<int, float> kvp in allPlayerScores)
+        {
+            orderOfPlayer[m] = kvp.Key;
+            print("Oder player: " + orderOfPlayer[m] );
+            m++;
+        }
+        //Einlesen der Scores in richtiger Reihenfolge
+        for (int l = 0; l<allPlayers.Count; l++)
+        {
+            scoreOfPlayer[l] = allPlayerScores[orderOfPlayer[l]];
+        }
 
         for (int i = 0; i < scoreOfPlayer.Length - 1; i++)
         { 
@@ -92,6 +109,12 @@ public class Gameover_Panel_Script : MonoBehaviour
                 }
             }
         }
+        print("sorted scores");
+        for (int l = 0; l < allPlayers.Count; l++)
+        {
+                print("Score " + scoreOfPlayer[l]  + " ID" + orderOfPlayer[l]);
+        }
+
         foreach (int value in scoreOfPlayer)
         {
             print("Print scores: " + value);

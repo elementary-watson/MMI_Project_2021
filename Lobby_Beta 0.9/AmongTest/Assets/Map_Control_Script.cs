@@ -123,9 +123,25 @@ public class Map_Control_Script : MonoBehaviour
                 img_miniMapTargetRoom[4].enabled = true;
                 img_bigMapTargetRoom[4].enabled = true;
                 break;
-            default:
+            case "Tag_NR_no":
                 img_miniMapTargetRoom[5].enabled = true;
                 img_bigMapTargetRoom[5].enabled = true;
+                break;
+            case "Tag_NR_so":
+                img_miniMapTargetRoom[6].enabled = true;
+                img_bigMapTargetRoom[6].enabled = true;
+                break;
+            case "Tag_NR_sw":
+                img_miniMapTargetRoom[7].enabled = true;
+                img_bigMapTargetRoom[7].enabled = true;
+                break;
+            case "Tag_NR_nw":
+                img_miniMapTargetRoom[8].enabled = true;
+                img_bigMapTargetRoom[8].enabled = true;
+                break;
+            default:
+                img_miniMapTargetRoom[9].enabled = true;
+                img_bigMapTargetRoom[9].enabled = true;
                 break;
         }
     }
@@ -157,7 +173,7 @@ public class Map_Control_Script : MonoBehaviour
     }
     public void resetTargetImages()
     {
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 9; i++)
         {
             img_bigMapTargetRoom[i].enabled = false;
             img_miniMapTargetRoom[i].enabled = false;
