@@ -104,8 +104,8 @@ public class Network : MonoBehaviourPunCallbacks
             playerReadyTexts[i].text = "";
         }
         RandomColor();
-        myRoomOptions = new RoomOptions() { MaxPlayers = 1, IsVisible = true, IsOpen = true /*,PlayerTtl = 10000, EmptyRoomTtl=60000*/ };
-        maxPlayersOfRoom = 1;
+        myRoomOptions = new RoomOptions() { MaxPlayers = 4, IsVisible = true, IsOpen = true /*,PlayerTtl = 10000, EmptyRoomTtl=60000*/ };
+        maxPlayersOfRoom = 4;
         //canJoin = true;
     }
 
