@@ -72,6 +72,7 @@ public class Gameover_Panel_Script : MonoBehaviour
         
         float findBiggest = 0;
         int[] orderOfPlayer = new int[allPlayers.Count];
+        int[] numberOfTasks = new int[allPlayers.Count];
         float[] scoreOfPlayer = new float[allPlayers.Count];
         float temp;
         int temp2;
@@ -137,6 +138,7 @@ public class Gameover_Panel_Script : MonoBehaviour
         }*/
         for (int j = 0; j < allPlayers.Count; j++)
         {
+            //ID FARBE TASKS PUNKTE
             playerRankingChains[j] = orderOfPlayer[j] + "-" + allPlayers[orderOfPlayer[j]] + "-" + allplayerTasks[orderOfPlayer[j]] + "-" + allPlayerScores[orderOfPlayer[j]];
             createRankElement(playerRankingChains[j]);
         }

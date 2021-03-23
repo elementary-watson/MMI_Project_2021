@@ -25,6 +25,7 @@ public class Single_Maptask_Script : Interactable
     }
     public void Reset()
     {
+        //reference auf alle scripte mit tag abgleichen
         myPanel.SetActive(false);
         updateHelper = 0;
         holdMovement = false;
