@@ -17,6 +17,7 @@ public class Multiplayer_Reference : MonoBehaviour
     private int ghostIncrementPower;
     private int saboteurActorID;
     private float progressbarMaximum;
+    private int nextTaskIndex;
     private IDictionary<int, string> allplayers = new Dictionary<int, string>();
     private IDictionary<int, float> allPlayerScores = new Dictionary<int, float>();
     private IDictionary<int, int> allPlayerTasks = new Dictionary<int, int>();
@@ -40,53 +41,35 @@ public class Multiplayer_Reference : MonoBehaviour
         "Tag_NR_no", "Tag_NR_so", "Tag_NR_nw", "Tag_NR_sw"
     };
 
-    List<string> saboteurTasksList = new List<string> { // XOF AMIR
-        "Tag_WaterDispenser", "Tag_Game", "Tag_NumberRadio",
-        "Tag_NumberBox", "Tag_ElectricBox", "Tag_ClickCabinet",
-        "Tag_Fillgauge", "Tag_EnergyNumber", "Tag_LeverEnergy",
-        "Tag_ClickMediKit", "Tag_Sink", "Tag_Tablet",
-        "Tag_ComputerLabor", "Tag_LaborSingleTube", "Tag_ClickLabor"
-    };
-
-
-
-    public IDictionary<int, string> getKickedplayers()
-    {
-        return kickedplayers;
-    }
-    public void addKickedplayers(int id, string charname)
-    {
-        if (!kickedplayers.Keys.Contains(id))
-            kickedplayers.Add(id, charname);
-    }
-    
-    int nextTaskIndex;
-    public string getNextTask()
-    {
-        if(AllTasksList.Count == (nextTaskIndex + 1))
-        {
-            nextTaskIndex = 0;
-        }
-        nextTaskIndex += 1;
-        return AllTasksList[nextTaskIndex-1];
-    }
-
     public void setupGamestyle()
     {
+        nextTaskIndex = 0;
+        saboteurActorID = -1;
+        gameRound = 1;
+        currentStage = 1;
+        saboteurPoints = 0;
+        crewPoints = 0;
+
+        progressbarMaximum = 1000;
+
         if (numberOfPlayer == 5 || numberOfPlayer == 6)
         {
             maxGameRounds = 3;
             playerIncrementPower = 10;
             ghostIncrementPower = playerIncrementPower / 4;
+            saboteurDecrementPower = -10;
+            progressbarMaximum = 100;
         }
         else
         {
             maxGameRounds = 5;
             playerIncrementPower = 10;
             ghostIncrementPower = playerIncrementPower / 4;
+            saboteurDecrementPower = -10;
+            progressbarMaximum = 100;
         }
 
-        List<string> AllTasksList = new List<string> {  
+        List<string> AllTasksList = new List<string> {
             "Tag_WaterDispenser", "Tag_Game", "Tag_NumberRadio",
             "Tag_NumberBox", "Tag_ElectricBox", "Tag_ClickCabinet",
             "Tag_Fillgauge", "Tag_EnergyNumber", "Tag_LeverEnergy",
@@ -100,12 +83,31 @@ public class Multiplayer_Reference : MonoBehaviour
         {
             var r = UnityEngine.Random.Range(i, count);
             var tmp = AllTasksList[i];
-            AllTasksList[i] = AllTasksList [r];
-            AllTasksList [r] = tmp;
+            AllTasksList[i] = AllTasksList[r];
+            AllTasksList[r] = tmp;
         }
         //this.AllTasksList = AllTasksList;
-
     }
+    public string getNextTask()
+    {
+        if (AllTasksList.Count == (nextTaskIndex + 1))
+        {
+            nextTaskIndex = 0;
+        }
+        nextTaskIndex += 1;
+        return AllTasksList[nextTaskIndex - 1];
+    }
+
+    public IDictionary<int, string> getKickedplayers()
+    {
+        return kickedplayers;
+    }
+    public void addKickedplayers(int id, string charname)
+    {
+        if (!kickedplayers.Keys.Contains(id))
+            kickedplayers.Add(id, charname);
+    }
+    #region player
     public void setPlayers(IDictionary<int, string> allplayers)
     {
         this.allplayers = allplayers;
@@ -113,7 +115,7 @@ public class Multiplayer_Reference : MonoBehaviour
     public IDictionary<int, string> getPlayers()
     {
         return allplayers;
-    }    
+    }
 
     public bool addPlayer(int id, string charname, int maxPlayers)
     {
@@ -122,12 +124,13 @@ public class Multiplayer_Reference : MonoBehaviour
             allplayers.Add(id, charname);
             numberOfPlayer += 1;
         }
-        if (numberOfPlayer == maxPlayers) { // Wird nur vom letzten "maxplayer" ausgeführt
+        if (numberOfPlayer == maxPlayers)
+        { // Wird nur vom letzten "maxplayer" ausgeführt
             print("addPLayer was max with id:" + id + "and maxplayer " + maxPlayers);
             return true;
         }
         return false;
-    }    
+    }
 
     public void deleteplayer(int photonId)
     {
@@ -139,11 +142,14 @@ public class Multiplayer_Reference : MonoBehaviour
     }
     public void readPlayer()
     {
-        foreach (KeyValuePair<int, string> kvp in allplayers) { 
+        foreach (KeyValuePair<int, string> kvp in allplayers)
+        {
             Console.WriteLine("Key: {0}, Value: {1}", kvp.Key, kvp.Value);
             print("Key: " + kvp.Key + "Value" + kvp.Value);
         }
     }
+    #endregion
+
     public void addPhotonplayer(int actorID, int photonViewID)
     {//allPhotonplayers
         if (!allPhotonplayers.Keys.Contains(actorID))
@@ -218,18 +224,7 @@ public class Multiplayer_Reference : MonoBehaviour
     }
     void Start()
     {
-        nextTaskIndex = 0;
-        saboteurActorID = -1;
-        gameRound = 1;
-        currentStage = 1;
-        saboteurPoints = 0;
-        crewPoints = 0;
-        numberOfPlayer = 0;
-        maxGameRounds = 3; //XOF muss dynamisch werden
-        playerIncrementPower = 10;
-        ghostIncrementPower = playerIncrementPower / 4;
-        saboteurDecrementPower = -100;
-        progressbarMaximum = 1000;
+
     }
 
     #region getundset

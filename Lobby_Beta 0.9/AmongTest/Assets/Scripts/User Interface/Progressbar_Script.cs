@@ -47,9 +47,7 @@ public class Progressbar_Script : MonoBehaviour
         current = 0;
     }
     private void Start()
-    {
-        setup();
-        
+    {               
     }
     public void setup()
     {

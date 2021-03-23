@@ -59,6 +59,8 @@ public class Network : MonoBehaviourPunCallbacks
     [SerializeField] GameObject Introduction_Panel_Crewmate;
     [SerializeField] GameObject Introduction_Panel_Saboteur;
     [SerializeField] GameObject Introduction_Panel;
+    [SerializeField] Introduction_Panel introP_object;
+
     [SerializeField] Introduction_Panel introPanel_object;
     [SerializeField] GameObject Callmeeting_Panel;
     [SerializeField] CallMeeting_Script callMeeting_object;
@@ -258,21 +260,26 @@ public class Network : MonoBehaviourPunCallbacks
             {
                 print("MaxPlayer has arrived");
                 PhotonNetwork.CurrentRoom.IsOpen = false;
-                //Randomize colors
-                RandomColor();
-                //photonView = gameObject.GetComponent<PhotonView>();
-                int i = 0;
-                //setupPlayer over RPC
-                foreach (Player player in PhotonNetwork.PlayerList)
-                {
-                    print("Id and Color: " + player.NickName + "-" + randomColorList[i]);
-                    photonView.RPC("RPC_setupPlayer", RpcTarget.All, player.NickName + "-" + randomColorList[i]);
-                    //photonView.RPC("setupPlayer", RpcTarget.OthersBuffered, player.NickName + "-" + randomColorList[i]);
-                    i++;
-                }                         
+                initiateStartGame();
             }
         }
         else { print("ERROR: Joining Room failed"); }
+    }
+    public void initiateStartGame() 
+    {
+        //Randomize colors
+        RandomColor();
+
+        //photonView = gameObject.GetComponent<PhotonView>();
+        int i = 0;
+        //setupPlayer over RPC
+        foreach (Player player in PhotonNetwork.PlayerList)
+        {
+            print("Id and Color: " + player.NickName + "-" + randomColorList[i]);
+            photonView.RPC("RPC_setupPlayer", RpcTarget.All, player.NickName + "-" + randomColorList[i]);
+            //photonView.RPC("setupPlayer", RpcTarget.OthersBuffered, player.NickName + "-" + randomColorList[i]);
+            i++;
+        }
     }
     private void RandomColor()
     {
@@ -429,6 +436,7 @@ public class Network : MonoBehaviourPunCallbacks
         setPhotonViewID();
         setPlayerMovement(false);
         Introduction_Panel.SetActive(true);
+        introP_object.setup();
         if (isSaboteur)
         {
             myPlayerRole.text = "Rolle >> Saboteur";
@@ -559,7 +567,7 @@ public class Network : MonoBehaviourPunCallbacks
         float addScore = spawnedPlayerObject.GetComponent<CharacterControl>().getIncrementPower();
 
         if (isSaboteur)
-            addScore = addScore + -1;
+            addScore = addScore*-1;
         playerScorepoints += addScore;
         numberOfTask += 1;
     }

@@ -13,11 +13,16 @@ public class Introduction_Panel : MonoBehaviour
     [SerializeField] Network _network;
     [SerializeField] Image img_cremate;
     [SerializeField] Image img_saboteur;
+    [SerializeField] Progressbar_Script prog_object;
     bool isWhite;
     // Start is called before the first frame update
     void Start()
     {
-        Invoke("fadeScreen",3);
+        
+    }
+    public void setup()
+    {
+        Invoke("fadeScreen", 3);
     }
     public void fadeScreen()
     {
@@ -55,6 +60,7 @@ public class Introduction_Panel : MonoBehaviour
         Main_Introduction_Panel.SetActive(false);
         _network.setPlayerMovement(true);
         timeGame_object.setup(); // Timer starten
+        prog_object.setup();
     }
 
     // Update is called once per frame
