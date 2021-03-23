@@ -3,7 +3,6 @@ using UnityEngine.UI;
 
 public class OnCloseListener : MonoBehaviour
 {
-    public Image backgroundImage;
     public Network network;
 
     /// <summary>
@@ -15,7 +14,6 @@ public class OnCloseListener : MonoBehaviour
         BrowserJS.Warn("This warning was called from Unity!");
 
         // Randomize the background image color
-        this.backgroundImage.color = new Color(Random.value, Random.value, Random.value);
         network.WebGLQuit();
         //TriggerApplicationQuit();
 

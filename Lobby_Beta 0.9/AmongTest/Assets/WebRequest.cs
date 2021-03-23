@@ -5,16 +5,16 @@ using UnityEngine.Networking;
 
 public class WebRequest : MonoBehaviour
 {
-    string gender, occupation, graduation, nationality, regular_gamer, amongus_played, playHoursPerWeek, email;
+    string gender,age , occupation, graduation, nationality, regular_gamer, amongus_played, playHoursPerWeek, email;
     void Start()
     {
-        StartCoroutine(UploadPost(gender, occupation, graduation, nationality, regular_gamer, amongus_played, playHoursPerWeek, email));
-
+        StartCoroutine(UploadPost(gender,age , occupation, graduation, nationality, regular_gamer, amongus_played, playHoursPerWeek, email));
     }
 
-    public void SaveData(string gender, string occupation, string graduation, string nationality, string regular_gamer, string amongus_played, string playHoursPerWeek, string email)
+    public void SaveData(string gender, string age, string occupation, string graduation, string nationality, string regular_gamer, string amongus_played, string playHoursPerWeek, string email)
     {
         this.gender = gender;
+        this.age = age;
         this.occupation = occupation;
         this.graduation = graduation;
         this.nationality = nationality;
@@ -24,7 +24,7 @@ public class WebRequest : MonoBehaviour
         this.email = email;
     }
 
-    IEnumerator UploadPost(string gender, string occupation, string graduation, string nationality, string regular_gamer, string amongus_played, string playHoursPerWeek, string email)
+    IEnumerator UploadPost(string gender,string age, string occupation, string graduation, string nationality, string regular_gamer, string amongus_played, string playHoursPerWeek, string email)
     {
 
         WWWForm form = new WWWForm();
@@ -32,6 +32,7 @@ public class WebRequest : MonoBehaviour
         form.AddField("userID", "5");
         form.AddField("TimeStamp", "21031541");
         form.AddField("gender", gender);
+        form.AddField("age", age);
         form.AddField("occupation", occupation);
         form.AddField("graduation", graduation);
         form.AddField("nationality", nationality);

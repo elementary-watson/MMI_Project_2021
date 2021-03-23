@@ -50,23 +50,42 @@ public class Multiplayer_Reference : MonoBehaviour
         saboteurPoints = 0;
         crewPoints = 0;
 
-        progressbarMaximum = 1000;
+        progressbarMaximum = 100;
 
         if (numberOfPlayer == 5 || numberOfPlayer == 6)
         {
             maxGameRounds = 3;
-            playerIncrementPower = 10;
-            ghostIncrementPower = playerIncrementPower / 4;
-            saboteurDecrementPower = -10;
             progressbarMaximum = 100;
+
+            if(numberOfPlayer == 5)
+            {
+                playerIncrementPower = 7;
+                ghostIncrementPower = playerIncrementPower / 4;
+            }
+            else
+            {
+                playerIncrementPower = 6;
+                ghostIncrementPower = playerIncrementPower / 4;
+            }
+            saboteurDecrementPower = -33;
         }
         else
         {
             maxGameRounds = 5;
-            playerIncrementPower = 10;
-            ghostIncrementPower = playerIncrementPower / 4;
-            saboteurDecrementPower = -10;
             progressbarMaximum = 100;
+
+            if (numberOfPlayer == 8)
+            {
+                playerIncrementPower = 4;
+                ghostIncrementPower = playerIncrementPower / 4;
+            }
+            else
+            {
+                playerIncrementPower = 4;
+                ghostIncrementPower = playerIncrementPower / 4;
+            }
+
+            saboteurDecrementPower = -33;
         }
 
         List<string> AllTasksList = new List<string> {

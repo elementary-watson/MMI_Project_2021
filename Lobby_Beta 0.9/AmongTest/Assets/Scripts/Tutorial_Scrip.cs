@@ -16,8 +16,10 @@ public class Tutorial_Scrip : MonoBehaviour
 
     public void btn_next()
     {
-        if (counter == 6) { }
+        if (counter == 6)
+        {
 
+        }
         else
         { 
             img_tutorial[counter].enabled = false;
