@@ -825,9 +825,7 @@ public class Network : MonoBehaviourPunCallbacks
             }
         }
     }
-
     #endregion
-
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
