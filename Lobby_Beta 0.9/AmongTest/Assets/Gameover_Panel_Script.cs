@@ -14,9 +14,11 @@ public class Gameover_Panel_Script : MonoBehaviour
     [SerializeField] Image img_crewmateTotalwin;
     [SerializeField] Image img_saboteurWin;
     [SerializeField] Image img_draw;
-
     [SerializeField] GameObject rank_element;
     [SerializeField] Transform trfm_content_rankElements;
+
+    [SerializeField] GameObject FragebogenPanel;
+
     // Start is called before the first frame update
 
     public IDictionary<int, int> allplayerTasks;
@@ -41,10 +43,10 @@ public class Gameover_Panel_Script : MonoBehaviour
     public void setup(bool caught, bool final)
     {
         if (caught)
-        {            
+        {
             img_crewmateTotalwin.enabled = true;
         }
-        else 
+        else
         {
             int highPoints;
             int maxrounds = m_reference.getMaxRounds();
@@ -66,10 +68,10 @@ public class Gameover_Panel_Script : MonoBehaviour
     public void createTable()
     {
         allPlayerScores = m_reference.getAllPlayerScores();
-        allplayerTasks =  m_reference.getAllPlayerTasks();
+        allplayerTasks = m_reference.getAllPlayerTasks();
         allPlayers = m_reference.getPlayers();
         string[] playerRankingChains = new string[allplayerTasks.Count];
-        
+
         float findBiggest = 0;
         int[] orderOfPlayer = new int[allPlayers.Count];
         int[] numberOfTasks = new int[allPlayers.Count];
@@ -97,8 +99,8 @@ public class Gameover_Panel_Script : MonoBehaviour
         }*/
 
         for (int i = 0; i < scoreOfPlayer.Length - 1; i++)
-        { 
-            for (int j = i + 1; j < scoreOfPlayer.Length; j++) { 
+        {
+            for (int j = i + 1; j < scoreOfPlayer.Length; j++) {
                 if (scoreOfPlayer[i] < scoreOfPlayer[j])
                 {
                     temp = scoreOfPlayer[i];
@@ -115,7 +117,7 @@ public class Gameover_Panel_Script : MonoBehaviour
         print("sorted scores");
         for (int l = 0; l < allPlayers.Count; l++)
         {
-                print("Score " + scoreOfPlayer[l]  + " ID" + orderOfPlayer[l]);
+            print("Score " + scoreOfPlayer[l] + " ID" + orderOfPlayer[l]);
         }
 
         foreach (int value in scoreOfPlayer)
@@ -142,10 +144,15 @@ public class Gameover_Panel_Script : MonoBehaviour
             playerRankingChains[j] = orderOfPlayer[j] + "-" + allPlayers[orderOfPlayer[j]] + "-" + allplayerTasks[orderOfPlayer[j]] + "-" + allPlayerScores[orderOfPlayer[j]];
             createRankElement(playerRankingChains[j]);
         }
-        
 
+        Invoke("finalQuestionary", 5f);
         //var sortedDict = from entry in allPlayerScores orderby entry.Value descending select entry;
         //var top5 = allPlayerScores.(pair => pair.Value).Take(5);
+    }
+    public void finalQuestionary()
+    {
+        FragebogenPanel.SetActive(true);
+        GameOver_Panel.SetActive(false);
     }
     public void createRankElement(string playerRankingChains)
     {

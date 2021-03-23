@@ -27,7 +27,6 @@ public class Tutorial_Scrip : MonoBehaviour
             img_tutorial[counter].enabled = true;
         }
     }
-
     public void btn_previous()
     {
         if(counter==0)

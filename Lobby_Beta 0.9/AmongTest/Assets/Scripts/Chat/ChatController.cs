@@ -184,6 +184,7 @@ public class ChatController : MonoBehaviour, IChatClientListener
         //string result = myChatMsg.Trim(charsToTrim);
 
         print("TRIM "+ s);
+
         createChatListElement(channelName, senders, messages);
     }
 

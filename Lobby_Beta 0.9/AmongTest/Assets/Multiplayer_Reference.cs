@@ -105,7 +105,7 @@ public class Multiplayer_Reference : MonoBehaviour
             AllTasksList[i] = AllTasksList[r];
             AllTasksList[r] = tmp;
         }
-        //this.AllTasksList = AllTasksList;
+        this.AllTasksList = AllTasksList;
     }
     public string getNextTask()
     {

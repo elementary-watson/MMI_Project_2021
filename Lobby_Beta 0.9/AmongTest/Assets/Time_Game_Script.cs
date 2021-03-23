@@ -56,7 +56,7 @@ public class Time_Game_Script : MonoBehaviour
     }
     void Update()
     {
-        elapsedTime = start;
+
         if (timerGoing)
         { 
             if (elapsedTime > 0)

@@ -13,7 +13,7 @@ using UnityEngine.UI;
 public class Network : MonoBehaviourPunCallbacks
 {
     int GAMEID = 100;
-
+    [SerializeField] string SessionID;
     [Header("LobbyRoom")]
     [SerializeField] private TMP_Text[] playerNameTexts = new TMP_Text[10];
     [SerializeField] private TMP_Text[] playerReadyTexts = new TMP_Text[10];
@@ -65,6 +65,7 @@ public class Network : MonoBehaviourPunCallbacks
     [SerializeField] CallMeeting_Script callMeeting_object;
     [SerializeField] private bool isGameOver;
     [SerializeField] private string RPC_timestamp; //XOF Zum Loggen der Daten
+    [SerializeField] string RPC_currentTimestamp; //XOF Zum Loggen der Daten
     public Progressbar_Script prog_reference;
     public Multiplayer_Reference m_reference;
     [SerializeField] Gameover_Panel_Script gameOver_object;
@@ -105,8 +106,8 @@ public class Network : MonoBehaviourPunCallbacks
             playerReadyTexts[i].text = "";
         }
         RandomColor();
-        myRoomOptions = new RoomOptions() { MaxPlayers = 4, IsVisible = true, IsOpen = true /*,PlayerTtl = 10000, EmptyRoomTtl=60000*/ };
-        maxPlayersOfRoom = 4;
+        myRoomOptions = new RoomOptions() { MaxPlayers = 1, IsVisible = true, IsOpen = true /*,PlayerTtl = 10000, EmptyRoomTtl=60000*/ };
+        maxPlayersOfRoom = 1;
         //canJoin = true;
     }
     private void Update()
@@ -114,6 +115,10 @@ public class Network : MonoBehaviourPunCallbacks
         
     }
     #region getta/setta
+    public string getRPC_currentTimestamp() { return RPC_currentTimestamp; }
+    public void setRPC_currentTimestamp(double RPC_currentTimestamp) { this.RPC_currentTimestamp = "" +RPC_currentTimestamp; }
+    public string getSessionID() { return SessionID; }
+    public void setSessionID(string sessionID) { print(sessionID); SessionID = sessionID; }
     public int getActorId() { return PhotonNetwork.LocalPlayer.ActorNumber; }
     public int getActorsInRoom() { return PhotonNetwork.CurrentRoom.PlayerCount; }
     public string getPlayerColor() { return myPlayerColorFilename; }
@@ -136,6 +141,7 @@ public class Network : MonoBehaviourPunCallbacks
     }
     public float getScorePoints() { return playerScorepoints; }
     public int getNumberOfTasks() { return numberOfTask; }
+    public int getMaxPlayer() { return maxPlayersOfRoom; }
     #endregion
 
     #region Chatfunctions
@@ -266,12 +272,36 @@ public class Network : MonoBehaviourPunCallbacks
 
             if (PhotonNetwork.CurrentRoom.PlayerCount == maxPlayersOfRoom)
             {
+                setSessionID();
                 print("MaxPlayer has arrived");
                 PhotonNetwork.CurrentRoom.IsOpen = false;
                 initiateStartGame();
             }
         }
         else { print("ERROR: Joining Room failed"); }
+    }
+
+    public void setSessionID()
+    {
+        photonView.RPC("RPC_setSessionID", RpcTarget.All);
+    }
+    [PunRPC]
+    public void RPC_setSessionID(PhotonMessageInfo info)
+    {
+        string lobbyId = "";
+        if (lobbySwitch == 0)
+            lobbyId = "0";
+        else if (lobbySwitch == 1)
+            lobbyId = "1";
+        else if (lobbySwitch == 2)
+            lobbyId = "2";
+        else if (lobbySwitch == 3)
+            lobbyId = "3";
+        int timesstamp = (int) info.SentServerTimestamp;
+        print("HERE" +timesstamp);
+        string sessionID = GAMEID + "00" + timesstamp + "00" + lobbyId;
+        print("SessionID" + sessionID);
+        setSessionID(sessionID);
     }
     public void initiateStartGame() 
     {
@@ -629,8 +659,9 @@ public class Network : MonoBehaviourPunCallbacks
 
 
     [PunRPC]
-    public void submitAllPlayers(bool isSubmitted, string playerColor, int photonActorID, int indexPosition)
+    public void submitAllPlayers(bool isSubmitted, string playerColor, int photonActorID, int indexPosition, PhotonMessageInfo info)
     {
+        setRPC_currentTimestamp(info.SentServerTime);
         if (isSubmitted)
             result_vp.submitVote(getActorId(), getPlayerColor(), playerColor, photonActorID, indexPosition);
         else

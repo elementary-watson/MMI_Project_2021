@@ -25,7 +25,7 @@ public class Result_Voting_Panel : MonoBehaviour
     [SerializeField] private GameObject ScorePanel;
     [SerializeField] Time_Game_Script timeGame_object;
     [SerializeField] private GameObject Summary_Panel;
-
+    [SerializeField] WebRequestGame databaseLogger;
     // Start is called before the first frame update    
 
     public void submitVote(int myActorID, string myplayerColor, string playerColor, int photonActorID,int indexPosition)
@@ -52,6 +52,13 @@ public class Result_Voting_Panel : MonoBehaviour
                     finalVotings.Add(photonActorID, 1);
                 else
                     finalVotings[photonActorID] += 1; //vote zu einer farbe hinzufügen
+
+                string isSab;
+                if (_network.getIsSaboteur())
+                    isSab = "1";
+                else
+                    isSab = "0";
+                databaseLogger.sendRequest(_network.getActorId().ToString(), _network.getSessionID(), _network.getRPC_currentTimestamp(), _network.getRPC_currentTimestamp(), m_reference.getGameRound().ToString(), _network.getMaxPlayer().ToString(), "", _network.getPlayerColor(), playerColor, "postvoting", "1", "", isSab);
             }
             receivedVotes += 1;
         }        
@@ -133,9 +140,7 @@ public class Result_Voting_Panel : MonoBehaviour
                     tmp_resultTexts[0].SetActive(true);
                     Invoke("setPreNoChoiceActive", 0.5f);
                     p_manager.sendText( "Kein Spieler wurde ausgewählt.");
-                    /*var tmp = thisResultVotingPanel.GetComponentInChildren<TextMeshProUGUI>();//.text = "Keinen verdaechtigen";
-                    if (tmp.tag == "test") print("XOFXOF");
-                    else print("FAILURE XOF");*/
+
                 }
                 catch (Exception e)
                 {
@@ -148,7 +153,14 @@ public class Result_Voting_Panel : MonoBehaviour
                 Sprite sp = Resources.Load<Sprite>(filename);
                 img_votedPlayer.sprite = sp;
                 Invoke("setPreChoiceActive", 0.5f); tmp_resultTexts[1].SetActive(true);
+                string isSab;
+                if (_network.getIsSaboteur())
+                    isSab = "1";
+                else
+                    isSab = "0";
+                databaseLogger.sendRequest(_network.getActorId().ToString(), _network.getSessionID(), _network.getRPC_currentTimestamp(), _network.getRPC_currentTimestamp() ,m_reference.getGameRound().ToString(), _network.getMaxPlayer().ToString(), "",_network.getPlayerColor(), playerColor, "prevoting","1","", isSab);
             }
+            // userID,  SessionID,  TimeStamp,  Duration,  Round,  NumberPlayers,  RemaingPlayers,  avatarColor,  value,  type,  survive,  sentiment,  topic
         } // else (stage 1)
     }
     public void setPreChoiceActive()
