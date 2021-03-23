@@ -52,13 +52,146 @@ public class Result_Voting_Panel : MonoBehaviour
                     finalVotings.Add(photonActorID, 1);
                 else
                     finalVotings[photonActorID] += 1; //vote zu einer farbe hinzufügen
+                string myPlayerColorNumber = "";
+                string votePlayerColorNumber = "";
+                #region ifs
 
+                
+                if (myplayerColor.Contains("Black"))
+                {
+                    myPlayerColorNumber = "7"; 
+                }
+                else if (myplayerColor.Contains("White"))
+                {
+                    myPlayerColorNumber = "6"; 
+                }
+                else if (myplayerColor.Contains("Pink"))
+                {
+                    myPlayerColorNumber = "8";
+                }
+                else if (myplayerColor.Contains("Orange"))
+                {
+                    myPlayerColorNumber = "9";
+                }
+                else if (myplayerColor.Contains("Red"))
+                {
+                    myPlayerColorNumber = "10";
+                }
+                if (myplayerColor.Contains("Purple"))
+                {
+                    myPlayerColorNumber = "1";
+                }
+                else if (myplayerColor.Contains("Purple"))
+                {
+                    myPlayerColorNumber = "1";
+                }
+
+                if (myplayerColor.Contains("Brown"))
+                {
+                    myPlayerColorNumber = "2";
+                }
+                else if (myplayerColor.Contains("Purple"))
+                {
+                    myPlayerColorNumber = "2";
+                }
+
+
+                if (myplayerColor.Contains("Green"))
+                {
+                    myPlayerColorNumber = "3";
+                }
+                else if (myplayerColor.Contains("Green"))
+                {
+                    myPlayerColorNumber = "3";
+                }
+
+
+                if (myplayerColor.Contains("Yellow"))
+                {
+                    myPlayerColorNumber = "4";
+                }
+                else if (myplayerColor.Contains("Yellow"))
+                {
+                    myPlayerColorNumber = "4";
+                }
+
+                if (myplayerColor.Contains("Blue"))
+                {
+                    myPlayerColorNumber = "5";
+                }
+                else if (myplayerColor.Contains("Blue"))
+                {
+                    myPlayerColorNumber = "5";
+                }
+                if (playerColor.Contains("Purple"))
+                {
+                    votePlayerColorNumber = "1";
+                }
+
+
+                if (playerColor.Contains("Brown"))
+                {
+                    votePlayerColorNumber = "2";
+                }
+
+
+
+                if (playerColor.Contains("Green"))
+                {
+                    votePlayerColorNumber = "3";
+                }
+
+
+
+                if (playerColor.Contains("Yellow"))
+                {
+                    votePlayerColorNumber = "4";
+                }
+
+
+                if (playerColor.Contains("Blue"))
+                {
+                    votePlayerColorNumber = "5";
+                }
+                if (playerColor.Contains("White"))
+                {
+                    votePlayerColorNumber = "6";
+                }
+
+
+                if (playerColor.Contains("Black"))
+                {
+                    votePlayerColorNumber = "7";
+                }
+
+
+
+                if (playerColor.Contains("Pink"))
+                {
+                    votePlayerColorNumber = "8";
+                }
+
+
+
+                if (playerColor.Contains("Orange"))
+                {
+                    votePlayerColorNumber = "9";
+                }
+
+
+                if (playerColor.Contains("red"))
+                {
+                    votePlayerColorNumber = "10";
+                }
+                #endregion
                 string isSab;
                 if (_network.getIsSaboteur())
                     isSab = "1";
                 else
                     isSab = "0";
-                databaseLogger.sendRequest(_network.getActorId().ToString(), _network.getSessionID(), _network.getRPC_currentTimestamp(), _network.getRPC_currentTimestamp(), m_reference.getGameRound().ToString(), _network.getMaxPlayer().ToString(), "", _network.getPlayerColor(), playerColor, "postvoting", "1", "", isSab);
+                databaseLogger.sendRequest(
+                    _network.getActorId().ToString(), _network.getSessionID(), _network.getRPC_currentTimestamp(), 
+                    _network.getRPC_currentTimestamp(), m_reference.getGameRound().ToString(), _network.getMaxPlayer().ToString(), "", myPlayerColorNumber, votePlayerColorNumber, "1", "1", "", isSab);
             }
             receivedVotes += 1;
         }        
@@ -153,12 +286,146 @@ public class Result_Voting_Panel : MonoBehaviour
                 Sprite sp = Resources.Load<Sprite>(filename);
                 img_votedPlayer.sprite = sp;
                 Invoke("setPreChoiceActive", 0.5f); tmp_resultTexts[1].SetActive(true);
+                string myPlayerColorNumber = "";
+                string votePlayerColorNumber = "";
+                #region ifs
+
+
+                if (_network.getPlayerColor().Contains("Black"))
+                {
+                    myPlayerColorNumber = "7";
+                }
+                else if (_network.getPlayerColor().Contains("White"))
+                {
+                    myPlayerColorNumber = "6";
+                }
+                else if (_network.getPlayerColor().Contains("Pink"))
+                {
+                    myPlayerColorNumber = "8";
+                }
+                else if (_network.getPlayerColor().Contains("Orange"))
+                {
+                    myPlayerColorNumber = "9";
+                }
+                else if (_network.getPlayerColor().Contains("Red"))
+                {
+                    myPlayerColorNumber = "10";
+                }
+                if (_network.getPlayerColor().Contains("Purple"))
+                {
+                    myPlayerColorNumber = "1";
+                }
+                else if (_network.getPlayerColor().Contains("Purple"))
+                {
+                    myPlayerColorNumber = "1";
+                }
+
+                if (_network.getPlayerColor().Contains("Brown"))
+                {
+                    myPlayerColorNumber = "2";
+                }
+                else if (_network.getPlayerColor().Contains("Purple"))
+                {
+                    myPlayerColorNumber = "2";
+                }
+
+
+                if (_network.getPlayerColor().Contains("Green"))
+                {
+                    myPlayerColorNumber = "3";
+                }
+                else if (_network.getPlayerColor().Contains("Green"))
+                {
+                    myPlayerColorNumber = "3";
+                }
+
+
+                if (_network.getPlayerColor().Contains("Yellow"))
+                {
+                    myPlayerColorNumber = "4";
+                }
+                else if (_network.getPlayerColor().Contains("Yellow"))
+                {
+                    myPlayerColorNumber = "4";
+                }
+
+                if (_network.getPlayerColor().Contains("Blue"))
+                {
+                    myPlayerColorNumber = "5";
+                }
+                else if (_network.getPlayerColor().Contains("Blue"))
+                {
+                    myPlayerColorNumber = "5";
+                }
+                if (playerColor.Contains("Purple"))
+                {
+                    votePlayerColorNumber = "1";
+                }
+
+
+                if (playerColor.Contains("Brown"))
+                {
+                    votePlayerColorNumber = "2";
+                }
+
+
+
+                if (playerColor.Contains("Green"))
+                {
+                    votePlayerColorNumber = "3";
+                }
+
+
+
+                if (playerColor.Contains("Yellow"))
+                {
+                    votePlayerColorNumber = "4";
+                }
+
+
+                if (playerColor.Contains("Blue"))
+                {
+                    votePlayerColorNumber = "5";
+                }
+                if (playerColor.Contains("White"))
+                {
+                    votePlayerColorNumber = "6";
+                }
+
+
+                if (playerColor.Contains("Black"))
+                {
+                    votePlayerColorNumber = "7";
+                }
+
+
+
+                if (playerColor.Contains("Pink"))
+                {
+                    votePlayerColorNumber = "8";
+                }
+
+
+
+                if (playerColor.Contains("Orange"))
+                {
+                    votePlayerColorNumber = "9";
+                }
+
+
+                if (playerColor.Contains("red"))
+                {
+                    votePlayerColorNumber = "10";
+                }
+                #endregion
                 string isSab;
                 if (_network.getIsSaboteur())
                     isSab = "1";
                 else
                     isSab = "0";
-                databaseLogger.sendRequest(_network.getActorId().ToString(), _network.getSessionID(), _network.getRPC_currentTimestamp(), _network.getRPC_currentTimestamp() ,m_reference.getGameRound().ToString(), _network.getMaxPlayer().ToString(), "",_network.getPlayerColor(), playerColor, "prevoting","1","", isSab);
+                databaseLogger.sendRequest(
+                    _network.getActorId().ToString(), _network.getSessionID(), _network.getRPC_currentTimestamp(),
+                    _network.getRPC_currentTimestamp(), m_reference.getGameRound().ToString(), _network.getMaxPlayer().ToString(), "", myPlayerColorNumber, votePlayerColorNumber, "0", "1", "", isSab);
             }
             // userID,  SessionID,  TimeStamp,  Duration,  Round,  NumberPlayers,  RemaingPlayers,  avatarColor,  value,  type,  survive,  sentiment,  topic
         } // else (stage 1)
