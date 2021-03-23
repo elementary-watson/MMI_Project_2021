@@ -33,7 +33,7 @@ public class Multiplayer_Reference : MonoBehaviour
 
     List<string> AllTasksList = new List<string> { // XOF AMIR
         //"Tag_WaterDispenser", "Tag_Game", "Tag_NumberRadio",
-        "Tag_NumberBox", "Tag_ElectricBox", "Tag_ClickCabinet",
+        "Tag_Fillgauge","Tag_Fillgauge","Tag_Fillgauge","Tag_NumberBox", "Tag_ElectricBox", "Tag_ClickCabinet",
         "Tag_Fillgauge", "Tag_EnergyNumber", "Tag_LeverEnergy",
         "Tag_ClickMediKit", "Tag_Sink", "Tag_Tablet",
         "Tag_ComputerLabor", "Tag_LaborSingleTube", "Tag_ClickLabor",

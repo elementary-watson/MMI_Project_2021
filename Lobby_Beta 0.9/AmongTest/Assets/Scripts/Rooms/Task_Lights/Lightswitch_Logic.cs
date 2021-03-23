@@ -17,10 +17,10 @@ public class Lightswitch_Logic : MonoBehaviour
     }
     public void setup()
     {
-        /*for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 6; i++)
         {
             switches[i].enabled = true;
-        }*/
+        }
         winText.SetActive(false);
         onCount = 0;
         collectSwitches();

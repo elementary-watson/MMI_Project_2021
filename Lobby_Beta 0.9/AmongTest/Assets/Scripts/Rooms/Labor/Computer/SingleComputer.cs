@@ -18,6 +18,7 @@ public class SingleComputer : MonoBehaviour
     public void btn_switch()
     {
         bool isCorrect = mainobject.checkPositionNumber(number);
+        print(number);
         if (isCorrect == true)
         {
             img_button.sprite = green;

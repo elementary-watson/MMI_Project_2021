@@ -9,7 +9,7 @@ public class Main_Fillgauge_Task : MonoBehaviour
     [SerializeField] GameObject info_panel;
     [SerializeField] GameObject win_panel;
     [SerializeField] GameObject Fillgauge_panel;
-    [SerializeField] Single_Fillgauge_Task[] sft_object = new Single_Fillgauge_Task[0];
+    [SerializeField] Single_Gauge_Task[] sft_object = new Single_Gauge_Task[0];
     [SerializeField] Network _network;
     public AudioSource taskfin_sound;
 
@@ -32,10 +32,11 @@ public class Main_Fillgauge_Task : MonoBehaviour
         current = current + 1;
         if(current == maxTasks)
         {
-            _network.incrementTaskprogress();
+            
             win_panel.SetActive(true);
             taskfin_sound.Play();
             Invoke("taskfinished",3);
+            _network.incrementTaskprogress();
         }
     }
 

@@ -85,6 +85,7 @@ public class MainComputer : MonoBehaviour
 
     public bool checkPositionNumber(int number)
     {
+        print(tenNumberList[currentPosition] + "  " + number);
         if (tenNumberList[currentPosition] == number)
         {
             currentPosition += 1;

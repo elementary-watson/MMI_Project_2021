@@ -56,9 +56,9 @@ public class Time_Game_Script : MonoBehaviour
     }
     void Update()
     {
-        elapsedTime = start;
+        
         if (timerGoing)
-        { 
+        { elapsedTime = start;
             if (elapsedTime > 0)
             {
                 elapsedTime -= Time.deltaTime;
