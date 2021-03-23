@@ -20,6 +20,12 @@ public class Single_Switch : MonoBehaviour
     {
         //setup_Task();
     }
+
+    public void setup()
+    {
+        btn.interactable = true;
+    }
+
     public void btn_turnSwitch()
     {
         switchfin_sound.Play();
