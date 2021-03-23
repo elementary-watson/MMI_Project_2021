@@ -59,8 +59,7 @@ public class Network : MonoBehaviourPunCallbacks
     [SerializeField] GameObject Introduction_Panel_Crewmate;
     [SerializeField] GameObject Introduction_Panel_Saboteur;
     [SerializeField] GameObject Introduction_Panel;
-    [SerializeField] Introduction_Panel introP_object;
-
+    [SerializeField] Lobby_Timer lobbyTime_object;
     [SerializeField] Introduction_Panel introPanel_object;
     [SerializeField] GameObject Callmeeting_Panel;
     [SerializeField] CallMeeting_Script callMeeting_object;
@@ -110,7 +109,10 @@ public class Network : MonoBehaviourPunCallbacks
         maxPlayersOfRoom = 4;
         //canJoin = true;
     }
-
+    private void Update()
+    {
+        
+    }
     #region getta/setta
     public int getActorId() { return PhotonNetwork.LocalPlayer.ActorNumber; }
     public int getActorsInRoom() { return PhotonNetwork.CurrentRoom.PlayerCount; }
@@ -243,6 +245,11 @@ public class Network : MonoBehaviourPunCallbacks
         //else if (PhotonNetwork.CurrentRoom.PlayerCount == roomMaxPlayerRef+1) PhotonNetwork.LeaveRoom();
         if (PhotonNetwork.CurrentRoom.IsOpen == true)
         {
+            lobbyTime_object.setLobbyRoomPeople(true);
+            if (PhotonNetwork.CurrentRoom.PlayerCount > 4)
+            {
+                lobbyTime_object.setup();
+            }
             PhotonNetwork.NickName = PhotonNetwork.LocalPlayer.ActorNumber + "";
             txtCurrentRoomName.text = PhotonNetwork.CurrentRoom.Name;
             print("Name of room: " + PhotonNetwork.CurrentRoom.Name +
@@ -254,7 +261,8 @@ public class Network : MonoBehaviourPunCallbacks
             photonView = gameObject.GetComponent<PhotonView>();
             photonView.RPC("RefreshPlayerNumberOnJoin", RpcTarget.All);
             photonView.RPC("RoomPlayerJoin", RpcTarget.All);
-            //txtCounterPlayersInRoom.text = "("+ PhotonNetwork.CurrentRoom.PlayerCount + "/10)";
+            //txtCounterPlayersInRoom.text = "("+ PhotonNetwork.CurrentRoom.PlayerCount + "/10)";            
+            
 
             if (PhotonNetwork.CurrentRoom.PlayerCount == maxPlayersOfRoom)
             {
@@ -436,7 +444,7 @@ public class Network : MonoBehaviourPunCallbacks
         setPhotonViewID();
         setPlayerMovement(false);
         Introduction_Panel.SetActive(true);
-        introP_object.setup();
+        introPanel_object.setup();
         if (isSaboteur)
         {
             myPlayerRole.text = "Rolle >> Saboteur";
@@ -796,6 +804,7 @@ public class Network : MonoBehaviourPunCallbacks
             {
                 print("QUIT: Saboteur left the game, reset?");
             }
+            lobbyTime_object.setLobbyRoomPeople(false);
             maxPlayersOfRoom -= 1; 
             photonView.RPC("RoomPlayerLeave", RpcTarget.All, PhotonNetwork.NickName.ToString());
             photonView.RPC("RefreshPlayerNumberOnLeave", RpcTarget.All);
