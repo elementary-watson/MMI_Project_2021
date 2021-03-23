@@ -80,18 +80,20 @@ public class Gameover_Panel_Script : MonoBehaviour
         {
             print("Check " + kvp.Key + " value " + kvp.Value);
         }
-            //Einlesen der Actor ID in richtiger Reihenfolge
+        //Einlesen der Actor ID in richtiger Reihenfolge
+        print("New lists");
         foreach (KeyValuePair<int, float> kvp in allPlayerScores)
         {
             orderOfPlayer[m] = kvp.Key;
-            print("Oder player: " + orderOfPlayer[m] );
+            scoreOfPlayer[m] = kvp.Value;
+            print("player: " + orderOfPlayer[m] + " value " + scoreOfPlayer[m]);
             m++;
         }
         //Einlesen der Scores in richtiger Reihenfolge
-        for (int l = 0; l<allPlayers.Count; l++)
+        /*for (int l = 0; l<allPlayers.Count; l++)
         {
             scoreOfPlayer[l] = allPlayerScores[orderOfPlayer[l]];
-        }
+        }*/
 
         for (int i = 0; i < scoreOfPlayer.Length - 1; i++)
         { 
