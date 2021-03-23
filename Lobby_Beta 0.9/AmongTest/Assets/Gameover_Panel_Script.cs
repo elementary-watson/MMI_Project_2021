@@ -138,7 +138,7 @@ public class Gameover_Panel_Script : MonoBehaviour
         }*/
         for (int j = 0; j < allPlayers.Count; j++)
         {
-            //ID FARBE TASKS PUNKTE
+            //ID-FARBE-TASKS-PUNKTE
             playerRankingChains[j] = orderOfPlayer[j] + "-" + allPlayers[orderOfPlayer[j]] + "-" + allplayerTasks[orderOfPlayer[j]] + "-" + allPlayerScores[orderOfPlayer[j]];
             createRankElement(playerRankingChains[j]);
         }

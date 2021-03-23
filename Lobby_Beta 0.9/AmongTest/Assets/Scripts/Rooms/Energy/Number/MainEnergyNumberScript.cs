@@ -27,7 +27,7 @@ public class MainEnergyNumberScript : MonoBehaviour
         setup();
     }
 
-    private void setup()
+    public void setup()
     {
         fixedcounter = 6;
         count = 0;

@@ -26,13 +26,17 @@ public class CallMeeting_Script : MonoBehaviour
 
     public AudioSource voting_Background_sound;
     public AudioSource game_Background_sound;
+
+    [SerializeField] Task_Reference_Script tskRef_object;
+
     // Start is called before the first frame update
     void Start()
     {        
     }
     public void setup(bool isCrewmate)
     {
-        foreach(Single_Maptask_Script item in allSingleMapTask_objects)
+        tskRef_object.callSetupAll();
+        foreach (Single_Maptask_Script item in allSingleMapTask_objects)
         {
             //item.Reset();
         }

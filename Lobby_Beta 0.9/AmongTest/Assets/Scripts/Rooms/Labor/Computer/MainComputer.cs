@@ -28,7 +28,7 @@ public class MainComputer : MonoBehaviour
         setup();
     }
 
-    private void setup()
+    public void setup()
     {
         fixedcounter = 10;
         count = 0;

@@ -44,7 +44,7 @@ public class MainSkriptGame : MonoBehaviour
 
     }
 
-    private void setup()
+    public void setup()
     {
         fourLetters = "";
         infoBoxText.text = "";

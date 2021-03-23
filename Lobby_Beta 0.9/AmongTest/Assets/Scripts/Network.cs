@@ -12,6 +12,8 @@ using UnityEngine.UI;
 
 public class Network : MonoBehaviourPunCallbacks
 {
+    int GAMEID = 100;
+
     [Header("LobbyRoom")]
     [SerializeField] private TMP_Text[] playerNameTexts = new TMP_Text[10];
     [SerializeField] private TMP_Text[] playerReadyTexts = new TMP_Text[10];

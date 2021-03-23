@@ -29,7 +29,7 @@ public class MainTablet : MonoBehaviour
         setup();
     }
 
-    private void setup()
+    public void setup()
     {
         currentPosition = 0;
         fixedcounter = 10;

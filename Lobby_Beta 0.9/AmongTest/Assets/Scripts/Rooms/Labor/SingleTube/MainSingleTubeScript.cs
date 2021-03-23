@@ -15,7 +15,7 @@ public class MainSingleTubeScript : MonoBehaviour
         setup();
     }
 
-    private void setup()
+    public void setup()
     {
         s_tubeobject.setup();
         win_message.SetActive(false);

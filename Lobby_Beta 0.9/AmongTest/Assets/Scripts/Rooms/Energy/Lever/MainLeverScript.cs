@@ -19,7 +19,7 @@ public class MainLeverScript : MonoBehaviour
         setup();    
     }
 
-    private void setup()
+    public void setup()
     {
         counter = 0;
         fincounter = 5;

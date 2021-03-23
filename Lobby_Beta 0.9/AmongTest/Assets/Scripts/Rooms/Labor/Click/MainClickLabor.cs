@@ -28,7 +28,7 @@ public class MainClickLabor : MonoBehaviour
         
     }
 
-    private void setup()
+    public void setup()
     {
         currentPosition = 0;
         fixedcounter = 12;
