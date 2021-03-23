@@ -34,7 +34,7 @@ public class CallMeeting_Script : MonoBehaviour
     {
         foreach(Single_Maptask_Script item in allSingleMapTask_objects)
         {
-            item.Reset();
+            //item.Reset();
         }
 
         game_Background_sound.Stop();

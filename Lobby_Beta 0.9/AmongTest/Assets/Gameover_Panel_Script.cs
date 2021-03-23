@@ -120,8 +120,8 @@ public class Gameover_Panel_Script : MonoBehaviour
             print("Print scores: " + value);
         }
         int k = 0;
-        
-        foreach (KeyValuePair<int, string> kvp in allPlayers) // für jeden Player
+
+        /*foreach (KeyValuePair<int, string> kvp in allPlayers) // für jeden Player
         {
             foreach (KeyValuePair<int, float> innerkvp in allPlayerScores) // jeder player score
             {
@@ -132,7 +132,7 @@ public class Gameover_Panel_Script : MonoBehaviour
                 }
             }
             k++;                
-        }
+        }*/
         for (int j = 0; j < allPlayers.Count; j++)
         {
             playerRankingChains[j] = orderOfPlayer[j] + "-" + allPlayers[orderOfPlayer[j]] + "-" + allplayerTasks[orderOfPlayer[j]] + "-" + allPlayerScores[orderOfPlayer[j]];

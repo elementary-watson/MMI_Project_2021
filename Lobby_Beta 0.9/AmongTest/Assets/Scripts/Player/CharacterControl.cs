@@ -26,6 +26,8 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
     [SerializeField] bool canInteract;
     [SerializeField] Image img_active;
     [SerializeField] Image img_inactive;
+    bool mainConsoleInteractable = true;
+    public bool cooldown = false;
 
     #region getta/setta
     public void resetTask()
@@ -60,7 +62,8 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
     }
     public void toggleInteractFunction(bool canInteract)
     {
-            this.canInteract = canInteract;
+        this.canInteract = canInteract;
+        mainConsoleInteractable = true;
     }
     public float getIncrementPower()
     {
@@ -114,7 +117,9 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
         //Vector3 icon_position = new Vector3(cam.WorldToViewportPoint())
         interactIcon.transform.position = new Vector2(xValue,yValue);*/
     }
-
+    public void start()
+    {
+    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
@@ -211,14 +216,21 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
             else if (collision) { }
         }
     }
-    
+
     // Update is called once per frame
+    public void resetCooldown()
+    {
+        cooldown = false;
+    }
     void Update()
     {
         if (photonView.IsMine)
         {
-            //interactIcon = GameObject.FindGameObjectWithTag("test");
-            if (Input.GetKeyDown(KeyCode.Space)) CheckInteraction();
+            if (Input.GetKeyDown(KeyCode.Space) && cooldown == false) {
+                cooldown = true;
+                CheckInteraction();
+                Invoke("resetCooldown", 1f);
+            }
          
         }
         //xVal = Input.GetAxisRaw
@@ -245,6 +257,7 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
             resetPosition();
         }
     }
+    
     public void CheckInteraction()
     {
         if (photonView.IsMine)
@@ -256,7 +269,8 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
                 foreach (RaycastHit2D rc in hits)
                 {
                     if (canInteract)
-                    {
+                    {                        
+                                                    
                         if (rc.transform.GetComponent<Interactable>()) // Checkt nach Task Collidern
                         {
                             rc.transform.GetComponent<Interactable>().Interact();
@@ -265,15 +279,22 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
                             currentTask = mainConsole_object.getCurrentTask();
                             mcs_object.setTargetRoom(currentTask);
                             gInfoScript_object.shortNotification("goCenter");
+                            mainConsoleInteractable = true;
                             return;
                         }
+                       
                         else if (rc.transform.GetComponent<BoxCollider2D>().CompareTag("Tag_MainConsole")) // Main-Console
                         {
-                            currentTask = mainConsole_object.Interact();
-                            mcs_object.resetTargetImages();
-                            mcs_object.setTargetRoom(currentTask);
-                            gInfoScript_object.shortNotification("goTask");
-                        }
+                            if (mainConsoleInteractable)
+                            {
+                                mainConsoleInteractable = false;
+                                currentTask = mainConsole_object.Interact();
+                                mcs_object.resetTargetImages();
+                                mcs_object.setTargetRoom(currentTask);
+                                gInfoScript_object.shortNotification("goTask");
+                            }
+                        }                        
+                        
                     }
                 }
             }

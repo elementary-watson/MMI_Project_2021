@@ -19,7 +19,7 @@ public class Lightswitch_Logic : MonoBehaviour
     {
         /*for (int i = 0; i < 6; i++)
         {
-            switches[i].enabled = false;
+            switches[i].enabled = true;
         }*/
         winText.SetActive(false);
         onCount = 0;
@@ -70,6 +70,7 @@ public class Lightswitch_Logic : MonoBehaviour
     }
     private void taskFinished()
     {
+        setup();
         for(int i = 0; i<5; i++)
         {
             //switches[0].interac

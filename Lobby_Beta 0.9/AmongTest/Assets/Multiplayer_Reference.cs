@@ -32,11 +32,12 @@ public class Multiplayer_Reference : MonoBehaviour
     List<string> RandomColorList;
 
     List<string> AllTasksList = new List<string> { // XOF AMIR
-        "Tag_WaterDispenser", "Tag_Game", "Tag_NumberRadio", 
+        "Tag_WaterDispenser", "Tag_Game", "Tag_NumberRadio",
         "Tag_NumberBox", "Tag_ElectricBox", "Tag_ClickCabinet",
-        "Tag_Fillgauge", "Tag_EnergyNumber", "Tag_LeverEnergy", 
-        "Tag_ClickMediKit", "Tag_Sink", "Tag_Tablet", 
-        "Tag_ComputerLabor", "Tag_LaborSingleTube", "Tag_ClickLabor"
+        "Tag_Fillgauge", "Tag_EnergyNumber", "Tag_LeverEnergy",
+        "Tag_ClickMediKit", "Tag_Sink", "Tag_Tablet",
+        "Tag_ComputerLabor", "Tag_LaborSingleTube", "Tag_ClickLabor",
+        "Tag_NR_no", "Tag_NR_so", "Tag_NR_nw", "Tag_NR_sw"
     };
 
     List<string> saboteurTasksList = new List<string> { // XOF AMIR

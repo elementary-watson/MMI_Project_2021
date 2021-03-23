@@ -29,12 +29,13 @@ public class Main_Console_Script : MonoBehaviour
     {
         if (isInteractable)
         {
+            isInteractable = false;
             for (int i = 0; i < 4; i++)
             {
                 the_active_state[i].enabled = false;
             }
             _network.getNextTask();
-            isInteractable = false;
+            
             return currentTask;
         }
         return "null";

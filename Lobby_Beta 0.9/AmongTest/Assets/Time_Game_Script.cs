@@ -22,7 +22,7 @@ public class Time_Game_Script : MonoBehaviour
     int canPlay;
     // Start is called before the first frame update
 
-    float start = 120f; //120f;
+    float start = 20f; //120f;
 
     private void Awake()
     {
@@ -56,6 +56,7 @@ public class Time_Game_Script : MonoBehaviour
     }
     void Update()
     {
+        //elapsedTime = start;
         if (timerGoing)
         {
             if (elapsedTime > 0)

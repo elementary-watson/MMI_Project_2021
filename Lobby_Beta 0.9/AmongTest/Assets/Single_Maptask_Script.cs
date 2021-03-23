@@ -10,7 +10,7 @@ public class Single_Maptask_Script : Interactable
     [SerializeField] bool isInteractable;
     [SerializeField] GameObject myPanel;
     [SerializeField] bool holdMovement;// damit kein (rpc) network calls pro frame passieren
-    int updateHelper;// damit kein (rpc) network calls pro frame passieren
+    [SerializeField] int updateHelper;// damit kein (rpc) network calls pro frame passieren
 
     public override void Interact()
     {
