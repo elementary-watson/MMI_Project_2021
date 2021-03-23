@@ -12,7 +12,7 @@ using UnityEngine.UI;
 
 public class Network : MonoBehaviourPunCallbacks
 {
-    int GAMEID = 100;
+    int GAMEID = 101;
     [SerializeField] string SessionID;
     [Header("LobbyRoom")]
     [SerializeField] private TMP_Text[] playerNameTexts = new TMP_Text[10];
