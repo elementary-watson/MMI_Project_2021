@@ -266,7 +266,7 @@ public class Multiplayer_Reference : MonoBehaviour
     public void setGhostIncrementPower(int ghostIncrementPower) { this.ghostIncrementPower = ghostIncrementPower; }
     
     public int getSaboteurActorID() { return saboteurActorID; }
-    public void setSaboteurActorID(int saboteurActorID) { if(this.saboteurActorID == -1) this.saboteurActorID = saboteurActorID; }
+    public void setSaboteurActorID(int saboteurActorID) { this.saboteurActorID = saboteurActorID; }
     
     public int getNumberOfPlayer() { return numberOfPlayer; }
     public void setNumberOfPlayer(int numberOfPlayer) { this.numberOfPlayer = numberOfPlayer; }

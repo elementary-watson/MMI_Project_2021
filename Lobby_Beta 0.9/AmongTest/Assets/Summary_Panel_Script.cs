@@ -64,6 +64,7 @@ public class Summary_Panel_Script : MonoBehaviour
     }
     public void turnmeoff()
     {
+        print("GAME CONTNUES");
         Summary_Panel.SetActive(false);
         _network.setPlayerMovement(true);
         progBar_script.setup();

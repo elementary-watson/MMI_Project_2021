@@ -1,18 +1,21 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
 public class WebRequest : MonoBehaviour
 {
-    string gender,age , occupation, graduation, nationality, regular_gamer, amongus_played, playHoursPerWeek, email;
+    string actorId, dateTime, gender,age , occupation, graduation, nationality, regular_gamer, amongus_played, playHoursPerWeek, email;
     void Start()
     {
-        StartCoroutine(UploadPost(gender,age , occupation, graduation, nationality, regular_gamer, amongus_played, playHoursPerWeek, email));
+        StartCoroutine(UploadPost(actorId, dateTime, gender,age , occupation, graduation, nationality, regular_gamer, amongus_played, playHoursPerWeek, email));
     }
 
-    public void SaveData(string gender, string age, string occupation, string graduation, string nationality, string regular_gamer, string amongus_played, string playHoursPerWeek, string email)
+    public void SaveData(string actorId, string dateTime, string gender, string age, string occupation, string graduation, string nationality, string regular_gamer, string amongus_played, string playHoursPerWeek, string email)
     {
+        this.actorId = actorId;
+        this.dateTime =dateTime;
         this.gender = gender;
         this.age = age;
         this.occupation = occupation;
@@ -24,13 +27,15 @@ public class WebRequest : MonoBehaviour
         this.email = email;
     }
 
-    IEnumerator UploadPost(string gender,string age, string occupation, string graduation, string nationality, string regular_gamer, string amongus_played, string playHoursPerWeek, string email)
+    IEnumerator UploadPost(string actorId, string dateTime, string gender,string age, string occupation, string graduation, string nationality, string regular_gamer, string amongus_played, string playHoursPerWeek, string email)
     {
-
+        //dateTime = System.DateTime.Now;
+        //var unixTime = dateTime.ToUniversalTime() - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        string currentTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         WWWForm form = new WWWForm();
         //form.AddField("ID", "5");
-        form.AddField("userID", "5");
-        form.AddField("TimeStamp", "21031541");
+        form.AddField("userID", actorId);
+        form.AddField("TimeStamp", currentTime);
         form.AddField("gender", gender);
         form.AddField("age", age);
         form.AddField("occupation", occupation);

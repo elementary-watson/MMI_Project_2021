@@ -231,6 +231,10 @@ MonoBehaviour:
   mainConsole_object: {fileID: 0}
   currentTask: 
   gInfoScript_object: {fileID: 0}
+  canInteract: 0
+  img_active: {fileID: 0}
+  img_inactive: {fileID: 0}
+  cooldown: 0
 --- !u!95 &6362391285179497199
 Animator:
   serializedVersion: 3

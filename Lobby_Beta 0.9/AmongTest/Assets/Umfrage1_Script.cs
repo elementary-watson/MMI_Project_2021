@@ -3,16 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-
+using System;
 public class Umfrage1_Script : MonoBehaviour
 {
     public GameObject[] questionGroupArr;
+    public GameObject frageBogenAllgemein;
     public QAClass[] qaArr;
     [SerializeField] WebRequest wr_object;
     public Text infotext;
     [SerializeField] GameObject webrequest;
     bool isFilled;
-
+    int actorID;
+    DateTime dateTime;
+    int timestamp;
     string geschlecht,alter , beruf, abschluss, staatsangehörigkeit, videospiele, amongus, stdProWoche, email;
 
 
@@ -22,8 +25,15 @@ public class Umfrage1_Script : MonoBehaviour
         isFilled = false;
     }
 
-    public void btn_finished()
+    public void btn_finished(int actorID)
     {
+        this.actorID = actorID;
+        //int timestamp = (int) System.DateTime.Now;
+        dateTime = System.DateTime.Now;
+        var unixTime = dateTime.ToUniversalTime() - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        print("web id"+actorID);
+        print("Time" + unixTime);
+
         for (int i = 0; i < qaArr.Length; i++)
         {
             qaArr[i] = ReadQuestionAndAnswer(questionGroupArr[i]);
@@ -31,12 +41,17 @@ public class Umfrage1_Script : MonoBehaviour
         //print(geschlecht +"\t"+ beruf + "\t" + abschluss + "\t" + staatsangehörigkeit + "\t" + videospiele + "\t" + amongus + "\t" + stdProWoche + "\t" + email);
         if(isFilled)
         {
+            print("ISFILLED");
             webrequest.SetActive(true);
-            wr_object.SaveData(geschlecht, alter, beruf ,abschluss ,staatsangehörigkeit ,videospiele ,amongus ,stdProWoche ,email);
+            wr_object.SaveData(actorID.ToString(), dateTime.ToString(), geschlecht, alter, beruf ,abschluss ,staatsangehörigkeit ,videospiele ,amongus ,stdProWoche ,email);
+            Invoke("CloseMyPanel", 5f);
         }
 
     }
-
+    public void CloseMyPanel()
+    {
+        frageBogenAllgemein.SetActive(false);
+    }
     QAClass ReadQuestionAndAnswer (GameObject questionGroup)
     {
         QAClass result = new QAClass();

@@ -1,10 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
 public class WebRequestSurvey2 : MonoBehaviour
 {
+    [SerializeField] Network _network;
     string value1, value2, value3, value4, value5, value6, value7, value8, value9, value10, value11, value12, value13, value14, value15, value16, value17, value18, value19;
 
     public void CallCoroutine()
@@ -45,11 +47,12 @@ public class WebRequestSurvey2 : MonoBehaviour
                    string value11, string value12, string value13, string value14, string value15, string value16, string value17, string value18, string value19)
     {
 
+        string currentTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         WWWForm form = new WWWForm();
-        form.AddField("userID", "5");
-        form.AddField("SessionID", "21031541");
-        form.AddField("TimeStamp", "01234567");
-        form.AddField("avatarColor", "Blue");
+        form.AddField("userID", _network.getActorId());
+        form.AddField("SessionID", _network.getSessionID());
+        form.AddField("TimeStamp", currentTime);
+        form.AddField("avatarColor", _network.getPlayerColor());
         form.AddField("value1", value1);
         form.AddField("value2", value2);
         form.AddField("value3", value3);

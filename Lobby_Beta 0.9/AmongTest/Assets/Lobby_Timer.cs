@@ -12,11 +12,13 @@ public class Lobby_Timer : MonoBehaviour
     [SerializeField] Network _network;
     public AudioSource countdown_sound;
     [SerializeField] bool timerGoing;
-    int canPlay;
-    int lobbyRoomPeople;
+    [SerializeField] int canPlay;
+    [SerializeField] int lobbyRoomPeople;
+    [SerializeField] int actorID;
 
-    float start = 180f;
-    public void setup()
+
+    float start = 10f;
+    public void setup(int actorId)
     {
         beginTimer();
     }

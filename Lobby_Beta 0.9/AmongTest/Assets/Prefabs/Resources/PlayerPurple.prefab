@@ -153,6 +153,7 @@ MonoBehaviour:
   canInteract: 0
   img_active: {fileID: 0}
   img_inactive: {fileID: 0}
+  cooldown: 0
 --- !u!95 &1356484061289570118
 Animator:
   serializedVersion: 3

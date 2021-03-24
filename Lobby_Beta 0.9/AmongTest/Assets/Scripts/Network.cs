@@ -1,5 +1,4 @@
-﻿using ExitGames.Client.Photon;
-using Photon.Pun;
+﻿using Photon.Pun;
 using Photon.Realtime;
 using System;
 //using System.Windows.Forms;
@@ -7,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Network : MonoBehaviourPunCallbacks
@@ -64,8 +62,9 @@ public class Network : MonoBehaviourPunCallbacks
     [SerializeField] GameObject Callmeeting_Panel;
     [SerializeField] CallMeeting_Script callMeeting_object;
     [SerializeField] private bool isGameOver;
-    [SerializeField] private string RPC_timestamp; //XOF Zum Loggen der Daten
-    [SerializeField] string RPC_currentTimestamp; //XOF Zum Loggen der Daten
+    [SerializeField] private double RPC_GameStartTimestamp; //XOF Zum Loggen der Daten
+    [SerializeField] string RPC_currentTimestampString; //XOF Zum Loggen der Daten
+    [SerializeField] double RPC_currentTimestampDouble; //XOF Zum Loggen der Daten
     public Progressbar_Script prog_reference;
     public Multiplayer_Reference m_reference;
     [SerializeField] Gameover_Panel_Script gameOver_object;
@@ -86,6 +85,8 @@ public class Network : MonoBehaviourPunCallbacks
     [SerializeField] string myCurrentTask; //XOF meine Task
     [SerializeField] Image img_active;
     [SerializeField] Image img_inactive;
+    [SerializeField] Umfrage1_Script umfrage1;
+    [SerializeField] GameObject Umfrage1_Panel;
 
     private void Start()
     {
@@ -115,8 +116,11 @@ public class Network : MonoBehaviourPunCallbacks
         
     }
     #region getta/setta
-    public string getRPC_currentTimestamp() { return RPC_currentTimestamp; }
-    public void setRPC_currentTimestamp(double RPC_currentTimestamp) { this.RPC_currentTimestamp = "" +RPC_currentTimestamp; }
+    public int getRPC_GameStartTimestamp() { return (int)RPC_GameStartTimestamp; }
+    public string getRPC_currentTimestampString() { return RPC_currentTimestampString; }
+    public double getRPC_currentTimestampDouble() { return RPC_currentTimestampDouble; }
+    public void setRPC_currentTimestamp(double RPC_currentTimestamp) { this.RPC_currentTimestampString = "" + RPC_currentTimestamp; 
+        this.RPC_currentTimestampDouble = RPC_currentTimestamp; }
     public string getSessionID() { return SessionID; }
     public void setSessionID(string sessionID) { print(sessionID); SessionID = sessionID; }
     public int getActorId() { return PhotonNetwork.LocalPlayer.ActorNumber; }
@@ -251,24 +255,35 @@ public class Network : MonoBehaviourPunCallbacks
         //else if (PhotonNetwork.CurrentRoom.PlayerCount == roomMaxPlayerRef+1) PhotonNetwork.LeaveRoom();
         if (PhotonNetwork.CurrentRoom.IsOpen == true)
         {
-            lobbyTime_object.setLobbyRoomPeople(true);
+            print(System.DateTime.Now);
+            umfrage1.btn_finished(getActorId());
+            photonView = gameObject.GetComponent<PhotonView>();
+            addPeopleTimerLobby(true);
             if (PhotonNetwork.CurrentRoom.PlayerCount > 4)
             {
-                lobbyTime_object.setup();
+                startTimerLobby();
             }
-            PhotonNetwork.NickName = PhotonNetwork.LocalPlayer.ActorNumber + "";
+            else if (PhotonNetwork.CurrentRoom.PlayerCount == 4)
+            {
+                startTimerLobby();
+            }
+            else if (PhotonNetwork.CurrentRoom.PlayerCount < 5)
+            {
+
+            }
+                PhotonNetwork.NickName = PhotonNetwork.LocalPlayer.ActorNumber + "";
             txtCurrentRoomName.text = PhotonNetwork.CurrentRoom.Name;
             print("Name of room: " + PhotonNetwork.CurrentRoom.Name +
                 "Player in current room: " + PhotonNetwork.CurrentRoom.PlayerCount +
                 "\nAlle RaumStatistiken PlayerInRooms: " + PhotonNetwork.CountOfPlayersInRooms +
                 "\nDEBUG: (InRoom) Name of Player: " + PhotonNetwork.NickName);
             statusText.text = "Connected to Lobby: " + lobby_Room_Name;
-
-            photonView = gameObject.GetComponent<PhotonView>();
+            
             photonView.RPC("RefreshPlayerNumberOnJoin", RpcTarget.All);
             photonView.RPC("RoomPlayerJoin", RpcTarget.All);
             //txtCounterPlayersInRoom.text = "("+ PhotonNetwork.CurrentRoom.PlayerCount + "/10)";            
-            
+
+            //photonView.RPC("sendMyActorID", RpcTarget.All);
 
             if (PhotonNetwork.CurrentRoom.PlayerCount == maxPlayersOfRoom)
             {
@@ -281,8 +296,63 @@ public class Network : MonoBehaviourPunCallbacks
         else { print("ERROR: Joining Room failed"); }
     }
 
-    public void setSessionID()
+    public void addPeopleTimerLobby(bool isJoin)
     {
+        photonView.RPC("RPC_addPeopleTimerLobby", RpcTarget.AllBuffered, isJoin);
+    }
+    [PunRPC]
+    public void RPC_addPeopleTimerLobby(bool isJoin)
+    {
+        lobbyTime_object.setLobbyRoomPeople(isJoin);
+    }
+    public void startTimerLobby()
+    {
+        photonView.RPC("RPC_startTimerLobby", RpcTarget.AllBuffered);
+    }
+    [PunRPC]
+    public void RPC_startTimerLobby()
+    {
+        lobbyTime_object.setup(getActorId());
+    }
+
+    public void stopTimerLobby()
+    {
+        photonView.RPC("RPC_stopTimerLobby", RpcTarget.AllBuffered);
+    }
+    [PunRPC]
+    public void RPC_stopTimerLobby()
+    {
+        lobbyTime_object.stopTimer();
+    }
+
+    public void sendMyActorID()
+    {
+        photonView.RPC("RPC_sendMyActorID", RpcTarget.All, getActorId());
+    }
+    int countAllPlayersArrived = 0;
+    int lastPlayer;
+    [PunRPC]
+    public void RPC_sendMyActorID(int otherActorID)
+    {
+        print(PhotonNetwork.CurrentRoom.PlayerCount);
+        countAllPlayersArrived += 1;
+        if(otherActorID < getActorId())
+        {
+            print(otherActorID + " " + getActorId());
+            lastPlayer = getActorId();
+        }
+        else
+        {
+            lastPlayer = otherActorID;
+        }
+        if (countAllPlayersArrived == PhotonNetwork.CurrentRoom.PlayerCount && lastPlayer == getActorId())
+        {
+            lastPlayerSetConfiguration();
+            maxPlayersOfRoom = (int)PhotonNetwork.CurrentRoom.PlayerCount;
+        }
+    }
+    public void setSessionID()
+    {        
         photonView.RPC("RPC_setSessionID", RpcTarget.All);
     }
     [PunRPC]
@@ -304,6 +374,12 @@ public class Network : MonoBehaviourPunCallbacks
         setSessionID(sessionID);
     }
     public void initiateStartGame() 
+    {
+        sendMyActorID();
+        
+
+    }
+    public void lastPlayerSetConfiguration()
     {
         //Randomize colors
         RandomColor();
@@ -334,9 +410,12 @@ public class Network : MonoBehaviourPunCallbacks
         }
         this.randomColorList = RandomColorList;
     }
+    bool canSetSaboteur =true;
     [PunRPC]
     public void RPC_setupPlayer(String idAndColor) //von joinlobby aufgerufen
     {
+        m_reference.setNumberOfPlayer((int)PhotonNetwork.CurrentRoom.PlayerCount);
+        maxPlayersOfRoom = (int)PhotonNetwork.CurrentRoom.PlayerCount;
         //XOF hier werden farben eingestellt und die multiplayer referenz aufgefüllt
         String[] parts = idAndColor.Split('-');
         if (parts[0] == (PhotonNetwork.NickName))
@@ -357,8 +436,10 @@ public class Network : MonoBehaviourPunCallbacks
             i++;
         }
         bool isMaxPlayer = m_reference.addPlayer(int.Parse(parts[0]), parts[1].Remove(0, 6), maxPlayersOfRoom);
-        if (isMaxPlayer == true) // wenn alle ankommen soll nur EINER den saboteur bestimmen
+        
+        if (getActorId() == lastPlayer && canSetSaboteur == true) // wenn alle ankommen soll nur EINER den saboteur bestimmen
         {
+            canSetSaboteur = false;
             print("Max was true");
             IDictionary<int, string> allplayers = m_reference.getPlayers();
             int pickTheWizard = getActorId();
@@ -443,13 +524,15 @@ public class Network : MonoBehaviourPunCallbacks
     [PunRPC]
     public void startGame(PhotonMessageInfo info)
     {
+        Umfrage1_Panel.SetActive(false);
         print("TimeStamp: " + info.timestamp);
         print("TimeStamp: " + info.SentServerTime);
-        RPC_timestamp = "" + info.SentServerTime;
+        RPC_GameStartTimestamp =  info.SentServerTime;
         //GameMapPanel.SetActive(true);
         //LobbyRoomPanel.SetActive(false);
-        if(test2 == 0)
-            ReferenceForDeveloper.text = RPC_timestamp;
+        if (test2 == 0) { }
+            //ReferenceForDeveloper.text = RPC_GameStartTimestamp;
+            print("HERE" + test2 + "  " + m_reference.getNumberOfPlayer());
         test2 += 1;
         if (test2 == m_reference.getNumberOfPlayer())
         {
@@ -677,6 +760,7 @@ public class Network : MonoBehaviourPunCallbacks
     [PunRPC]
     public void RPC_setPlayerToGhost(int kickedPhotonViewId)
     {
+        //m_reference.
         print("Photon Ghost call");
         if (isSaboteur)
         {
@@ -740,6 +824,7 @@ public class Network : MonoBehaviourPunCallbacks
         {
             setIsGameOver(isGameOver);
         }
+        print("RESULT GAMEOVER" + timeCheckForGameOver + " " + maxPlayersOfRoom);
         if (timeCheckForGameOver == maxPlayersOfRoom)
         {
             pms_object.checkVotingResult(getIsGameOver());
@@ -758,6 +843,7 @@ public class Network : MonoBehaviourPunCallbacks
     [PunRPC]
     public void buildStatistics(int actorID , float score, int numOfTasks)
     {
+        canSetSaboteur = true;
         statisticsHelper += 1;
         print("buildStatistics called");
         allScoresDone = m_reference.addAllPlayerScores(actorID, score, maxPlayersOfRoom);
@@ -836,6 +922,10 @@ public class Network : MonoBehaviourPunCallbacks
                 print("QUIT: Saboteur left the game, reset?");
             }
             lobbyTime_object.setLobbyRoomPeople(false);
+            if (PhotonNetwork.CurrentRoom.PlayerCount > 4)
+            {
+                addPeopleTimerLobby(false);
+            }
             maxPlayersOfRoom -= 1; 
             photonView.RPC("RoomPlayerLeave", RpcTarget.All, PhotonNetwork.NickName.ToString());
             photonView.RPC("RefreshPlayerNumberOnLeave", RpcTarget.All);

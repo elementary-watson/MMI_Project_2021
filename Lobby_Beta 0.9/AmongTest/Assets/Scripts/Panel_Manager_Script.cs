@@ -148,6 +148,7 @@ public class Panel_Manager_Script : MonoBehaviour
             Score_Panel.SetActive(true);
             Player_Panel.SetActive(true);
             Summary_Panel.SetActive(true);// summary rufen und dann nächste runde
+
             SummaryP_object.setNextMode(false, false); //escaped - nextRound
             result_VotingPanel.SetActive(false);
             voting_panel.SetActive(false);

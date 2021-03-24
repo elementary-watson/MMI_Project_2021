@@ -56,70 +56,70 @@ public class Result_Voting_Panel : MonoBehaviour
                 string votePlayerColorNumber = "";
                 #region ifs
 
-                
-                if (myplayerColor.Contains("Black"))
+
+                if (_network.getPlayerColor().Contains("Black"))
                 {
-                    myPlayerColorNumber = "7"; 
+                    myPlayerColorNumber = "7";
                 }
-                else if (myplayerColor.Contains("White"))
+                else if (_network.getPlayerColor().Contains("White"))
                 {
-                    myPlayerColorNumber = "6"; 
+                    myPlayerColorNumber = "6";
                 }
-                else if (myplayerColor.Contains("Pink"))
+                else if (_network.getPlayerColor().Contains("Pink"))
                 {
                     myPlayerColorNumber = "8";
                 }
-                else if (myplayerColor.Contains("Orange"))
+                else if (_network.getPlayerColor().Contains("Orange"))
                 {
                     myPlayerColorNumber = "9";
                 }
-                else if (myplayerColor.Contains("Red"))
+                else if (_network.getPlayerColor().Contains("Red"))
                 {
                     myPlayerColorNumber = "10";
                 }
-                if (myplayerColor.Contains("Purple"))
+                if (_network.getPlayerColor().Contains("Purple"))
                 {
                     myPlayerColorNumber = "1";
                 }
-                else if (myplayerColor.Contains("Purple"))
+                else if (_network.getPlayerColor().Contains("Purple"))
                 {
                     myPlayerColorNumber = "1";
                 }
 
-                if (myplayerColor.Contains("Brown"))
+                if (_network.getPlayerColor().Contains("Brown"))
                 {
                     myPlayerColorNumber = "2";
                 }
-                else if (myplayerColor.Contains("Purple"))
+                else if (_network.getPlayerColor().Contains("Purple"))
                 {
                     myPlayerColorNumber = "2";
                 }
 
 
-                if (myplayerColor.Contains("Green"))
+                if (_network.getPlayerColor().Contains("Green"))
                 {
                     myPlayerColorNumber = "3";
                 }
-                else if (myplayerColor.Contains("Green"))
+                else if (_network.getPlayerColor().Contains("Green"))
                 {
                     myPlayerColorNumber = "3";
                 }
 
 
-                if (myplayerColor.Contains("Yellow"))
+                if (_network.getPlayerColor().Contains("Yellow"))
                 {
                     myPlayerColorNumber = "4";
                 }
-                else if (myplayerColor.Contains("Yellow"))
+                else if (_network.getPlayerColor().Contains("Yellow"))
                 {
                     myPlayerColorNumber = "4";
                 }
 
-                if (myplayerColor.Contains("Blue"))
+                if (_network.getPlayerColor().Contains("Blue"))
                 {
                     myPlayerColorNumber = "5";
                 }
-                else if (myplayerColor.Contains("Blue"))
+                else if (_network.getPlayerColor().Contains("Blue"))
                 {
                     myPlayerColorNumber = "5";
                 }
@@ -184,14 +184,36 @@ public class Result_Voting_Panel : MonoBehaviour
                     votePlayerColorNumber = "10";
                 }
                 #endregion
+                int survived = 1;
+                if (photonActorID == _network.getActorId())
+                {
+                    survived = 0;
+                }
+                string remainingPlayer = "";
+                IDictionary<int, string> allplayers = m_reference.getPlayers();
+                IDictionary<int, string> kickedPlayer = m_reference.getKickedplayers();
+                int k = 0;
+                foreach (KeyValuePair<int, string> item in allplayers)
+                {
+                    foreach (KeyValuePair<int, string> innerItem in kickedPlayer)
+                    {
+                        if (item.Value == innerItem.Value)
+                        {
+
+                        }
+                        else
+                            remainingPlayer = remainingPlayer + innerItem.Value + "-";
+                    }
+                }
+                int durationTimestamp = (int)_network.getRPC_currentTimestampDouble() - _network.getRPC_GameStartTimestamp();
                 string isSab;
                 if (_network.getIsSaboteur())
                     isSab = "1";
                 else
                     isSab = "0";
                 databaseLogger.sendRequest(
-                    _network.getActorId().ToString(), _network.getSessionID(), _network.getRPC_currentTimestamp(), 
-                    _network.getRPC_currentTimestamp(), m_reference.getGameRound().ToString(), _network.getMaxPlayer().ToString(), "", myPlayerColorNumber, votePlayerColorNumber, "1", "1", "", isSab);
+                    _network.getActorId().ToString(), _network.getSessionID(), _network.getRPC_currentTimestampString(),
+                    durationTimestamp.ToString(), m_reference.getGameRound().ToString(), _network.getMaxPlayer().ToString(), remainingPlayer, myPlayerColorNumber, votePlayerColorNumber, "1", survived.ToString(), "", isSab);
             }
             receivedVotes += 1;
         }        
@@ -249,7 +271,6 @@ public class Result_Voting_Panel : MonoBehaviour
                 img_votedPlayer.sprite = sp;
                 Setup();
                 tmp_resultTexts[3].SetActive(true);
-
             }
             else if (mostVoted.Value > 0)
             {
@@ -418,14 +439,36 @@ public class Result_Voting_Panel : MonoBehaviour
                     votePlayerColorNumber = "10";
                 }
                 #endregion
+                int survived = 1;
+                if (photonActorID == _network.getActorId())
+                {
+                    survived = 0;
+                }
+                string remainingPlayer = "";
+                IDictionary<int, string> allplayers = m_reference.getPlayers();
+                IDictionary<int, string> kickedPlayer = m_reference.getKickedplayers();
+                int k = 0;
+                foreach (KeyValuePair<int, string> item in allplayers)                
+                {
+                    foreach (KeyValuePair<int, string> innerItem in kickedPlayer)
+                    {
+                        if (item.Value == innerItem.Value)
+                        {
+
+                        }
+                        else
+                            remainingPlayer = remainingPlayer + innerItem.Value + "-";
+                    }
+                }
+                int durationTimestamp = (int)_network.getRPC_currentTimestampDouble() - _network.getRPC_GameStartTimestamp();
                 string isSab;
                 if (_network.getIsSaboteur())
                     isSab = "1";
                 else
                     isSab = "0";
                 databaseLogger.sendRequest(
-                    _network.getActorId().ToString(), _network.getSessionID(), _network.getRPC_currentTimestamp(),
-                    _network.getRPC_currentTimestamp(), m_reference.getGameRound().ToString(), _network.getMaxPlayer().ToString(), "", myPlayerColorNumber, votePlayerColorNumber, "0", "1", "", isSab);
+                    _network.getActorId().ToString(), _network.getSessionID(), _network.getRPC_currentTimestampString(),
+                    durationTimestamp.ToString(), m_reference.getGameRound().ToString(), _network.getMaxPlayer().ToString(), remainingPlayer, myPlayerColorNumber, votePlayerColorNumber, "0", survived.ToString(), "", isSab);
             }
             // userID,  SessionID,  TimeStamp,  Duration,  Round,  NumberPlayers,  RemaingPlayers,  avatarColor,  value,  type,  survive,  sentiment,  topic
         } // else (stage 1)
