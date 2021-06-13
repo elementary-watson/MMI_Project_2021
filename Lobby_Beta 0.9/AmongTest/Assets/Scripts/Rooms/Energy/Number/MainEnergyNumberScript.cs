@@ -77,7 +77,7 @@ public class MainEnergyNumberScript : MonoBehaviour
         {
             randomNumberText[i].text = "" + randomNumberList[i];
         }
-        infoBoxText.text = "Klicke alle Zahlen von 1 bis 6 an";
+        infoBoxText.text = "Click all numbers from 1 to 6";
     }
 
     public bool checkPositionNumber(int number)
@@ -95,7 +95,7 @@ public class MainEnergyNumberScript : MonoBehaviour
         count = count + cp;
         if (count == fixedcounter)
         {
-            infoBoxText.text = "Drücke und Halte die Hand";
+            infoBoxText.text = "Squeeze and hold the hand symbol";
             s_handscript[0].setInteractable(true);
         }
     }

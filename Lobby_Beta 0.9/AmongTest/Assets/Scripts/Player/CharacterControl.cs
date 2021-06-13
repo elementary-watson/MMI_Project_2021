@@ -156,11 +156,11 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
 
             if (collision.gameObject.CompareTag("Collidor_Hauptraum"))
             {
-                mcs_object.SetRoomName("Hauptraum", 0, currentTask);
+                mcs_object.SetRoomName("Main room", 0, currentTask);
             }
             else if (collision.gameObject.CompareTag("Collidor_Freizeitraum"))
             {
-                mcs_object.SetRoomName("Freizeitraum", 1, currentTask);
+                mcs_object.SetRoomName("Recreation room", 1, currentTask);
             }
             else if (collision.gameObject.CompareTag("Collidor_NR_no"))
             {
@@ -168,7 +168,7 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
             }
             else if (collision.gameObject.CompareTag("Collidor_Elektrik"))
             {
-                mcs_object.SetRoomName("Elektrikraum", 3, currentTask);
+                mcs_object.SetRoomName("Electrical room", 3, currentTask);
             }
             else if (collision.gameObject.CompareTag("Collidor_NR_so"))
             {
@@ -176,11 +176,11 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
             }
             else if (collision.gameObject.CompareTag("Collidor_Energie"))
             {
-                mcs_object.SetRoomName("Energieraum", 5, currentTask);
+                mcs_object.SetRoomName("Energy room", 5, currentTask);
             }
             else if (collision.gameObject.CompareTag("Collidor_Medizinraum"))
             {
-                mcs_object.SetRoomName("Medizinraum", 6, currentTask);
+                mcs_object.SetRoomName("Medical Room", 6, currentTask);
             }
             else if (collision.gameObject.CompareTag("Collidor_NR_sw"))
             {
@@ -188,7 +188,7 @@ public class CharacterControl : Photon.Pun.MonoBehaviourPun
             }
             else if (collision.gameObject.CompareTag("Collidor_Labor"))
             {
-                mcs_object.SetRoomName("Labor", 8, currentTask);
+                mcs_object.SetRoomName("Laboratory", 8, currentTask);
             }
             else if (collision.gameObject.CompareTag("Collidor_NR_nw"))
             {

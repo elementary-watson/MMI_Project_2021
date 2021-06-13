@@ -75,7 +75,7 @@ public class MainSkriptGame : MonoBehaviour
     }    
     private void setupPartTwo()
     {
-        infoBoxText.text = "Die mittleren gruenen Knoepfe druecken";
+        infoBoxText.text = "Press the middle green buttons";
         currenPositionMid = 0;
         List<int> nums= new List<int> {0,1,2};
         var count = nums.Count;
@@ -97,7 +97,7 @@ public class MainSkriptGame : MonoBehaviour
     }
     public void setupPartThree() 
     {
-        infoBoxText.text = "Einen der erschienenen Gegner anklicken!";
+        infoBoxText.text = "Click one of the appeared opponents!";
         minigameContainer.SetActive(true);
         List<string> RandomColorList = new List<string> { "Black", "Blue", "Brown", "Pink", "Green", "Orange", "Purple", "Red", "White", "Yellow" };
         var count = RandomColorList.Count;
@@ -230,7 +230,7 @@ public class MainSkriptGame : MonoBehaviour
             fourLetters = fourLetters + " " + randomLetterforTaskList[i];
             fourLetterList[i] = randomLetterforTaskList[i];
         }
-        infoBoxText.text = "Druecke" + fourLetters ;
+        infoBoxText.text = "Press" + fourLetters ;
     }
 
     private void taskfinished()

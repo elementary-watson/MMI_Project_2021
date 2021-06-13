@@ -230,7 +230,7 @@ public class Result_Voting_Panel : MonoBehaviour
         string filename = "Player Color/" + playerColor + "_Char";
         Sprite sp = Resources.Load<Sprite>(filename);
         img_votedPlayer.sprite = sp;
-        p_manager.sendText("Du verdaechtigst diesen Spieler.\nFinale Entscheidung nach der folgenden Diskussionsrunde.");
+        p_manager.sendText("You suspect this player.\nMake a final decision after a quick debate..");
     }
     public void finalReveal(int photonActorID, string playerColor)
     {
@@ -293,7 +293,7 @@ public class Result_Voting_Panel : MonoBehaviour
                 {
                     tmp_resultTexts[0].SetActive(true);
                     Invoke("setPreNoChoiceActive", 0.5f);
-                    p_manager.sendText( "Kein Spieler wurde ausgewählt.");
+                    p_manager.sendText("No player was selected.");
 
                 }
                 catch (Exception e)

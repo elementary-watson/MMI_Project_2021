@@ -271,7 +271,7 @@ public class Network : MonoBehaviourPunCallbacks
             {
 
             }
-                PhotonNetwork.NickName = PhotonNetwork.LocalPlayer.ActorNumber + "";
+            PhotonNetwork.NickName = PhotonNetwork.LocalPlayer.ActorNumber + "";
             txtCurrentRoomName.text = PhotonNetwork.CurrentRoom.Name;
             print("Name of room: " + PhotonNetwork.CurrentRoom.Name +
                 "Player in current room: " + PhotonNetwork.CurrentRoom.PlayerCount +

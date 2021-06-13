@@ -12,8 +12,7 @@ public class Game_Info_Script : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Invoke("startCenterCall", 8);
-       
+        Invoke("startCenterCall", 8);       
     }
     public void startCenterCall()
     {
@@ -24,26 +23,26 @@ public class Game_Info_Script : MonoBehaviour
         switch (source)
         {
             case "startCenter":
-                tmp_infoText.text = "Nutze die Hauptkonsole (Im Zentrum)"; // startCenter
+                tmp_infoText.text = "Use the main console (Location: center of map)"; // startCenter
                 notify_sound.Play();
                 break;
             case "goTask":
-                tmp_infoText.text = "Erledige schnell die Task! (Siehe Karte)"; // goTask
+                tmp_infoText.text = "Complete the task quickly! (Use your map!)"; // goTask
                 notify_sound.Play();
                 break;
             case "backCenter":
-                tmp_infoText.text = "Super! Zurueck zur Hauptkonsole (Siehe Karte)"; // backCenter
+                tmp_infoText.text = "Great! Back to the main console! (Check map)"; // backCenter
                 break;
             case "isGhost":
-                tmp_infoText.text = "Du bist nun ein Geist. Aufgabe abholen!"; // isGhost
+                tmp_infoText.text = "You are now a ghost and invisible. Continue with tasks to win!"; // isGhost
                 notify_sound.Play();
                 break;
             case "shortTime":
-                tmp_infoText.text = "ACHTUNG! Nicht mehr viel Zeit!"; // shortTime
+                tmp_infoText.text = "ATTENTION! Not much time left!"; // shortTime
                 notify_sound.Play();
                 break;
             case "roundsLeft":
-                tmp_infoText.text = "Nur noch " + "X" + " Runden"; // roundsLeft
+                tmp_infoText.text = "Only " + "X" + " rounds left"; // roundsLeft
                 notify_sound.Play();
                 break;
         }        

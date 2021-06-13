@@ -40,8 +40,8 @@ public class MainWaterDispenser : MonoBehaviour
         if(count == 1)
         {
             switchfin_sound.Play();
-            infoBoxText.text = "Fülle den Behälter jetzt wieder auf";
-            fill_Text.text = "Füllen";
+            infoBoxText.text = "Now fill up the container again";
+            fill_Text.text = "Fill";
             empty_Text.text = "";
             s_filldespenser.setInteractable(true);
             s_filldespenser.setup();
@@ -59,9 +59,9 @@ public class MainWaterDispenser : MonoBehaviour
     {
         s_emptydespenser.setup();
         s_filldespenser.setInteractable(false);
-        infoBoxText.text = "Leere den Behälter";
+        infoBoxText.text = "Empty the container";
         fill_Text.text = "";
-        empty_Text.text = "Leeren";
+        empty_Text.text = "Empty";
         fixedcounter = 2;
         count = 0;
         img_fill.enabled = false;

@@ -22,7 +22,7 @@ public class MainElecBox : MonoBehaviour
     {
         setup();
         img_Light.enabled = false;
-        infoBoxText.text = "Bringe den Strom zum fließen";
+        infoBoxText.text = "Get the current flowing";
 
     }
     
@@ -41,7 +41,7 @@ public class MainElecBox : MonoBehaviour
 
     public void setup()
     {
-        infoBoxText.text = "Bringe den Strom zum fließen";
+        infoBoxText.text = "Get the current flowing";
         fixedcounter = 9;
         count = 0;
         win_message.SetActive(false);

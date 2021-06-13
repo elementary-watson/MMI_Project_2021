@@ -110,7 +110,7 @@ public class MainTablet : MonoBehaviour
             tenNumbers = tenNumbers + " " + randomNumberforTaskList[i];
             tenNumberList[i] = randomNumberforTaskList[i];
         }
-        infoBoxText.text = "Klicke alle Zahlen von " + randomNumberforTaskList[0] + " bis " + randomNumberforTaskList[9] + " an";
+        infoBoxText.text = "Click through all numbers from " + randomNumberforTaskList[0] + " to " + randomNumberforTaskList[9];
     }
 
     public void checkCounter(int cp)
