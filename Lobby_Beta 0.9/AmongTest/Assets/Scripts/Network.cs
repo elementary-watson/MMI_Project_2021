@@ -173,30 +173,6 @@ public class Network : MonoBehaviourPunCallbacks
         PhotonNetwork.ConnectUsingSettings();
     }
 
-    public void JoinLobby()
-    {
-        print("1. Join Lobby was called");
-        //In PUN 2 you would have to deal with the Room List in another way, since it isn't cached internally any longer. 
-        //PhotonNetwork.CurrentLobby.Name = "";
-        PhotonNetwork.JoinLobby(customLobby);
-        
-        print(PhotonNetwork.CountOfPlayersOnMaster);
-        try
-        {
-            if (PhotonNetwork.InLobby) print("We are in a lobby"); 
-            print("LobbyName: " + PhotonNetwork.CurrentLobby.ToString());
-            print("LobbyName: " + PhotonNetwork.CurrentLobby.Name);
-        }
-        catch (Exception e)
-        {
-            print("ERROR: " + e);
-        }
-    }
-    //Not working because Photon ist ein Huenson
-    public override void OnJoinedLobby()
-    {
-        if (PhotonNetwork.InLobby) print("We are in a lobby");
-    }
     public override void OnConnected()
     {
         print("2. Onconnected We are connected");
@@ -216,41 +192,45 @@ public class Network : MonoBehaviourPunCallbacks
     }
     private void pickLobbyRoom()
     {
-        if (lobbySwitch == 0) PhotonNetwork.JoinOrCreateRoom("LobbyRaum_A", myRoomOptions, TypedLobby.Default);
-        if (lobbySwitch == 1) PhotonNetwork.JoinOrCreateRoom("LobbyRaum_B", myRoomOptions, TypedLobby.Default);
-        if (lobbySwitch == 2) PhotonNetwork.JoinOrCreateRoom("LobbyRaum_C", myRoomOptions, TypedLobby.Default);
-        if (lobbySwitch == 3) PhotonNetwork.JoinOrCreateRoom("LobbyRaum_D", myRoomOptions, TypedLobby.Default);
+        if (lobbySwitch == 0) PhotonNetwork.JoinOrCreateRoom("LobbyRoom_A", myRoomOptions, TypedLobby.Default);
+        if (lobbySwitch == 1) PhotonNetwork.JoinOrCreateRoom("LobbyRoom_B", myRoomOptions, TypedLobby.Default);
+        if (lobbySwitch == 2) PhotonNetwork.JoinOrCreateRoom("LobbyRoom_C", myRoomOptions, TypedLobby.Default);
+        if (lobbySwitch == 3) PhotonNetwork.JoinOrCreateRoom("LobbyRoom_D", myRoomOptions, TypedLobby.Default);
     }
 
-    [PunRPC]
-    public void RoomPlayerJoin()
+    public void JoinLobby()
     {
-        int i = 0;
-        for (int j = 0; j < 10; j++)
+        print("1. Join Lobby was called");
+        //In PUN 2 you would have to deal with the Room List in another way, since it isn't cached internally any longer. 
+        //PhotonNetwork.CurrentLobby.Name = "";
+        PhotonNetwork.JoinLobby(customLobby);
+
+        print(PhotonNetwork.CountOfPlayersOnMaster);
+        try
         {
-            playerImageContainer[j].enabled = false;
-            playerNameTexts[j].SetText("");
+            if (PhotonNetwork.InLobby) print("JoinLobby called");
+            print("LobbyName: " + PhotonNetwork.CurrentLobby.ToString());
+            print("LobbyName: " + PhotonNetwork.CurrentLobby.Name);
         }
-        foreach (Player player in PhotonNetwork.PlayerList)
+        catch (Exception e)
         {
-            print("ID: " + player.ActorNumber + "\n" + "Nickname: " + player.NickName);
-            playerNameTexts[i].SetText(player.NickName);
-            playerImageContainer[i].enabled = true;
-            i++;
+            print("ERROR: " + e);
         }
     }
-    [PunRPC]
-    public void RefreshPlayerNumberOnJoin()
+    //Not working because Photon ist ein Huenson
+    public override void OnJoinedLobby()
     {
-        txtCounterPlayersInRoom.text = "(" + PhotonNetwork.CurrentRoom.PlayerCount + "/10)";
+        if (PhotonNetwork.InLobby) print("OnJoinedLobby called");
     }
+
+
     #endregion
 
     #region Inside_Room/Configuration
     int test3 = 0;
     public override void OnJoinedRoom()
     {
-        print("DEBUG: I joined room");
+        print("OnJoinedRoom called");
         //try { 
         //else if (PhotonNetwork.CurrentRoom.PlayerCount == roomMaxPlayerRef+1) PhotonNetwork.LeaveRoom();
         if (PhotonNetwork.CurrentRoom.IsOpen == true)
@@ -274,7 +254,7 @@ public class Network : MonoBehaviourPunCallbacks
             PhotonNetwork.NickName = PhotonNetwork.LocalPlayer.ActorNumber + "";
             txtCurrentRoomName.text = PhotonNetwork.CurrentRoom.Name;
             print("Name of room: " + PhotonNetwork.CurrentRoom.Name +
-                "Player in current room: " + PhotonNetwork.CurrentRoom.PlayerCount +
+                "\nPlayer in current room: " + PhotonNetwork.CurrentRoom.PlayerCount +
                 "\nAlle RaumStatistiken PlayerInRooms: " + PhotonNetwork.CountOfPlayersInRooms +
                 "\nDEBUG: (InRoom) Name of Player: " + PhotonNetwork.NickName);
             statusText.text = "Connected to Lobby: " + lobby_Room_Name;
@@ -323,6 +303,30 @@ public class Network : MonoBehaviourPunCallbacks
     public void RPC_stopTimerLobby()
     {
         lobbyTime_object.stopTimer();
+    }
+
+    [PunRPC]
+    public void RoomPlayerJoin()
+    {
+        int i = 0;
+        for (int j = 0; j < 10; j++)
+        {
+            playerImageContainer[j].enabled = false;
+            playerNameTexts[j].SetText("");
+        }
+        foreach (Player player in PhotonNetwork.PlayerList)
+        {
+            print("ID: " + player.ActorNumber + "\n" + "Nickname: " + player.NickName);
+            playerNameTexts[i].SetText(player.NickName);
+            playerImageContainer[i].enabled = true;
+            i++;
+        }
+    }
+
+    [PunRPC]
+    public void RefreshPlayerNumberOnJoin()
+    {
+        txtCounterPlayersInRoom.text = "(" + PhotonNetwork.CurrentRoom.PlayerCount + "/10)";
     }
 
     public void sendMyActorID()
@@ -375,8 +379,7 @@ public class Network : MonoBehaviourPunCallbacks
     }
     public void initiateStartGame() 
     {
-        sendMyActorID();
-        
+        sendMyActorID();        
 
     }
     public void lastPlayerSetConfiguration()

@@ -20,7 +20,14 @@ public class Lobby_Timer : MonoBehaviour
     float start = 10f;
     public void setup(int actorId)
     {
-        beginTimer();
+        initiateTimer();
+    }
+    public void initiateTimer()
+    {
+        canPlay = 0;
+        countdown_sound.Stop();
+        timerGoing = true;
+        elapsedTime = start;
     }
     public void setLobbyRoomPeople(bool isJoined)
     {
@@ -30,13 +37,6 @@ public class Lobby_Timer : MonoBehaviour
             lobbyRoomPeople -= 1;
     }
 
-    public void beginTimer()
-    {
-        canPlay = 0;
-        countdown_sound.Stop();
-        timerGoing = true;
-        elapsedTime = start;
-    }
     public void stopTimer()
     {
         timerGoing = false;
