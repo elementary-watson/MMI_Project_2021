@@ -92,6 +92,7 @@ public class Network : MonoBehaviourPunCallbacks
     {
         //MessageBox.Show(Callback, "Hello World!", "Hello");
     }
+
     public void Awake()
     {
         // XOF PhotonNetwork.FetchServerTimestamp();
@@ -115,6 +116,7 @@ public class Network : MonoBehaviourPunCallbacks
     {
         
     }
+
     #region getta/setta
     public int getRPC_GameStartTimestamp() { return (int)RPC_GameStartTimestamp; }
     public string getRPC_currentTimestampString() { return RPC_currentTimestampString; }
