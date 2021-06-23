@@ -10,6 +10,7 @@ public class Countdown : MonoBehaviour
 
     [SerializeField] Text txt_countdownText;
     [SerializeField] Network _network;
+    public AudioSource countdown_sound;
     int isFin;
     void Start()
     {
@@ -29,12 +30,14 @@ public class Countdown : MonoBehaviour
             }
             else
             {
+                countdown_sound.Play();
                 currentTime -= 1 * Time.deltaTime;
                 txt_countdownText.text = "Starting in " + currentTime.ToString("0");
             }
 
             if (currentTime <= 1)
             {
+                countdown_sound.Stop();
                 txt_countdownText.text = "Game starts now...";
             }
         }

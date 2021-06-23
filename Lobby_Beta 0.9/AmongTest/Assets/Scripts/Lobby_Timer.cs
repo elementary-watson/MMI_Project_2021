@@ -10,7 +10,6 @@ public class Lobby_Timer : MonoBehaviour
     [SerializeField] private float elapsedTime;
     [SerializeField] TextMeshProUGUI tmp_timer;
     [SerializeField] Network _network;
-    public AudioSource countdown_sound;
     [SerializeField] bool timerGoing;
     [SerializeField] int canPlay;
     [SerializeField] int lobbyRoomPeople;
@@ -33,7 +32,6 @@ public class Lobby_Timer : MonoBehaviour
     public void beginTimer()
     {
         canPlay = 0;
-        countdown_sound.Stop();
         timerGoing = true;
         elapsedTime = start;
     }
@@ -59,13 +57,11 @@ public class Lobby_Timer : MonoBehaviour
                     }
                     if (canPlay == 1)
                     {
-                        countdown_sound.Play();
                         canPlay++;
                     }
                 }
                 else
                 {
-                    countdown_sound.Stop();
                     timerGoing = false;
                     elapsedTime = start;
                     _network.initiateStartGame();

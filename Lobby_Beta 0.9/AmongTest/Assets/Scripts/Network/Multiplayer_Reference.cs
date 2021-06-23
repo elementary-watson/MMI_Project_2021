@@ -18,6 +18,26 @@ public class Multiplayer_Reference : MonoBehaviour
     private int saboteurActorID;
     private float progressbarMaximum;
     private int nextTaskIndex;
+
+    public List<PlayerAttributes> fullPlayerList = new List<PlayerAttributes>();
+
+    public void addNewPlayer(int actorID, string playerColor) 
+    {
+        fullPlayerList.Add(new PlayerAttributes(actorID, playerColor)) ;
+    }
+
+    public int getPlayerByActorID(int actorID)
+    {
+        for (int i = 0; i < fullPlayerList.Count; i++)
+        {
+            if (fullPlayerList[i].getActorID() == actorID) 
+                return i; 
+            else 
+                return -1; 
+        }
+        return -1;
+    }
+
     private IDictionary<int, string> allplayers = new Dictionary<int, string>();
     private IDictionary<int, float> allPlayerScores = new Dictionary<int, float>();
     private IDictionary<int, int> allPlayerTasks = new Dictionary<int, int>();
@@ -44,9 +64,11 @@ public class Multiplayer_Reference : MonoBehaviour
     public void setupGamestyle()
     {
         nextTaskIndex = 0;
-        saboteurActorID = -1;
+        //saboteurActorID = -1;
+
         gameRound = 1;
         currentStage = 1;
+
         saboteurPoints = 0;
         crewPoints = 0;
 
