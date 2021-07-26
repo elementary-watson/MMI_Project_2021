@@ -368,8 +368,7 @@ public class Network : MonoBehaviourPunCallbacks
     int lastPlayer;
 
     public void lastAsRoomLeader(int otherActorID)
-    {
-        countArrived += 1;
+    {        
         if (otherActorID < getActorId())
         {
             print(otherActorID + " " + getActorId());
