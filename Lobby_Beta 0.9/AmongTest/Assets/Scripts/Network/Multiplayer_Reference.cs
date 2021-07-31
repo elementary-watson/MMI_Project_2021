@@ -19,24 +19,57 @@ public class Multiplayer_Reference : MonoBehaviour
     private float progressbarMaximum;
     private int nextTaskIndex;
 
+    #region PlayerListMethods
     public List<PlayerAttributes> fullPlayerList = new List<PlayerAttributes>();
 
-    public void addNewPlayer(int actorID, string playerColor) 
+    public List<PlayerAttributes> getFullPlayerList()
     {
-        fullPlayerList.Add(new PlayerAttributes(actorID, playerColor)) ;
+        return fullPlayerList;
     }
 
-    public int getPlayerByActorID(int actorID)
+    public void addNewPlayer(int actorID, string playerColor)
+    {
+        fullPlayerList.Add(new PlayerAttributes(actorID, playerColor));
+    }
+
+    public int getPlayerIndexByActorID(int actorID)
     {
         for (int i = 0; i < fullPlayerList.Count; i++)
         {
-            if (fullPlayerList[i].getActorID() == actorID) 
+            if (fullPlayerList[i].getActorID() == actorID)
                 return i; 
-            else 
-                return -1; 
         }
         return -1;
     }
+    
+    public PlayerAttributes getPlayerObjectByActorID(int actorID)
+    {
+        for (int i = 0; i < fullPlayerList.Count; i++)
+        {
+            if (fullPlayerList[i].getActorID() == actorID)
+                return fullPlayerList[i];
+        }
+        return null;
+    }
+    public int getColorNumberByActorID(int actorID)
+    {
+        for (int i = 0; i < fullPlayerList.Count; i++)
+        {
+            if (fullPlayerList[i].getActorID() == actorID)
+                return fullPlayerList[i].getPlayerColorCode();
+        }
+        return -1;
+    }    
+    public bool isGhostByActorID(int actorID)
+    {
+        for (int i = 0; i < fullPlayerList.Count; i++)
+        {
+            if (fullPlayerList[i].getActorID() == actorID)
+                return fullPlayerList[i].getPlayerIsGhost();
+        }
+        return false;
+    }
+    #endregion
 
     private IDictionary<int, string> allplayers = new Dictionary<int, string>();
     private IDictionary<int, float> allPlayerScores = new Dictionary<int, float>();
@@ -258,6 +291,19 @@ public class Multiplayer_Reference : MonoBehaviour
         }
         return new Vector3(0,0,0);
     }
+
+    public Vector3 setupPlayerPosition(int actorId) 
+    {
+        for(int i = 0; i< fullPlayerList.Count; i++)
+        {
+            if (fullPlayerList[i].getActorID() == actorId) 
+            {
+                return spawnPositions[1];
+            }
+        }
+        return new Vector3(0f, 0f, 0f);
+    }
+
 
     public void setRandomColorList(List<string> RandomColorList) // Farben werden randomized um zufällige positionen für spieler zu erstellen
     {

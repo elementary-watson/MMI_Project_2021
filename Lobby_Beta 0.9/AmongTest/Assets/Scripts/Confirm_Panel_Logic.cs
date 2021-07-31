@@ -15,14 +15,15 @@ public class Confirm_Panel_Logic : MonoBehaviour
     //[SerializeField] private GameObject timerPanel;
     [SerializeField] TextMeshProUGUI confirmTxt;
     [SerializeField] Multiplayer_Reference m_reference;
+    [SerializeField] LoggingVotings log_votings;
 
 
     public void setTemporaryVote(string playerColor, int photonActorID, int indexPosition)
     {
         if (m_reference.getCurrentStage() == 1)
-            confirmTxt.text = "Spieler als Saboteur verdaechtigen ?";
+            confirmTxt.text = "Suspect player as saboteur ?";
         else
-            confirmTxt.text = "Spieler als Saboteur beschuldigen ?";
+            confirmTxt.text = "Accuse players of being saboteurs ?";
         this.playerColor = playerColor;
         this.photonActorID = photonActorID;
         this.indexPosition = indexPosition;
@@ -33,7 +34,10 @@ public class Confirm_Panel_Logic : MonoBehaviour
         if(isSubmitted)
             print("isSubmitted == True");
         if (isSubmitted)
+        {
+            log_votings.loggingVote(playerColor, photonActorID);
             result_vp.submitVote(_network.getActorId(), _network.getPlayerColor(), playerColor, photonActorID, indexPosition);
+        }
         else
             result_vp.submitVote(_network.getActorId(), _network.getPlayerColor(), "", 0, 0);
         this.playerColor = "";
@@ -43,7 +47,11 @@ public class Confirm_Panel_Logic : MonoBehaviour
     public void photon_Timeout_ConfirmChoice()//läuft die zeit aus werden die auwahldaten geschickt
     {
         if (isSubmitted)
-           _network.callSubmitVote(true,playerColor,photonActorID,indexPosition);
+        {
+            log_votings.loggingVote(playerColor, photonActorID);
+            _network.callSubmitVote(true,playerColor,photonActorID,indexPosition);
+        }
+           
         else
            _network.callSubmitVote(false,"",0,0);
         this.playerColor = "";

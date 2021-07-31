@@ -27,7 +27,7 @@ public class PlayerAttributes
     public int getPlayerID() { return playerID; }
     public void setPlayerScore(int playerScore) { this.playerScore = playerScore; }
     public float getPlayerScore() { return playerScore; }
-    public void setPlayerNumTasks(int addTask) { playerNumTasks = addTask; }
+    public void setPlayerNumTasks(int addTask) { playerNumTasks = playerNumTasks + addTask; }
     public int getPlayerNumTasks() { return playerNumTasks; }
     public void setPlayerColor(string playerColor) { this.playerColor = playerColor; }
     public string getPlayerColor() { return playerColor; }
@@ -35,19 +35,6 @@ public class PlayerAttributes
     public bool getPlayerIsGhost() { return isGhost; }
     public void setPlayerIsSaboteur(bool isSaboteur) { this.isSaboteur = isSaboteur; }
     public bool getPlayerIsSaboteur() { return isSaboteur; }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
 
     public int getPlayerColorCode()
     {

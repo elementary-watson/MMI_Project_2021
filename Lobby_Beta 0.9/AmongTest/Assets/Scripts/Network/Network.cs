@@ -379,33 +379,57 @@ public class Network : MonoBehaviourPunCallbacks
             lastPlayer = otherActorID;
         }
     }
+    bool canSendMyActorID = true;
     // Hier schickt jeder spieler seine eigene actor id im RPC
     [PunRPC]
     public void RPC_sendMyActorID(int otherActorID)
     {
-        //Hier bekommt jeder von jedem die ActorID, deshalb wollen wir den letzten als Konfigurator bestimmen, weil es nur einer sein darf.
-        print("RPC_sendMyActorID PlayerCount: " + PhotonNetwork.CurrentRoom.PlayerCount);
-        countArrived += 1;
-
-        lastAsRoomLeader(otherActorID);
-        if (countArrived == PhotonNetwork.CurrentRoom.PlayerCount && lastPlayer == getActorId())
+        if(canSendMyActorID == true)
         {
-            countArrived = 0;
-            maxPlayersOfRoom = (int)PhotonNetwork.CurrentRoom.PlayerCount;
-            lastPlayerSetConfiguration();
+            //Hier bekommt jeder von jedem die ActorID, deshalb wollen wir den letzten als Konfigurator bestimmen, weil es nur einer sein darf.
+            print("RPC_sendMyActorID PlayerCount: " + PhotonNetwork.CurrentRoom.PlayerCount);
+            countArrived += 1;
+
+            lastAsRoomLeader(otherActorID);
+
+            if (countArrived == PhotonNetwork.CurrentRoom.PlayerCount && lastPlayer == getActorId())
+            {
+                canSendMyActorID = false;
+                print("RPC_sendMyActorID Iam the lastRoomLeader");
+                countArrived = 0;
+                maxPlayersOfRoom = (int)PhotonNetwork.CurrentRoom.PlayerCount;
+                lastPlayerSetConfiguration();
+            }
+            if (countArrived == PhotonNetwork.CurrentRoom.PlayerCount)
+            {
+                canSendMyActorID = false;
+                countArrived = 0;
+            }
         }
+        else { print("called again!"); }   
     }
     public void lastPlayerSetConfiguration()
     {
         //Randomize colors
+        print("Rnd Colours set");
         RandomColor();
         //photonView = gameObject.GetComponent<PhotonView>();
         int i = 0;
-        //setupPlayer over RPC
+        print("All Colors");
+        foreach (String color in randomColorList)
+        {
+            print(color);
+        }
+        print("All Player Nicknames");
+        foreach (Player player in PhotonNetwork.PlayerList)
+        {
+            print(player.NickName);
+        }
+        //setupPlayer over RPC 
         foreach (Player player in PhotonNetwork.PlayerList)
         {
             print("Id and Color: " + player.NickName + "-" + randomColorList[i]);
-            photonView.RPC("RPC_setupPlayer", RpcTarget.All, player.NickName + "-" + randomColorList[i]);
+            photonView.RPC("RPC_setupPlayer", RpcTarget.All, player.NickName, randomColorList[i]);
             //photonView.RPC("setupPlayer", RpcTarget.OthersBuffered, player.NickName + "-" + randomColorList[i]);
             i++;
         }
@@ -425,82 +449,75 @@ public class Network : MonoBehaviourPunCallbacks
         }
         this.randomColorList = RandomColorList;
     }
-    
+
+    bool canSetupPlayer = true;
     [PunRPC]
-    public void RPC_setupPlayer(String idAndColor)
+    public void RPC_setupPlayer(String id, String Color)
     {
-        m_reference.setNumberOfPlayer((int)PhotonNetwork.CurrentRoom.PlayerCount);
-        
-        maxPlayersOfRoom = (int)PhotonNetwork.CurrentRoom.PlayerCount;
-        //XOF hier werden farben eingestellt und die multiplayer referenz aufgefüllt
-        String[] parts = idAndColor.Split('-');
         string temp = "";
-        if (parts[0] == (PhotonNetwork.NickName))
+        print("MyID: " + getActorId() + " RPC_setupPlayer: " + id + " " + Color);
+        if (canSetupPlayer) 
         {
-            temp = parts[1];
-        }
-        int otherActorID = int.Parse(parts[0]);
-        lastAsRoomLeader(otherActorID);        
-        if (temp != null) playerColor = temp.Remove(0, 6);
+            m_reference.setNumberOfPlayer((int)PhotonNetwork.CurrentRoom.PlayerCount);
+            maxPlayersOfRoom = (int)PhotonNetwork.CurrentRoom.PlayerCount;
 
-        switch (playerColor)
-        {
-            case "Purple":
-                myPlayerColorFilename = "Purple_Char";
-                break;
-            case "Brown":
-                myPlayerColorFilename = "Brown_Char";
-                break;
-            case "Green":
-                myPlayerColorFilename = "Green_Char";
-                break;
-            case "Yellow":
-                myPlayerColorFilename = "Yellow_Char";
-                break;
-            case "Blue":
-                myPlayerColorFilename = "Blue_Char";
-                break;
-            case "White":
-                myPlayerColorFilename = "White_Char";
-                break;
-            case "Black":
-                myPlayerColorFilename = "Black_Char";
-                break;
-            case "Pink":
-                myPlayerColorFilename = "Pink_Char";
-                break;
-            case "Orange":
-                myPlayerColorFilename = "Orange_Char";
-                break;
-            case "Red":
-                myPlayerColorFilename = "Red_Char";
-                break;
-        }
-        /*// The character prefab filename
-        List<string> colorFileList = new List<string> { "Black_Char", "Blue_Char", "Brown_Char", "Pink_Char", "Green_Char", "Orange_Char", "Purple_Char", "Red_Char", "White_Char", "Yellow_Char" };
-        string temp = "";
-        if (playerColor != null)
-            temp = playerColor.Remove(0, 6);
-        int i = 0;
-        foreach (string item in colorFileList)
-        {
-            if (item.Contains(temp))
+            if (m_reference.getPlayerIndexByActorID(int.Parse(id)) == -1)
             {
-                myPlayerColorFilename = colorFileList[i];
+                temp = Color;
+                //int otherActorID = int.Parse(id);
+                //lastAsRoomLeader(otherActorID);
+                if (temp != null) playerColor = temp.Remove(0, 6);
+                print("Trimmed Color: " + playerColor);
+                switch (playerColor)
+                {
+                    case "Purple":
+                        myPlayerColorFilename = "Purple_Char";
+                        break;
+                    case "Brown":
+                        myPlayerColorFilename = "Brown_Char";
+                        break;
+                    case "Green":
+                        myPlayerColorFilename = "Green_Char";
+                        break;
+                    case "Yellow":
+                        myPlayerColorFilename = "Yellow_Char";
+                        break;
+                    case "Blue":
+                        myPlayerColorFilename = "Blue_Char";
+                        break;
+                    case "White":
+                        myPlayerColorFilename = "White_Char";
+                        break;
+                    case "Black":
+                        myPlayerColorFilename = "Black_Char";
+                        break;
+                    case "Pink":
+                        myPlayerColorFilename = "Pink_Char";
+                        break;
+                    case "Orange":
+                        myPlayerColorFilename = "Orange_Char";
+                        break;
+                    case "Red":
+                        myPlayerColorFilename = "Red_Char";
+                        break;
+                }
+                m_reference.addNewPlayer(int.Parse(id), playerColor);
+                countArrived += 1;
             }
-            i++;
-        }*/
-        m_reference.addNewPlayer(getActorId(), playerColor);
-        //bool isMaxPlayer = m_reference.addPlayer(int.Parse(parts[0]), parts[1].Remove(0, 6), maxPlayersOfRoom);
-
-        if (countArrived == PhotonNetwork.CurrentRoom.PlayerCount && lastPlayer == getActorId() && canSetSaboteur == true) // wenn alle ankommen soll nur EINER den saboteur bestimmen
-        {
-            countArrived = 0;
-            canSetSaboteur = false;
-            print("Init setSaboteur with ActorID: " + getActorId());
-            setupMultiplayerGame();
+            print(countArrived);
+            if (countArrived == PhotonNetwork.CurrentRoom.PlayerCount && lastPlayer == getActorId() && canSetSaboteur == true) // wenn alle ankommen soll nur EINER den saboteur bestimmen
+            {
+                canSetupPlayer = false;
+                //bool isMaxPlayer = m_reference.addPlayer(int.Parse(parts[0]), parts[1].Remove(0, 6), maxPlayersOfRoom);
+                print("Init setSaboteur with ActorID: " + getActorId());
+                if (countArrived == PhotonNetwork.CurrentRoom.PlayerCount) countArrived = 0;
+                setupMultiplayerGame();
+            }
+            else if (countArrived == PhotonNetwork.CurrentRoom.PlayerCount)
+            {
+                canSetupPlayer = false;
+            }
         }
-        print("RPC_setupPlayer: " + int.Parse(parts[0]) + " Color" + parts[1].Remove(0, 6));
     }
 
     public void checkConnectionState()
@@ -513,31 +530,51 @@ public class Network : MonoBehaviourPunCallbacks
 
     public void setupMultiplayerGame() //wird nur einmal vom letzten playerausgeführt
     {
+        List <PlayerAttributes> fullPlayerList = m_reference.getFullPlayerList();
+        print("setupMultiplayerGame");
+        foreach(PlayerAttributes pa in fullPlayerList) 
+        {
+            print("ID " + pa.getActorID() + " Color " + pa.getPlayerColor());
+        }
         // XOF hier wird der Saboteur erstellt
         int rand = UnityEngine.Random.Range(0, PhotonNetwork.CurrentRoom.PlayerCount);
-        //int i = 1;
-        int saboteurID = m_reference.fullPlayerList[rand].getActorID();
-        print("The Saboteur with index: " + rand + " is: " + saboteurID);
-
+        int id = int.Parse(PhotonNetwork.NickName);
+        int saboteurID = id;
+        print("Picked the Saboteur with index: " + id + " and ID: " + saboteurID);
+        int indexOfSab = m_reference.getPlayerIndexByActorID(id);
+        print("The color is: " + m_reference.fullPlayerList[indexOfSab].getPlayerColor());
         setPlayerSpawnPosition();
         photonView.RPC("RPC_setupMultiplayerGame", RpcTarget.All, saboteurID);
     }
 
+    bool canSetupMultiplayer = true;
     [PunRPC]
     public void RPC_setupMultiplayerGame(int saboteurID) // Spielbalance und saboteur einstellen
-    {        
-        //diese methode absichern falls method durch playerleave gerufen wurde. Falls einer geht muss nach jeder Runde rebalanced werden.
-        print("RPC_setupMultiplayerGame Saboteur ID " + saboteurID);
-        if (getActorId() == saboteurID)
+    {
+        //diese methode absichern falls methode durch playerleave gerufen wurde. Falls einer geht muss nach jeder Runde rebalanced werden.
+        if (canSetupMultiplayer == true)
         {
-            isSaboteur = true;
-            int index = m_reference.getPlayerByActorID(getActorId());
-            m_reference.fullPlayerList[index].setPlayerIsSaboteur(true);
+            countArrived = 0;
+            print("RPC_setupMultiplayerGame Saboteur ID " + saboteurID);
+            canSetupMultiplayer = false;
+            canSetSaboteur = false;
+            List<PlayerAttributes> fullPlayerList = m_reference.getFullPlayerList();
+            for (int i = 0; i< fullPlayerList.Count; i++)
+            {
+                m_reference.fullPlayerList[i].setPlayerIsGhost(false);
+            }
+            if (getActorId() == saboteurID)
+            {
+                isSaboteur = true;
+                int index = m_reference.getPlayerIndexByActorID(getActorId());
+                m_reference.fullPlayerList[index].setPlayerIsSaboteur(true);
+                m_reference.fullPlayerList[index].setPlayerIsGhost(false);
+            }
+            m_reference.setSaboteurActorID(saboteurID);
+            m_reference.setupGamestyle();
+            //Continues in Class Countdown XOF
+            CounterObject.SetActive(true);
         }
-        m_reference.setSaboteurActorID(saboteurID);
-        m_reference.setupGamestyle();
-        //Continues in Class Countdown XOF
-        CounterObject.SetActive(true);
     }
 
     public void RPCStartFading()
@@ -556,29 +593,44 @@ public class Network : MonoBehaviourPunCallbacks
     #endregion
 
     #region startgame
-    public void RPCstartgame(){photonView.RPC("startGame", RpcTarget.All);}
+    public void RPCstartgame()
+    {
+        photonView.RPC("startGame", RpcTarget.All);
+    }
+
+    bool canStartGame = true;
     int test2 = 0;
     [PunRPC]
     public void startGame(PhotonMessageInfo info)
     {
-        Umfrage1_Panel.SetActive(false);
-        print("TimeStamp: " + info.timestamp);
-        print("TimeStamp: " + info.SentServerTime);
-        RPC_GameStartTimestamp =  info.SentServerTime;
-        //GameMapPanel.SetActive(true);
-        //LobbyRoomPanel.SetActive(false);
-        if (test2 == 0) { }
-            //ReferenceForDeveloper.text = RPC_GameStartTimestamp;
-            print("HERE" + test2 + "  " + m_reference.getNumberOfPlayer());
-        test2 += 1;
-        if (test2 == m_reference.getNumberOfPlayer())
+        if(canStartGame == true) 
         {
+            canStartGame = false;
+            Umfrage1_Panel.SetActive(false);
+            print("TimeStamp mit info.timestamp: " + info.timestamp);
+            print("TimeStamp mit info.SentServerTime: " + info.SentServerTime);
+            print("TimeStamp mit info.SentServerTimestamp: " + info.SentServerTimestamp);
+            RPC_GameStartTimestamp = info.SentServerTime;
+            //GameMapPanel.SetActive(true);
+            //LobbyRoomPanel.SetActive(false);
+            if (test2 == 0) { }
+            //ReferenceForDeveloper.text = RPC_GameStartTimestamp;
+            print("HERE " + test2 + "  " + m_reference.getNumberOfPlayer());
+            test2 += 1;
             SpawnPlayer();
-        }        
+            if (test2 == m_reference.getNumberOfPlayer())
+            {
+            }
+        }
+        print(test2);
+        test2 += 1;
     }
     private void SpawnPlayer()
     {
-        GameObject spawn = PhotonNetwork.Instantiate(playerColor, spawnPositions, Quaternion.identity);
+        print("SpawnPlayer Started");
+        string colorName = m_reference.getPlayerObjectByActorID(getActorId()).getPlayerColor();
+        print(colorName);
+        GameObject spawn = PhotonNetwork.Instantiate( ("Player" + colorName), spawnPositions, Quaternion.identity);
         CharacterControl cc = spawn.GetComponent<CharacterControl>();
         cc.interactIcon = useindicator;
         cc.setMCSScript(msc_object);
@@ -645,7 +697,9 @@ public class Network : MonoBehaviourPunCallbacks
         String[] parts = chain.Split('-');
         List<string> setColorPosition = parts.ToList();
         m_reference.setRandomColorList(setColorPosition);
-        Vector3 spawnPos = m_reference.setupPositions(PhotonNetwork.LocalPlayer.ActorNumber);
+        //Vector3 spawnPos = m_reference.setupPositions(PhotonNetwork.LocalPlayer.ActorNumber);
+        Vector3 spawnPos = m_reference.setupPlayerPosition(getActorId());
+
         if (spawnPos == new Vector3(0, 0, 0))
             print("ERROR: Player was not found position faulty!");
         else
@@ -728,6 +782,8 @@ public class Network : MonoBehaviourPunCallbacks
             addScore = addScore*-1;
         playerScorepoints += addScore;
         numberOfTask += 1;
+        int index = m_reference.getPlayerIndexByActorID(getActorId());
+        m_reference.fullPlayerList[index].setPlayerNumTasks(1);
     }
     [PunRPC]
     public void incrementTaskprogressNetwork(float increment)
