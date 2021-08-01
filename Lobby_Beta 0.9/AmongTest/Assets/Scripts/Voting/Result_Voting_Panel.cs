@@ -8,7 +8,7 @@ using System;
 public class Result_Voting_Panel : MonoBehaviour
 {
     [Header("Voting Panel")]
-    IDictionary<int, string> player; // 
+    IDictionary<int, string> player; //
     IDictionary<int, int> finalVotings = new Dictionary<int,int>(); //actor id , votings
     [SerializeField] private Multiplayer_Reference m_reference;
     [SerializeField] private Image img_votedPlayer;
@@ -17,7 +17,6 @@ public class Result_Voting_Panel : MonoBehaviour
     [SerializeField] TextMeshProUGUI tmp_resultText;    
     [SerializeField] private GameObject thisResultVotingPanel;
     [SerializeField] private GameObject[] tmp_resultTexts = new GameObject[0]; // Prevote: 0 no vote, 1 vote ||  Postvote: 2 votekick, 3 tie, 4 no votes
-
     [SerializeField] private GameObject Voting_Panel;
     [SerializeField] private Panel_Manager_Script p_manager;
     [Header("Extern")]
@@ -52,10 +51,10 @@ public class Result_Voting_Panel : MonoBehaviour
                 else if (!(finalVotings.Keys.Contains(photonActorID))) // farbe erstes mal gevoted
                     finalVotings.Add(photonActorID, 1);
                 else
-                    finalVotings[photonActorID] += 1; //vote zu einer farbe hinzufügen
+                    finalVotings[photonActorID] += 1; // Vote zu einer farbe hinzufügen
             }
             receivedVotes += 1;
-        }        
+        }
         
         if (receivedVotes >= _network.getActorsInRoom())//Wenn alle spieler einen vote gesendet haben ergebnis bildschirm öffnen
         { 

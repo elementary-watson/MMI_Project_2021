@@ -59,7 +59,8 @@ public class Multiplayer_Reference : MonoBehaviour
                 return fullPlayerList[i].getPlayerColorCode();
         }
         return -1;
-    }    
+    }
+
     public bool isGhostByActorID(int actorID)
     {
         for (int i = 0; i < fullPlayerList.Count; i++)
