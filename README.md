@@ -32,65 +32,63 @@ Sabotage ist ein in Unity 3D entwickeltes Multiplayer-Spiel (bis zu 10 Teilnehme
 
 ## Galerie
 
-- **Lobby-Ansicht**  
-  <img src="https://github.com/user-attachments/assets/7847fd0e-2c33-4607-ad6e-c7ddbfa50b10"  
-       alt="Spieler um den Tisch Among us"  
-       width="70%" />  
-  *Alle Teilnehmenden um den zentralen Tisch in der Lobby.*
+![image](https://github.com/user-attachments/assets/5e50d7f3-ccfd-4843-9afb-8a099eef2f03)
 
-- **Charakter-Farbpalette**  
-  <img src="https://github.com/user-attachments/assets/211d0842-05aa-457f-80d5-3b29f26c2eb9"  
-       alt="Hex-Farben der Charaktere"  
-       width="70%" />  
-  *Übersicht der zugewiesenen HEX-Farbwerte pro Figur.*
-
-- **Abstimmungsfenster**  
-  <img src="https://github.com/user-attachments/assets/07f17faf-9d60-421e-ba60-fea800284ed0"  
-       alt="Eject_Window"  
-       width="70%" />  
-  *Standardfenster zum Auswerfen eines vermuteten Saboteurs.*
-
-- **Auswahlmodus im Eject-Fenster**  
-  <img src="https://github.com/user-attachments/assets/f2ed3735-130f-48fa-b0ee-937ef4b5d996"  
-       alt="Eject_Window_Selection"  
-       width="70%" />  
-  *Auswahl-Fokus während der Abstimmung.*
-
-- **Tablet-Task**  
-  <img src="https://github.com/user-attachments/assets/c1ee0aa3-451f-4466-9f52-f68a6678ab27"  
-       alt="Tablet_Task"  
-       width="70%" />  
-  *Minispiel auf dem Tablet-Terminal.*
-
-- **Spül-Task**  
-  <img src="https://github.com/user-attachments/assets/803188b1-7aba-4766-9da6-2aba735cf1e8"  
-       alt="Sink_Task"  
-       width="70%" />  
-  *Minispiel: Spüle füllen und entleeren.*
-
-- **Rollenauswahl**  
-  <img src="https://github.com/user-attachments/assets/1307b0f4-ca95-46bd-8c01-95fa96842c0d"  
-       alt="Role_Selection"  
-       width="70%" />  
-  *Festlegen von Crew- und Saboteur-Rollen.*
-
-- **Studien-Task**  
-  <img src="https://github.com/user-attachments/assets/337bed3f-9d09-45df-b337-200dda578ecb"  
-       alt="Mini_Study_Task"  
-       width="70%" />  
-  *Spezialtask zur Erhebung von Farb-Bias.*
-
-- **Hauptspielraum**  
+- **Hauptspielraum**
+- 
   <img src="https://github.com/user-attachments/assets/b3d901a9-ee17-4dec-af25-5e8406eb000f"  
        alt="main_room"  
        width="70%" />  
   *Zentrale Spielstation mit Minikarte.*
 
-- **Raumübersicht**  
+- **Raumübersicht**
+- 
   <img src="https://github.com/user-attachments/assets/dc47bc61-7420-438c-97ba-d80dc8c27320"  
        alt="Ingame Rooms"  
        width="70%" />  
   *Übersichtskarte aller Spielräume.*
+
+- **Abstimmungsfenster**
+- 
+  <img src="https://github.com/user-attachments/assets/07f17faf-9d60-421e-ba60-fea800284ed0"  
+       alt="Eject_Window"  
+       width="70%" />  
+  *Standardfenster zum Auswerfen eines vermuteten Saboteurs.*
+
+- **Auswahlmodus im Eject-Fenster**
+- 
+  <img src="https://github.com/user-attachments/assets/f2ed3735-130f-48fa-b0ee-937ef4b5d996"  
+       alt="Eject_Window_Selection"  
+       width="70%" />  
+  *Auswahl-Fokus während der Abstimmung.*
+
+- **Tablet-Task**
+- 
+  <img src="https://github.com/user-attachments/assets/c1ee0aa3-451f-4466-9f52-f68a6678ab27"  
+       alt="Tablet_Task"  
+       width="70%" />  
+  *Minispiel auf dem Tablet-Terminal.*
+
+- **Spül-Task**
+- 
+  <img src="https://github.com/user-attachments/assets/803188b1-7aba-4766-9da6-2aba735cf1e8"  
+       alt="Sink_Task"  
+       width="70%" />  
+  *Minispiel: Spüle füllen und entleeren.*
+
+- **Studien-Task**
+- 
+  <img src="https://github.com/user-attachments/assets/337bed3f-9d09-45df-b337-200dda578ecb"  
+       alt="Mini_Study_Task"  
+       width="70%" />  
+  *Spezialtask zur Erhebung von Farb-Bias.*
+
+- **Rollenauswahl**
+- 
+  <img src="https://github.com/user-attachments/assets/1307b0f4-ca95-46bd-8c01-95fa96842c0d"  
+       alt="Role_Selection"  
+       width="70%" />  
+  *Festlegen von Crew- und Saboteur-Rollen.*
 
 
 
